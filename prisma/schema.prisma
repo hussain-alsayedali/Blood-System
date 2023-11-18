@@ -1,0 +1,122 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model nurse {
+  nurseId   Int      @id @default(autoincrement())
+  bankId    String   @unique
+  createdAt DateTime @default(now())
+  email     String   @unique @db.VarChar(255)
+  phone     String   @unique
+  weight    String
+  birth     DateTime
+  address   String
+  firstName String
+  lastName  String
+  username  String   @unique
+  password  String
+}
+
+model Recipient {
+  recipientId    Int         @id @default(autoincrement())
+  currentUrgency String
+  bankId         String      @unique
+  createdAt      DateTime    @default(now())
+  email          String      @unique @db.VarChar(255)
+  phone          String      @unique
+  weight         String
+  birth          DateTime
+  address        String
+  firstName      String
+  lastName       String
+  username       String      @unique
+  password       String
+  infections     infection[]
+  blood          Blood       @relation(fields: [bloodType], references: [type])
+  bloodType      String
+  BloodBag       BloodBag[]
+}
+
+model Donor {
+  donorId        Int         @id @default(autoincrement())
+  currentUrgency String
+  bankId         String      @unique
+  createdAt      DateTime    @default(now())
+  email          String      @unique @db.VarChar(255)
+  phone          String      @unique
+  weight         String
+  birth          DateTime
+  address        String
+  firstName      String
+  lastName       String
+  username       String      @unique
+  password       String
+  diseases       infection[]
+  blood          Blood       @relation(fields: [bloodType], references: [type])
+  bloodType      String
+  BloodBag       BloodBag[]
+  Donation       Donation[]
+}
+
+model infection {
+  infectionId             Int            @id @default(autoincrement())
+  diseaseName             DiseaseCatalog @relation(fields: [diseaseCatalogDiseaseId], references: [diseaseId])
+  dateOfInfection         DateTime
+  dateOfheal              DateTime?
+  strength                String
+  cured                   Boolean
+  Recipient               Recipient?     @relation(fields: [recipientRecipientId], references: [recipientId])
+  recipientRecipientId    Int?
+  Donor                   Donor?         @relation(fields: [donorDonorId], references: [donorId])
+  donorDonorId            Int?
+  diseaseCatalogDiseaseId Int
+}
+
+model DiseaseCatalog {
+  diseaseId   Int         @id @default(autoincrement())
+  diseaseName String
+  infection   infection[]
+}
+
+model Blood {
+  type        String      @id @unique
+  recieveFrom String
+  Donor       Donor[]
+  Recipient   Recipient[]
+}
+
+model BloodBag {
+  bagId                Int        @id @default(autoincrement())
+  givenTo              Recipient? @relation(fields: [recipientRecipientId], references: [recipientId])
+  recipientRecipientId Int?
+  recipientDate        DateTime?
+  donationDetails      Donation   @relation(fields: [donationId], references: [donationId])
+  Donor                Donor?     @relation(fields: [donorDonorId], references: [donorId])
+  donorDonorId         Int?
+  donationId           Int        @unique
+  BloodBank            BloodBank? @relation(fields: [bloodBankId], references: [bloodBankId])
+  bloodBankId          Int?
+}
+
+model Donation {
+  donationId       Int       @id @unique @default(autoincrement())
+  donationDate     DateTime
+  amount           Int
+  opperationStatus String
+  donorId          Donor     @relation(fields: [donorDonorId], references: [donorId])
+  donorDonorId     Int
+  BloodBag         BloodBag?
+}
+
+model BloodBank {
+  bloodBankId Int        @id @default(autoincrement())
+  bloodBags   BloodBag[]
+}

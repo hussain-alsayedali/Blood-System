@@ -1,0 +1,8 @@
+-- AlterTable
+ALTER TABLE "Donor" ALTER COLUMN "bankId" SET DATA TYPE TEXT;
+
+-- AlterTable
+ALTER TABLE "Recipient" ALTER COLUMN "bankId" SET DATA TYPE TEXT;
+
+-- AlterTable
+ALTER TABLE "nurse" ALTER COLUMN "bankId" SET DATA TYPE TEXT;
