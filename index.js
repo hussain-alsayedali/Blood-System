@@ -1,10 +1,11 @@
 const express = require("express");
 const app = express();
 const { PrismaClient } = require("@prisma/client");
+const { PrismaSessionStore } = require("@quixo3/prisma-session-store");
 const prisma = new PrismaClient();
 
 const passport = require("passport");
-const session = require("express-session");
+const expressSession = require("express-session");
 
 const methodOverride = require("method-override");
 const flash = require("express-flash");
@@ -44,6 +45,23 @@ app.use(logger("dev"));
 
 //Use forms for put / delete
 app.use(methodOverride("_method"));
+
+//
+app.use(
+  expressSession({
+    cookie: {
+      maxAge: 60 * 1000, // ms
+    },
+    secret: "a santa at nasa",
+    resave: true,
+    saveUninitialized: true,
+    store: new PrismaSessionStore(new PrismaClient(), {
+      checkPeriod: 30 * 1000, //ms
+      dbRecordIdIsSessionId: true,
+      dbRecordIdFunction: undefined,
+    }),
+  })
+);
 
 // Passport middleware
 app.use(passport.initialize());

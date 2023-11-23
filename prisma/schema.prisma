@@ -120,3 +120,10 @@ model BloodBank {
   bloodBankId Int        @id @default(autoincrement())
   bloodBags   BloodBag[]
 }
+
+model Session {
+  id        String   @id
+  sid       String   @unique
+  data      String
+  expiresAt DateTime
+}
