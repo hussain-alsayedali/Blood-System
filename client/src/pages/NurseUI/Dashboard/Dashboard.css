@@ -1,0 +1,110 @@
+.dashboard-container {
+    padding: 20px;
+    color: #c0c0c0;
+    background-color: #2C2C2C;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  }
+  
+  .urgency-selector {
+    margin-bottom: 20px;
+  }
+  
+  .urgency-selector label {
+    font-weight: bold;
+    margin-right: 10px;
+  }
+  
+  .urgency-selector select {
+    padding: 5px;
+    font-size: 1em;
+    border: none;
+    border-radius: 5px;
+  }
+  
+  .patients-list {
+    width: 100%;
+    overflow-x: auto;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 10px;
+  }
+  
+  th, td {
+    border-bottom: 1px solid #ddd;
+    padding: 15px 8px;
+    text-align: left;
+  }
+  
+  th {
+    background-color: #3D3D3D;
+    color: white;
+  }
+  
+  td {
+    background-color: #3D3D3D;
+    color: #c0c0c0;
+  }
+  
+  button {
+    background-color: #4b4b4b;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  button:hover {
+    background-color: #6b6b6b;
+  }
+
+  .urgency-selector label {
+    font-weight: bold;
+    margin-right: 10px;
+  }
+  
+  .urgency-options {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .urgency-options .option {
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #3D3D3D;
+    color: #c0c0c0;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  }
+  
+  .urgency-options .option:hover {
+    background-color: #6b6b6b;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.4);
+  }
+  
+  .urgency-options .option.selected {
+    background-color: #4b4b4b;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.6);
+  }
+
+  .total-requests {
+    margin-bottom: 20px;
+    padding: 10px;
+    background-color: #3D3D3D;
+    color: #c0c0c0;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    text-align: center;
+    font-size: 1.5em;
+    font-weight: bold;
+  }
+
+  .urgency-image {
+    vertical-align: middle;
+  }

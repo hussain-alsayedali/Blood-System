@@ -1,0 +1,26 @@
+.profile-container {
+  background-color: #242526;
+  color: #c0c0c0;
+  padding: 20px;
+  border-radius: 10px;
+  width: 80%;
+  margin: auto;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.title {
+  text-align: center;
+  font-size: 2em;
+  margin-bottom: 20px;
+}
+
+.profile-details {
+  background-color: #3d3d3d;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.profile-details p {
+  font-size: 1.2em;
+  margin-bottom: 10px;
+}

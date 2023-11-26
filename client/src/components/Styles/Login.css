@@ -1,0 +1,36 @@
+/* Login.css */
+
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #121212;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #232323;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.login-form input,
+.login-form select,
+.login-form button {
+    margin: 10px 0;
+    padding: 10px;
+    width: 200px;
+}
+
+.login-form button {
+    cursor: pointer;
+    background-color: #3f51b5;
+    color: white;
+}
+
+.error-message {
+    color: #f44336;
+}
