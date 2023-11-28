@@ -1,13 +1,16 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Nav from './pages/NurseUI/Nav/Nav';
-import Dashboard_Nurse from './pages/NurseUI/Dashboard/Dashboard';
-import Storage_Nurse from './pages/NurseUI/Storage/Storage';
-import Control_Nurse from './pages/NurseUI/Control/Control';
-import Profile from './components/Profile'; // Profile component
-import NotFound from './components/NotFound';
-import Login from './components/Login';
-import './components/Styles/App.css';
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Nav from "./pages/NurseUI/Nav/Nav";
+import Dashboard_Nurse from "./pages/NurseUI/Dashboard/Dashboard";
+import Storage_Nurse from "./pages/NurseUI/Storage/Storage";
+import Control_Nurse from "./pages/NurseUI/Control/Control";
+import Profile from "./components/Profile"; // Profile component
+import NotFound from "./components/NotFound";
+import Login from "./components/Login";
+import SignupDonor from "./components/SignupDonor";
+import SignupRecipent from "./components/SignupRecipent";
+import SignupNurse from "./components/SignupNurse";
+import "./components/Styles/App.css";
 
 // App component definition
 function App() {
@@ -17,23 +20,29 @@ function App() {
       <Routes>
         {/* Default route loads the Login component*/}
         <Route path="/" element={<Login />} />
+        <Route path="/signupDonor" element={<SignupDonor />} />
+        <Route path="/signupRecipent" element={<SignupRecipent />} />
+        <Route path="/signupNurse" element={<SignupNurse />} />
 
-        <Route path="/nurse/*" element={
-          <>
-            <Nav />
+        <Route
+          path="/nurse/*"
+          element={
+            <>
+              <Nav />
 
-            <main className="main">
-              <Routes>
-                <Route path="/" element={<Dashboard_Nurse />} />
-
-                <Route path="/dashboard" element={<Dashboard_Nurse />} />
-                <Route path="/storage" element={<Storage_Nurse />} />
-                <Route path="/control" element={<Control_Nurse />} />
-                <Route path="/profile" element={<Profile />} />
-              </Routes>
-            </main>
-          </>
-        } />
+              <main className="main">
+                <Routes>
+                  <Route path="/" element={<Dashboard_Nurse />} />
+                  <Route path="/" element={<Dashboard_Nurse />} />
+                  <Route path="/dashboard" element={<Dashboard_Nurse />} />
+                  <Route path="/storage" element={<Storage_Nurse />} />
+                  <Route path="/control" element={<Control_Nurse />} />
+                  <Route path="/profile" element={<Profile />} />
+                </Routes>
+              </main>
+            </>
+          }
+        />
 
         <Route path="/patient/*" element={<NotFound />} />
 

@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import boss from '../assets/satiyah.jpg';
-import { Link } from 'react-router-dom';
-import axios from 'axios';
-import { useDispatch } from 'react-redux';
-import './Styles/Login.css'; // Import the CSS file
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import boss from "../assets/satiyah.jpg";
+import { Link } from "react-router-dom";
+import axios from "axios";
+import { useDispatch } from "react-redux";
+import "./Styles/Login.css"; // Import the CSS file
 
 function Login() {
   const [username, setUsername] = useState("");
@@ -18,17 +18,18 @@ function Login() {
     e.preventDefault();
     setError("");
 
-    axios.post("http://localhost:2121/login", {
-      username,
-      password,
-      role
-    })
-      .then(response => {
+    axios
+      .post("http://localhost:2121/login", {
+        username,
+        password,
+        role,
+      })
+      .then((response) => {
         console.log(response.data.user);
-        dispatch({ type: 'SET_USER', payload: response.data.user }); // Dispatch SET_USER action
+        dispatch({ type: "SET_USER", payload: response.data.user }); // Dispatch SET_USER action
         navigate(`/${role}`);
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
         if (error.response && error.response.status === 401) {
           setError("Wrong username or password");
@@ -67,9 +68,24 @@ function Login() {
       <img src={boss} className="boss-image" height={250} />
       <br />
       <p className="access-buttons">Hacking buttons: (Quick access)</p>
-      <Link to="/nurse"><button>Nurse</button></Link>
-      <Link to="/donor"><button>Donor</button></Link>
-      <Link to="/recipient"><button>Recipient</button></Link>
+      <Link to="/nurse">
+        <button>Nurse</button>
+      </Link>
+      <Link to="/donor">
+        <button>Donor</button>
+      </Link>
+      <Link to="/recipient">
+        <button>Recipient</button>
+      </Link>
+      <Link to="/signupDonor">
+        <button>SignUp As donor</button>
+      </Link>
+      <Link to="/signupRecipent">
+        <button>SignUp As recipent</button>
+      </Link>
+      <Link to="/signupNurse">
+        <button>SignUp As Nurse</button>
+      </Link>
     </div>
   );
 }

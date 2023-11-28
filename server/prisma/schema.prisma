@@ -16,12 +16,11 @@ model nurse {
   createdAt DateTime @default(now())
   email     String   @unique @db.VarChar(255)
   phone     String   @unique
-  weight    String
+  weight    Float
   birth     DateTime
   address   String
   firstName String
   lastName  String
-  username  String   @unique
   password  String
 }
 
@@ -29,15 +28,15 @@ model Recipient {
   recipientId    Int         @id @default(autoincrement())
   currentUrgency String
   bankId         String      @unique
+  currentMoney   Int         @default(0)
   createdAt      DateTime    @default(now())
   email          String      @unique @db.VarChar(255)
   phone          String      @unique
-  weight         String
+  weight         Float
   birth          DateTime
   address        String
   firstName      String
   lastName       String
-  username       String      @unique
   password       String
   infections     infection[]
   blood          Blood       @relation(fields: [bloodType], references: [type])
@@ -46,24 +45,23 @@ model Recipient {
 }
 
 model Donor {
-  donorId        Int         @id @default(autoincrement())
-  currentUrgency String
-  bankId         String      @unique
-  createdAt      DateTime    @default(now())
-  email          String      @unique @db.VarChar(255)
-  phone          String      @unique
-  weight         String
-  birth          DateTime
-  address        String
-  firstName      String
-  lastName       String
-  username       String      @unique
-  password       String
-  diseases       infection[]
-  blood          Blood       @relation(fields: [bloodType], references: [type])
-  bloodType      String
-  BloodBag       BloodBag[]
-  Donation       Donation[]
+  donorId      Int         @id @default(autoincrement())
+  currentMoney Int         @default(0)
+  bankId       String      @unique
+  createdAt    DateTime    @default(now())
+  email        String      @unique @db.VarChar(255)
+  phone        String      @unique
+  weight       Float
+  birth        DateTime
+  address      String
+  firstName    String
+  lastName     String
+  password     String
+  diseases     infection[]
+  blood        Blood       @relation(fields: [bloodType], references: [type])
+  bloodType    String
+  BloodBag     BloodBag[]
+  Donation     Donation[]
 }
 
 model infection {

@@ -14,6 +14,7 @@ const path = require("path");
 const mainRoutes = require("./routes/main");
 const cors = require("cors");
 const bodyParser = require("body-parser");
+const { data } = require("autoprefixer");
 
 require("dotenv").config({ path: "./config/.env" });
 
@@ -92,6 +93,9 @@ app.post("/login", async (req, res) => {
 
   res.json({ user });
 });
+
+async function main() {}
+main();
 
 app.listen(process.env.PORT, () => {
   console.log("Server is running, you better catch it!");

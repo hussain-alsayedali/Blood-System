@@ -102,7 +102,6 @@ exports.postSignupDonator = async (req, res, next) => {
 
     const donator = await prisma.donor.create({
       data: {
-        currentUrgency: "no",
         bankId: req.body.bankId,
         email: req.body.email,
         phone: req.body.phone,
@@ -111,12 +110,8 @@ exports.postSignupDonator = async (req, res, next) => {
         address: req.body.address,
         firstName: req.body.firstName,
         lastName: req.body.lastName,
-        userName: req.body.userName,
         password: hashedPassword,
-        diseases: [],
         bloodType: req.body.bloodType,
-        donations: [],
-        BloodBag: [],
       },
     });
     await prisma.$disconnect();
@@ -185,7 +180,7 @@ exports.postSignupNurse = async (req, res, next) => {
     });
     await prisma.$disconnect();
 
-    req.logIn(donator, (err) => {
+    req.logIn(currentNurse, (err) => {
       if (err) {
         return next(err);
       }
@@ -242,15 +237,12 @@ exports.postSignupRecipient = async (req, res, next) => {
         address: req.body.address,
         firstName: req.body.firstName,
         lastName: req.body.lastName,
-        userName: req.body.userName,
         password: hashedPassword,
         bloodType: req.body.bloodType,
-        infections: [],
-        bloodBag: [],
       },
     });
     await prisma.$disconnect();
-    req.logIn(donator, (err) => {
+    req.logIn(currentRecipient, (err) => {
       if (err) {
         return next(err);
       }
