@@ -1,6 +1,5 @@
 const passport = require("passport");
 const validator = require("validator");
-const User = require("../models/User");
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 const bcrypt = require("bcrypt");
@@ -86,7 +85,7 @@ exports.postSignupDonator = async (req, res, next) => {
   try {
     const existingUser = await prisma.donor.findFirst({
       where: {
-        OR: [{ email: req.body.email }, { userName: req.body.userName }],
+        OR: [{ email: req.body.email }],
       },
     });
 
@@ -180,6 +179,7 @@ exports.postSignupNurse = async (req, res, next) => {
       if (err) {
         return next(err);
       }
+      // /profile
       res.redirect("/profile");
     });
   } catch (error) {
@@ -208,7 +208,7 @@ exports.postSignupRecipient = async (req, res, next) => {
   try {
     const existingUser = await prisma.recipient.findFirst({
       where: {
-        OR: [{ email: req.body.email }, { userName: req.body.userName }],
+        OR: [{ email: req.body.email }],
       },
     });
 

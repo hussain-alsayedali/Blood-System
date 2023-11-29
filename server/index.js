@@ -16,20 +16,39 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const { data } = require("autoprefixer");
 
+//enablieng cors
+app.use(
+  cors({
+    origin: "*",
+  })
+);
+//Use .env file in config folder
 require("dotenv").config({ path: "./config/.env" });
 
-app.set("views", path.join(__dirname, "views"));
-app.set("view engine", "ejs");
+// Passport config
+require("./config/passport")(passport);
 
+//Static Folder
 app.use(express.static("public"));
 
-app.use(express.json({ limit: "50mb" }));
-app.use(
-  express.urlencoded({ extended: true, limit: "50mb", parameterLimit: 50000 })
-);
+//Body Parsing
 
+// app.use(express.json({ limit: "50mb" }));
+// app.use(
+//   express.urlencoded({ extended: true, limit: "50mb", parameterLimit: 50000 })
+// );
+app.use(
+  bodyParser.urlencoded({
+    extended: true,
+  })
+);
+app.use(bodyParser.json());
+
+//Logging
 app.use(logger("dev"));
-app.use(methodOverride("_method"));
+
+//Use forms for put / delete
+// app.use(methodOverride("_method"));
 
 app.use(
   expressSession({
@@ -47,52 +66,56 @@ app.use(
   })
 );
 
+// Passport middleware
 app.use(passport.initialize());
 app.use(passport.session());
+
+//Use flash messages for errors, info, ect...
 app.use(flash());
 
+//Setup Routes For Which The Server Is Listening
 app.use("/", mainRoutes);
 
-app.use(cors());
-app.use(bodyParser.json());
+// app.use(cors());
+// app.use(bodyParser.json());
 
-app.post("/login", async (req, res) => {
-  const { username, password, role } = req.body;
+// app.post("/login", async (req, res) => {
+//   const { username, password, role } = req.body;
 
-  console.log("Trying to check the user.. hold on.");
-  let user;
-  switch (role) {
-    case "nurse":
-      user = await prisma.nurse.findUnique({
-        where: {
-          username: username,
-        },
-      });
-      break;
-    case "donor":
-      user = await prisma.donor.findUnique({
-        where: {
-          username: username,
-        },
-      });
-      break;
-    case "recipient":
-      user = await prisma.recipient.findUnique({
-        where: {
-          username: username,
-        },
-      });
-      break;
-    default:
-      return res.status(400).json({ error: "Invalid role" });
-  }
+//   console.log("Trying to check the user.. hold on.");
+//   let user;
+//   switch (role) {
+//     case "nurse":
+//       user = await prisma.nurse.findUnique({
+//         where: {
+//           username: username,
+//         },
+//       });
+//       break;
+//     case "donor":
+//       user = await prisma.donor.findUnique({
+//         where: {
+//           username: username,
+//         },
+//       });
+//       break;
+//     case "recipient":
+//       user = await prisma.recipient.findUnique({
+//         where: {
+//           username: username,
+//         },
+//       });
+//       break;
+//     default:
+//       return res.status(400).json({ error: "Invalid role" });
+//   }
 
-  if (!user || user.password !== password) {
-    return res.status(401).json({ error: "Invalid username or password" });
-  }
+//   if (!user || user.password !== password) {
+//     return res.status(401).json({ error: "Invalid username or password" });
+//   }
 
-  res.json({ user });
-});
+//   res.json({ user });
+// });
 
 async function main() {}
 main();

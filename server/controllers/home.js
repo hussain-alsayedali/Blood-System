@@ -1,5 +1,8 @@
 module.exports = {
   getIndex: (req, res) => {
-    res.render("main.ejs");
+    res.json("moew");
+  },
+  meow: (req, res) => {
+    res.json("moew test");
   },
 };
