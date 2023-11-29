@@ -135,8 +135,6 @@ exports.postSignupNurse = async (req, res, next) => {
     validationErrors.push({
       msg: "Password must be at least 8 characters long",
     });
-  if (req.body.password !== req.body.confirmPassword)
-    validationErrors.push({ msg: "Passwords do not match" });
 
   if (validationErrors.length) {
     req.flash("errors", validationErrors);
@@ -149,7 +147,7 @@ exports.postSignupNurse = async (req, res, next) => {
   try {
     const existingUser = await prisma.nurse.findFirst({
       where: {
-        OR: [{ email: req.body.email }, { userName: req.body.userName }],
+        OR: [{ email: req.body.email }],
       },
     });
 
@@ -165,7 +163,6 @@ exports.postSignupNurse = async (req, res, next) => {
 
     const currentNurse = await prisma.nurse.create({
       data: {
-        currentUrgency: "no",
         bankId: req.body.bankId,
         email: req.body.email,
         phone: req.body.phone,
@@ -174,7 +171,6 @@ exports.postSignupNurse = async (req, res, next) => {
         address: req.body.address,
         firstName: req.body.firstName,
         lastName: req.body.lastName,
-        userName: req.body.userName,
         password: hashedPassword,
       },
     });
