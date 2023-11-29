@@ -20,20 +20,9 @@ export default function SignupDonor() {
     event.preventDefault(); // Prevent default form submission behavior
     Axios({
       method: "POST",
-      data: {
-        firstName: "",
-        lastName: "",
-        weight: 0,
-        email: "",
-        phone: "",
-        bankId: "",
-        birth: new Date(),
-        address: "",
-        password: "",
-        bloodType: "",
-      },
+      data: formData,
       withCredentials: true,
-      url: "http://localhost:2121/signupnurse",
+      url: "http://localhost:2121/signupDonor",
     })
       .then((res) => console.log(res))
       .catch((error) => console.error(error));

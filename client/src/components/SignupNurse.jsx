@@ -15,6 +15,17 @@ export default function SignupNurse() {
   });
   console.log(formData);
 
+  const register = (event) => {
+    event.preventDefault(); // Prevent default form submission behavior
+    Axios({
+      method: "POST",
+      data: formData,
+      withCredentials: true,
+      url: "http://localhost:2121/signupnurse",
+    })
+      .then((res) => console.log(res))
+      .catch((error) => console.error(error));
+  };
   function handleChange(event) {
     console.log(event);
     const { name, value, type, checked } = event.target;
@@ -26,13 +37,13 @@ export default function SignupNurse() {
     });
   }
 
-  function handleSubmit(event) {
-    event.preventDefault();
-    submitToApi(formData);
-  }
+  // function handleSubmit(event) {
+  //   event.preventDefault();
+  //   submitToApi(formData);
+  // }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={register}>
       <input
         type="text"
         placeholder="First Name"

@@ -16,6 +16,7 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const { data } = require("autoprefixer");
 
+const authController = require("./controllers/auth");
 //enablieng cors
 app.use(
   cors({
@@ -37,11 +38,7 @@ app.use(express.static("public"));
 // app.use(
 //   express.urlencoded({ extended: true, limit: "50mb", parameterLimit: 50000 })
 // );
-app.use(
-  bodyParser.urlencoded({
-    extended: true,
-  })
-);
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 //Logging
@@ -74,6 +71,10 @@ app.use(passport.session());
 app.use(flash());
 
 //Setup Routes For Which The Server Is Listening
+app.get("/test", async (req, res) => {
+  res.json("snip");
+});
+
 app.use("/", mainRoutes);
 
 // app.use(cors());
