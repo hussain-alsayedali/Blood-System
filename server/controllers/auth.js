@@ -127,6 +127,7 @@ exports.postSignupDonator = async (req, res, next) => {
 };
 
 exports.postSignupNurse = async (req, res, next) => {
+  console.log(req.body);
   const validationErrors = [];
   if (!validator.isEmail(req.body.email))
     validationErrors.push({ msg: "Please enter a valid email address." });
@@ -137,7 +138,8 @@ exports.postSignupNurse = async (req, res, next) => {
 
   if (validationErrors.length) {
     req.flash("errors", validationErrors);
-    return res.redirect("../signup");
+    // return res.redirect("../signup");
+    res.json("err1");
   }
   req.body.email = validator.normalizeEmail(req.body.email, {
     gmail_remove_dots: false,
@@ -154,7 +156,9 @@ exports.postSignupNurse = async (req, res, next) => {
       req.flash("errors", {
         msg: "Account with that email address or username already exists.",
       });
-      return res.redirect("../signup");
+      res.json("err2");
+
+      // return res.redirect("../signup");
     }
 
     // Hash the password
@@ -180,7 +184,9 @@ exports.postSignupNurse = async (req, res, next) => {
         return next(err);
       }
       // /profile
-      res.redirect("/profile");
+      res.json("err2");
+
+      // res.redirect("/profile");
     });
   } catch (error) {
     return next(error);

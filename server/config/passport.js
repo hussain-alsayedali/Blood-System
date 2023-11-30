@@ -68,15 +68,15 @@ module.exports = function (passport) {
       },
       async (email, password, done) => {
         try {
-          const nurse = await prisma.nurse.findUnique({
-            where: { nurseEmail: email },
+          const currentNurse = await prisma.nurse.findUnique({
+            where: { email: email },
           });
-          if (!nurse) {
+          if (!currentNurse) {
             return done(null, false, { message: "Invalid nurse email." });
           }
-          const isMatch = await bcrypt.compare(password, nurse.password);
+          const isMatch = await bcrypt.compare(password, currentNurse.password);
           if (isMatch) {
-            return done(null, nurse);
+            return done(null, currentNurse);
           }
           return done(null, false, { message: "Invalid nurse password." });
         } catch (err) {
@@ -89,24 +89,26 @@ module.exports = function (passport) {
   // Serialize and deserialize logic for each user type
 
   passport.serializeUser((user, done) => {
-    const isNurse = prisma.$exists.nurse({
-      id: user.id,
-    });
-    const isDonor = prisma.$exists.donor({
-      id: user.id,
-    });
-    const isRecipient = prisma.$exists.donor({
-      id: user.id,
-    });
-    let userType = null;
-    if (isNurse) {
-      userType = "nurse";
-    } else if (isDonor) {
-      userType = "donor";
-    } else {
-      userType = "recipient";
-    }
-    done(null, { id: user.id, type: userType });
+    console.log(user);
+    // const isNurse = prisma.nurse.findUnique({ where: { id: user.id } });
+    // const isDonor = prisma.donor.findUnique({ where: { id: user.id } });
+    // const isRecipient = prisma.recipient.findUnique({ where: { id: user.id } });
+
+    // Promise.all([isNurse, isDonor, isRecipient]).then(
+    //   ([nurse, donor, recipient]) => {
+    //     let userType = null;
+    //     if (nurse) {
+    //       userType = "nurse";
+    //     } else if (donor) {
+    //       userType = "donor";
+    //     } else if (recipient) {
+    //       userType = "recipient";
+    //     }
+    //     done(null, { id: user.id, type: userType });
+    //     // done(null, { id: user.id, type: userType });
+    //   }
+    // );
+    done(null, user);
   });
 
   passport.deserializeUser(async (serializedUser, done) => {

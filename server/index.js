@@ -23,6 +23,8 @@ app.use(
     origin: "*",
   })
 );
+// app.use(cors())
+app.use(express.static(path.join(__dirname, "public")));
 //Use .env file in config folder
 require("dotenv").config({ path: "./config/.env" });
 
@@ -34,13 +36,15 @@ app.use(express.static("public"));
 
 //Body Parsing
 
-// app.use(express.json({ limit: "50mb" }));
-// app.use(
-//   express.urlencoded({ extended: true, limit: "50mb", parameterLimit: 50000 })
-// );
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
-
+app
+  .use(
+    express.urlencoded({
+      extended: true,
+    })
+  )
+  .use(express.json({ limit: "1mb" }));
+// app.use(express.json());
+// app.use(express.urlencoded({ extended: false }));
 //Logging
 app.use(logger("dev"));
 
@@ -70,55 +74,20 @@ app.use(passport.session());
 //Use flash messages for errors, info, ect...
 app.use(flash());
 
+// منين منين
+app.use("/", mainRoutes);
+
 //Setup Routes For Which The Server Is Listening
 app.get("/test", async (req, res) => {
   res.json("snip");
 });
-
-app.use("/", mainRoutes);
-
-// app.use(cors());
-// app.use(bodyParser.json());
-
-// app.post("/login", async (req, res) => {
-//   const { username, password, role } = req.body;
-
-//   console.log("Trying to check the user.. hold on.");
-//   let user;
-//   switch (role) {
-//     case "nurse":
-//       user = await prisma.nurse.findUnique({
-//         where: {
-//           username: username,
-//         },
-//       });
-//       break;
-//     case "donor":
-//       user = await prisma.donor.findUnique({
-//         where: {
-//           username: username,
-//         },
-//       });
-//       break;
-//     case "recipient":
-//       user = await prisma.recipient.findUnique({
-//         where: {
-//           username: username,
-//         },
-//       });
-//       break;
-//     default:
-//       return res.status(400).json({ error: "Invalid role" });
-//   }
-
-//   if (!user || user.password !== password) {
-//     return res.status(401).json({ error: "Invalid username or password" });
-//   }
-
-//   res.json({ user });
-// });
-
-async function main() {}
+app.post("/", (req, res) => {
+  let data = req.body;
+  res.send("Data Received: " + JSON.stringify(data));
+});
+async function main() {
+  console.log("منين منين");
+}
 main();
 
 app.listen(process.env.PORT, () => {
