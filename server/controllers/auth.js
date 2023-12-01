@@ -164,13 +164,14 @@ exports.postSignupNurse = async (req, res, next) => {
     // Hash the password
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
 
+    let numWeight = parseFloat(req.body.weight);
     const currentNurse = await prisma.nurse.create({
       data: {
         bankId: req.body.bankId,
         email: req.body.email,
         phone: req.body.phone,
-        weight: req.body.weight,
-        birth: req.body.birth,
+        weight: numWeight,
+        birth: new Date(req.body.birth),
         address: req.body.address,
         firstName: req.body.firstName,
         lastName: req.body.lastName,

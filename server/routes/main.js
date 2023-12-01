@@ -6,7 +6,7 @@ const { ensureAuth, ensureGuest, isAuthed } = require("../middleware/auth");
 
 router.get("/", isAuthed, homeController.getIndex);
 
-router.post("/tester", isAuthed, authController.postSignupNurse);
+router.post("/signupnurse", isAuthed, authController.postSignupNurse);
 
 router.get("/meow", isAuthed, homeController.meow);
 

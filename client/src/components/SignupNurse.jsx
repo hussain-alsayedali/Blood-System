@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import React, { useState } from "react";
-
+import Axios from "axios";
 export default function SignupNurse() {
   const [formData, setFormData] = React.useState({
     firstName: "",
@@ -16,15 +16,19 @@ export default function SignupNurse() {
   console.log(formData);
 
   const register = (event) => {
+    console.log("started clicking");
+
     event.preventDefault(); // Prevent default form submission behavior
     Axios({
       method: "POST",
       data: formData,
-      withCredentials: true,
-      url: "http://localhost:2121/signupnurse",
+      // withCredentials: true,
+      url: "http://localhost:2121/nurse/signup",
+      crossDomain: true,
     })
       .then((res) => console.log(res))
       .catch((error) => console.error(error));
+    console.log("finished clicking");
   };
   function handleChange(event) {
     console.log(event);
@@ -59,6 +63,13 @@ export default function SignupNurse() {
         value={formData.lastName}
       />
       <input
+        type="text"
+        placeholder="bankId"
+        onChange={handleChange}
+        name="bankId"
+        value={formData.bankId}
+      />
+      <input
         type="number"
         placeholder="weight"
         onChange={handleChange}
@@ -71,6 +82,13 @@ export default function SignupNurse() {
         onChange={handleChange}
         name="email"
         value={formData.email}
+      />
+      <input
+        type="phone"
+        placeholder="phone"
+        onChange={handleChange}
+        name="phone"
+        value={formData.phone}
       />
       <input
         type="text"

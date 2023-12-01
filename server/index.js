@@ -12,6 +12,7 @@ const flash = require("express-flash");
 const logger = require("morgan");
 const path = require("path");
 const mainRoutes = require("./routes/main");
+const nurseRoutes = require("./routes/nurse");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const { data } = require("autoprefixer");
@@ -23,7 +24,7 @@ app.use(
     origin: "*",
   })
 );
-// app.use(cors())
+
 app.use(express.static(path.join(__dirname, "public")));
 //Use .env file in config folder
 require("dotenv").config({ path: "./config/.env" });
@@ -76,6 +77,7 @@ app.use(flash());
 
 // منين منين
 app.use("/", mainRoutes);
+app.use("/nurse", nurseRoutes);
 
 //Setup Routes For Which The Server Is Listening
 app.get("/test", async (req, res) => {
