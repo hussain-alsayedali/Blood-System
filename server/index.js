@@ -13,6 +13,8 @@ const logger = require("morgan");
 const path = require("path");
 const mainRoutes = require("./routes/main");
 const nurseRoutes = require("./routes/nurse");
+const donorRoutes = require("./routes/donor");
+const recipientRoutes = require("./routes/recipient");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const { data } = require("autoprefixer");
@@ -78,6 +80,8 @@ app.use(flash());
 // منين منين
 app.use("/", mainRoutes);
 app.use("/nurse", nurseRoutes);
+app.use("/donor", donorRoutes);
+app.use("/recipient", recipientRoutes);
 
 //Setup Routes For Which The Server Is Listening
 app.get("/test", async (req, res) => {

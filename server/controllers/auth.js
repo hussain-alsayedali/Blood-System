@@ -64,6 +64,7 @@ exports.getSignup = (req, res) => {
 };
 
 exports.postSignupDonator = async (req, res, next) => {
+  console.log(req.body);
   const validationErrors = [];
   if (!validator.isEmail(req.body.email))
     validationErrors.push({ msg: "Please enter a valid email address." });
@@ -71,12 +72,11 @@ exports.postSignupDonator = async (req, res, next) => {
     validationErrors.push({
       msg: "Password must be at least 8 characters long",
     });
-  if (req.body.password !== req.body.confirmPassword)
-    validationErrors.push({ msg: "Passwords do not match" });
 
   if (validationErrors.length) {
     req.flash("errors", validationErrors);
-    return res.redirect("../signup");
+    console.log("there is many errors" + validationErrors);
+    // return res.redirect("../signup");
   }
   req.body.email = validator.normalizeEmail(req.body.email, {
     gmail_remove_dots: false,
@@ -93,6 +93,9 @@ exports.postSignupDonator = async (req, res, next) => {
       req.flash("errors", {
         msg: "Account with that email address or username already exists.",
       });
+      console.log(
+        "Account with that email address or username already exists."
+      );
       return res.redirect("../signup");
     }
 
@@ -104,8 +107,8 @@ exports.postSignupDonator = async (req, res, next) => {
         bankId: req.body.bankId,
         email: req.body.email,
         phone: req.body.phone,
-        weight: req.body.weight,
-        birth: req.body.birth,
+        weight: parseFloat(req.body.weight),
+        birth: new Date(req.body.birth),
         address: req.body.address,
         firstName: req.body.firstName,
         lastName: req.body.lastName,
@@ -119,7 +122,8 @@ exports.postSignupDonator = async (req, res, next) => {
       if (err) {
         return next(err);
       }
-      res.redirect("/profile");
+      // res.redirect("/profile");
+      console.log("redirect");
     });
   } catch (error) {
     return next(error);
@@ -201,8 +205,6 @@ exports.postSignupRecipient = async (req, res, next) => {
     validationErrors.push({
       msg: "Password must be at least 8 characters long",
     });
-  if (req.body.password !== req.body.confirmPassword)
-    validationErrors.push({ msg: "Passwords do not match" });
 
   if (validationErrors.length) {
     req.flash("errors", validationErrors);
@@ -231,12 +233,12 @@ exports.postSignupRecipient = async (req, res, next) => {
 
     const currentRecipient = await prisma.recipient.create({
       data: {
-        currentUrgency: req.body.urgency,
+        currentUrgency: req.body.currentUrgency,
         bankId: req.body.bankId,
         email: req.body.email,
         phone: req.body.phone,
-        weight: req.body.weight,
-        birth: req.body.birth,
+        weight: parseFloat(req.body.weight),
+        birth: new Date(req.body.birth),
         address: req.body.address,
         firstName: req.body.firstName,
         lastName: req.body.lastName,

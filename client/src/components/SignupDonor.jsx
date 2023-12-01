@@ -12,7 +12,7 @@ export default function SignupDonor() {
     birth: new Date(),
     address: "",
     password: "",
-    bloodType: "",
+    bloodType: "B+",
   });
 
   console.log(formData);
@@ -21,8 +21,9 @@ export default function SignupDonor() {
     Axios({
       method: "POST",
       data: formData,
-      withCredentials: true,
-      url: "http://localhost:2121/signupDonor",
+      // withCredentials: true,
+      url: "http://localhost:2121/donor/signup",
+      crossDomain: true,
     })
       .then((res) => console.log(res))
       .catch((error) => console.error(error));
@@ -54,6 +55,20 @@ export default function SignupDonor() {
         onChange={handleChange}
         name="lastName"
         value={formData.lastName}
+      />
+      <input
+        type="text"
+        placeholder="bankId"
+        onChange={handleChange}
+        name="bankId"
+        value={formData.bankId}
+      />
+      <input
+        type="text"
+        placeholder="phone"
+        onChange={handleChange}
+        name="phone"
+        value={formData.phone}
       />
       <input
         type="number"
