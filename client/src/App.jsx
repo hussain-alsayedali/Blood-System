@@ -7,9 +7,9 @@ import Control_Nurse from "./pages/NurseUI/Control/Control";
 import Profile from "./components/Profile"; // Profile component
 import NotFound from "./components/NotFound";
 import Login from "./components/Login";
-import SignupDonor from "./components/SignupDonor";
-import SignupRecipent from "./components/SignupRecipent";
-import SignupNurse from "./components/SignupNurse";
+import SignupDonor from "./pages/DonorUI/SignupDonor";
+import SignupRecipent from "./pages/RecipientUI/SignupRecipent";
+import SignupNurse from "./pages/NurseUI/SignupNurse";
 import "./components/Styles/App.css";
 
 // App component definition

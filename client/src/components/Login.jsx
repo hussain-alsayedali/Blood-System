@@ -4,14 +4,15 @@ import boss from "../assets/satiyah.jpg";
 import { Link } from "react-router-dom";
 import Axios from "axios";
 import { useDispatch } from "react-redux";
+import logoIcon from "../assets/blood-donation.png"
 import "./Styles/Login.css"; // Import the CSS file
-
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [role, setRole] = useState("nurse");
+  const [role, setRole] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const [isSignup, setIsSignup] = useState(false);
   const dispatch = useDispatch(); // Initialize useDispatch
 
   const handleLogin = (e) => {
@@ -35,36 +36,73 @@ function Login() {
         }
       });
   };
+  const handleSignUp = (e) => {
+    e.preventDefault();
+    //signup logic here
+  };
 
   return (
-    <div className="login-container">
-      <form className="login-form" onSubmit={handleLogin}>
-        <input
-          type="text"
-          placeholder="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-        <select value={role} onChange={(e) => setRole(e.target.value)}>
-          <option value="nurse">nurse</option>
-          <option value="donor">donor</option>
-          <option value="recipient">recipient</option>
-        </select>
-        <button type="submit">Login</button>
-        {/* Render an error message if login fails */}
-        {error && <p className="error-message">{error}</p>}
-      </form>
+    <div className="main-container">
+      <div className="logo">
+        <img src={logoIcon} alt="BloodWave logo" className="logo-img" />
+        <h1>BloodWave</h1>
+      </div>
+
+      <div className="login-container">
+        {isSignup ? (
+          <div className="signup-form">
+            <p>Sign up as: </p>
+            <Link to="/signupDonor">
+              <button>Sign up as Donor</button>
+            </Link>
+            <Link to="/signupRecipent">
+              <button>Sign up as Recipent</button>
+            </Link>
+            <Link to="/signupNurse">
+              <button>Sign up as Nurse</button>
+            </Link>
+            <div className="signup-text" onClick={() => setIsSignup(false)}>Login instead</div>
+          </div>
+        ) : (
+          <form className="login-form" onSubmit={handleLogin}>
+            <p>LOGIN</p>
+            <input
+              type="text"
+              placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+            <input
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+            <select value={role} onChange={(e) => setRole(e.target.value)}>
+              <option value="">Select your role</option> // new default option
+              <option value="nurse">nurse</option>
+              <option value="donor">donor</option>
+              <option value="recipient">recipient</option>
+            </select>
+            <button type="submit">Login</button>
+            {/* Render an error message if login fails */}
+            {error && <p className="error-message">{error}</p>}
+            <div className="login-text" onClick={() => setIsSignup(true)}>Do you want to sign up?</div>
+          </form>
+        )}
+
+        <Link to="/guest">
+          <button>Browse as guest</button>
+        </Link>
+      </div>
 
 
-      <p className="access-buttons">Hacking buttons: (Quick access)</p>
+
+      {/* to be deleted... hack buttons */}
+      ---------------------- <br></br>
+      developers buttons
       <Link to="/nurse">
         <button>Nurse</button>
       </Link>
@@ -74,17 +112,9 @@ function Login() {
       <Link to="/recipient">
         <button>Recipient</button>
       </Link>
-      <Link to="/signupDonor">
-        <button>SignUp As donor</button>
-      </Link>
-      <Link to="/signupRecipent">
-        <button>SignUp As recipent</button>
-      </Link>
-      <Link to="/signupNurse">
-        <button>SignUp As Nurse</button>
-      </Link>
     </div>
   );
 }
+
 
 export default Login;

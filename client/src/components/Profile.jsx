@@ -1,33 +1,29 @@
 import React, { useState, useEffect } from "react";
 import "./Styles/Profile.css";
-import { useSelector } from "react-redux";
 import Axios from "axios";
 
 function Profile() {
-  // const user = useSelector(state => state.user); // Select user data from Redux store
   const [users, setUsers] = useState([
     {
-      donorId: 5,
-      currentMoney: 0,
-      bankId: "kidasw",
+      donorId: 69,
+      currentMoney: 10000000,
+      bankId: "jaxing",
       createdAt: "2023-12-01T05:09:33.609Z",
-      email: "zxxhuss@gama.com",
-      phone: "u5432e",
-      weight: 70,
+      email: "hussain@gama.com",
+      phone: "05045353421231132",
+      weight: 433,
       birth: "1990-01-01T00:00:00.000Z",
-      address: "asdsda",
-      firstName: "kkkw",
-      lastName: "sdaw",
+      address: "jarodiyah",
+      firstName: "hussain",
+      lastName: "alsayedali",
       password: "$2b$10$g/aNIBatIq0W0dZzLjB7Bu8OG5rEt/Jb4IbSHjI4AG/wkC.3RIoka",
-      bloodType: "B+",
+      bloodType: "pdf",
     },
   ]);
   useEffect(() => {
     Axios({
       method: "GET",
-      // withCredentials: true,
       url: "http://localhost:2121/nurse/getAllDonors",
-      // crossDomain: true,
     })
       .then((res) => {
         setUsers(res.data);
@@ -44,7 +40,7 @@ function Profile() {
           <strong>ID:</strong> {users[0].donorId}
         </p>
         <p>
-          <strong>Name:</strong> {users[0].firstName}
+          <strong>Name:</strong> {users[0].firstName} {users[0].lastName}
         </p>
         <p>
           <strong>Age:</strong>{" "}
@@ -58,6 +54,18 @@ function Profile() {
         </p>
         <p>
           <strong>Phone:</strong> {users[0].phone}
+        </p>
+        <p>
+          <strong>Weight:</strong> {users[0].weight}
+        </p>
+        <p>
+          <strong>Address:</strong> {users[0].address}
+        </p>
+        <p>
+          <strong>Bank ID:</strong> {users[0].bankId}
+        </p>
+        <p>
+          <strong>Current Money:</strong> {users[0].currentMoney}
         </p>
       </div>
     </div>

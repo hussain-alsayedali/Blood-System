@@ -1,11 +1,23 @@
 /* Login.css */
 
-.login-container {
+.main-container {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 100vh;
     background-color: #121212;
+}
+
+.login-container {
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #232323;
+    padding: 20px;
+    border-radius: 10px;
 }
 
 .login-form {
@@ -15,6 +27,24 @@
     background-color: #232323;
     padding: 20px;
     border-radius: 10px;
+}
+
+.signup-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #232323;
+    padding: 40px;
+    /* Increase padding to make form larger */
+    border-radius: 10px;
+    justify-content: space-between;
+}
+
+.signup-form button {
+    margin: 20px 0;
+    /* Increase margin to add more space between buttons */
+    padding: 10px;
+    width: 200px;
 }
 
 .login-form input,
@@ -27,10 +57,29 @@
 
 .login-form button {
     cursor: pointer;
-    background-color: #3f51b5;
+    background-color: #d34e45;
     color: white;
 }
 
 .error-message {
     color: #f44336;
+}
+
+.signup-text,
+.login-text {
+    text-decoration: underline;
+}
+
+.signup-text:hover {
+    color: #f44336;
+    cursor: pointer;
+}
+
+.logo {
+    margin: 0px 90px 0px 0px;
+}
+
+.login-text:hover {
+    color: #f44336;
+    cursor: pointer;
 }
