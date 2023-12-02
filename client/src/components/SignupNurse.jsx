@@ -24,7 +24,7 @@ export default function SignupNurse() {
       data: formData,
       // withCredentials: true,
       url: "http://localhost:2121/nurse/signup",
-      crossDomain: true,
+      // crossDomain: true,
     })
       .then((res) => console.log(res))
       .catch((error) => console.error(error));

@@ -33,7 +33,7 @@ export default function SignupRecipent() {
     Axios({
       method: "POST",
       data: formData,
-      // withCredentials: true,
+      withCredentials: true,
       url: "http://localhost:2121/recipient/signup",
       crossDomain: true,
     })

@@ -24,6 +24,7 @@ const authController = require("./controllers/auth");
 app.use(
   cors({
     origin: "*",
+    credentials: true,
   })
 );
 

@@ -14,27 +14,38 @@ exports.getLogin = (req, res) => {
 };
 
 exports.postLogin = (req, res, next) => {
-  passport.authenticate("local", (err, user, info) => {
+  console.log("entered the login");
+  console.log(req.body);
+  passport.authenticate("nurse", (err, user, info) => {
     if (err) {
+      console.log("first err" + err);
+
       return next(err);
     }
     if (!user) {
+      console.log("second err" + err);
       req.flash("errors", { msg: "Invalid email or password." });
       return res.redirect("/login");
     }
     // Compare the provided password with the stored hashed password
     bcrypt.compare(req.body.password, user.password, (err, isMatch) => {
       if (err) {
+        console.log(err);
         return next(err);
       }
       if (isMatch) {
         req.logIn(user, (err) => {
           if (err) {
+            console.log(err);
+
             return next(err);
           }
-          res.redirect("/profile");
+          res.json("true");
+          // res.redirect("/profile");
         });
       } else {
+        console.log("last err");
+
         req.flash("errors", { msg: "Invalid email or password." });
         res.redirect("/login");
       }
@@ -132,6 +143,8 @@ exports.postSignupDonator = async (req, res, next) => {
 
 exports.postSignupNurse = async (req, res, next) => {
   console.log(req.body);
+  console.log(req.session);
+  console.log("meow");
   const validationErrors = [];
   if (!validator.isEmail(req.body.email))
     validationErrors.push({ msg: "Please enter a valid email address." });
@@ -141,9 +154,10 @@ exports.postSignupNurse = async (req, res, next) => {
     });
 
   if (validationErrors.length) {
+    console.log("err");
+
     req.flash("errors", validationErrors);
     // return res.redirect("../signup");
-    res.json("err1");
   }
   req.body.email = validator.normalizeEmail(req.body.email, {
     gmail_remove_dots: false,
@@ -160,6 +174,7 @@ exports.postSignupNurse = async (req, res, next) => {
       req.flash("errors", {
         msg: "Account with that email address or username already exists.",
       });
+      console.log("err2");
       res.json("err2");
 
       // return res.redirect("../signup");
@@ -186,11 +201,12 @@ exports.postSignupNurse = async (req, res, next) => {
 
     req.logIn(currentNurse, (err) => {
       if (err) {
+        console.log("err");
         return next(err);
       }
       // /profile
-      res.json("err2");
-
+      //res.json("err2");
+      res.json("succes");
       // res.redirect("/profile");
     });
   } catch (error) {
@@ -252,7 +268,8 @@ exports.postSignupRecipient = async (req, res, next) => {
         return next(err);
       }
 
-      res.redirect("/profile");
+      // res.redirect("/profile");
+      res.json("true");
     });
   } catch (error) {
     return next(error);

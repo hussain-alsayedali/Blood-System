@@ -21,7 +21,7 @@ export default function SignupDonor() {
     Axios({
       method: "POST",
       data: formData,
-      // withCredentials: true,
+      withCredentials: true,
       url: "http://localhost:2121/donor/signup",
       crossDomain: true,
     })

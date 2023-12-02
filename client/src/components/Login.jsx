@@ -7,7 +7,7 @@ import { useDispatch } from "react-redux";
 import "./Styles/Login.css"; // Import the CSS file
 
 function Login() {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("nurse");
   const [error, setError] = useState("");
@@ -19,14 +19,14 @@ function Login() {
     setError("");
 
     axios
-      .post("http://localhost:2121/login", {
-        username,
+      .post(`http://localhost:2121/${role}/login`, {
+        email,
         password,
         role,
       })
       .then((response) => {
-        console.log(response.data.user);
-        dispatch({ type: "SET_USER", payload: response.data.user }); // Dispatch SET_USER action
+        console.log(response);
+        // dispatch({ type: "SET_USER", payload: response.data.user }); // Dispatch SET_USER action
         navigate(`/${role}`);
       })
       .catch((error) => {
@@ -42,9 +42,9 @@ function Login() {
       <form className="login-form" onSubmit={handleLogin}>
         <input
           type="text"
-          placeholder="Username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          placeholder="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
           required
         />
         <input
