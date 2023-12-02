@@ -63,9 +63,7 @@ function Login() {
         {error && <p className="error-message">{error}</p>}
       </form>
 
-      <br />
-      <img src={boss} className="boss-image" height={250} />
-      <br />
+
       <p className="access-buttons">Hacking buttons: (Quick access)</p>
       <Link to="/nurse">
         <button>Nurse</button>

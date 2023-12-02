@@ -3,14 +3,26 @@ import './Dashboard.css'
 import criticalImage from '../../../assets/crit.png'
 
 function Dashboard() {
+  // the blood type and what it can recieve from.🩸
+  const bloodTypeCompatibility = {
+    'A+': ['A+', 'A-', 'O+', 'O-'],
+    'A-': ['A-', 'O-'],
+    'B+': ['B+', 'B-', 'O+', 'O-'],
+    'B-': ['B-', 'O-'],
+    'AB+': ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'],
+    'AB-': ['AB-', 'A-', 'B-', 'O-'],
+    'O+': ['O+', 'O-'],
+    'O-': ['O-']
+  };
+
   const [selectedUrgency, setSelectedUrgency] = useState("All");
   const [clickedUrgency, setClickedUrgency] = useState("");
   const [patients, setPatients] = useState([
     { id: 1, name: "Ali", bloodType: "A+", phone: "050342532", urgency: "Critical", date: "2023-11-21" },
     { id: 2, name: "Feras", bloodType: "B+", phone: "050342532", urgency: "Low", date: "2023-11-23" },
-    { id: 3, name: "Messi", bloodType: "A", phone: "053342532", urgency: "Mid", date: "2023-11-22" },
-    { id: 3, name: "Messi", bloodType: "A", phone: "053342532", urgency: "Served", date: "2023-11-22" },
-    { id: 3, name: "Messi", bloodType: "A", phone: "053342532", urgency: "Critical", date: "2023-11-22" },
+    { id: 3, name: "Messi", bloodType: "A-", phone: "053342532", urgency: "Mid", date: "2023-11-22" },
+    { id: 3, name: "Messi", bloodType: "AB+", phone: "053342532", urgency: "Served", date: "2023-11-22" },
+    { id: 3, name: "Messi", bloodType: "O+", phone: "053342532", urgency: "Critical", date: "2023-11-22" },
     // Add more patient data as needed
   ]);
 
@@ -29,7 +41,7 @@ function Dashboard() {
   }
 
   const getUrgencyLabel = (urgency) => {
-    switch(urgency) {
+    switch (urgency) {
       case 'Critical':
         return { __html: `<img src="${criticalImage}" alt="Critical" img class="urgency-image"/> Critical`, color: 'red' };
       case 'Mid':
@@ -41,8 +53,8 @@ function Dashboard() {
     }
   }
 
-  const handleServeClick = (patient) => {
-    setPatients(patients.map(p => p.id === patient.id ? {...p, urgency: 'Served'} : p));
+  const handleServeClick = (patient, bloodType) => {
+    setPatients(patients.map(p => p.id === patient.id ? { ...p, urgency: 'Served', servedBloodType: bloodType } : p));
   }
 
   return (
@@ -77,7 +89,7 @@ function Dashboard() {
               <th>Phone</th>
               <th>Urgency</th>
               <th>Date</th>
-              <th>Action</th>
+              <th>Give blood type</th>
             </tr>
           </thead>
           <tbody>
@@ -86,18 +98,20 @@ function Dashboard() {
                 <td>{patient.name}</td>
                 <td>{patient.bloodType}</td>
                 <td>{patient.phone}</td>
-                <td 
+                <td
                   style={{ color: getUrgencyLabel(patient.urgency).color }}
                   dangerouslySetInnerHTML={getUrgencyLabel(patient.urgency)}
                 ></td>
                 <td>{patient.date}</td>
                 <td>
-                {patient.urgency !== 'Served' && (
-                  <button onClick={() => handleServeClick(patient)}>
-                    Serve
-                  </button>
-                )}
-              </td>
+                  {patient.urgency !== 'Served' && (
+                    bloodTypeCompatibility[patient.bloodType].map(bloodType => (
+                      <button onClick={() => handleServeClick(patient, bloodType)}>
+                        {bloodType}
+                      </button>
+                    ))
+                  )}
+                </td>
               </tr>
             ))}
           </tbody>
