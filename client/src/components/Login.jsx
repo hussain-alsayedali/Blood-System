@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import boss from "../assets/satiyah.jpg";
 import { Link } from "react-router-dom";
-import axios from "axios";
+import Axios from "axios";
 import { useDispatch } from "react-redux";
 import "./Styles/Login.css"; // Import the CSS file
 
@@ -18,12 +18,11 @@ function Login() {
     e.preventDefault();
     setError("");
 
-    axios
-      .post(`http://localhost:2121/${role}/login`, {
-        email,
-        password,
-        role,
-      })
+    Axios.post(`http://localhost:2121/${role}/login`, {
+      email,
+      password,
+      role,
+    })
       .then((response) => {
         console.log(response);
         // dispatch({ type: "SET_USER", payload: response.data.user }); // Dispatch SET_USER action

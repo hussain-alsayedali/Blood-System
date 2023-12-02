@@ -133,8 +133,9 @@ export default function SignupRecipent() {
         name="urgency"
       >
         <option value="CRITICAL">CRITICAL</option>
-        <option value="Bad">Bad</option>
-        <option value="fine">fine</option>
+        <option value="Mid">Mid</option>
+        <option value="Low">Low</option>
+        <option value="served">served</option>
       </select>
       <br />
       <br />
