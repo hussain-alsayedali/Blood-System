@@ -1,0 +1,30 @@
+.form-container {
+    width: 50%;
+    /* Set the desired width */
+    margin: 0 auto;
+    /* Center the form horizontally */
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+form input,
+form select,
+form button {
+    margin: 10px 0;
+    padding: 10px;
+    font-size: 16px;
+}
+
+form button {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+form button:hover {
+    background-color: #f6665c;
+}

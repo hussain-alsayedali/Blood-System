@@ -51,7 +51,6 @@ function Login() {
       <div className="login-container">
         {isSignup ? (
           <div className="signup-form">
-            <p>Sign up as: </p>
             <Link to="/signupDonor">
               <button>Sign up as Donor</button>
             </Link>

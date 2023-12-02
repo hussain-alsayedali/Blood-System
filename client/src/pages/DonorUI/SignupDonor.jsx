@@ -41,91 +41,95 @@ export default function SignupDonor() {
   }
 
   return (
-    <form onSubmit={register}>
-      <input
-        type="text"
-        placeholder="First Name"
-        onChange={handleChange}
-        name="firstName"
-        value={formData.firstName}
-      />
-      <input
-        type="text"
-        placeholder="Last Name"
-        onChange={handleChange}
-        name="lastName"
-        value={formData.lastName}
-      />
-      <input
-        type="text"
-        placeholder="bankId"
-        onChange={handleChange}
-        name="bankId"
-        value={formData.bankId}
-      />
-      <input
-        type="text"
-        placeholder="phone"
-        onChange={handleChange}
-        name="phone"
-        value={formData.phone}
-      />
-      <input
-        type="number"
-        placeholder="weight"
-        onChange={handleChange}
-        name="weight"
-        value={formData.weight}
-      />
-      <input
-        type="email"
-        placeholder="Email"
-        onChange={handleChange}
-        name="email"
-        value={formData.email}
-      />
-      <input
-        type="text"
-        value={formData.address}
-        placeholder="address"
-        onChange={handleChange}
-        name="address"
-      />
-      <input
-        type="date"
-        value={formData.birth}
-        placeholder="birth"
-        onChange={handleChange}
-        name="birth"
-      />
-      <input
-        type="password"
-        value={formData.password}
-        placeholder="password"
-        onChange={handleChange}
-        name="password"
-      />
+    <div className="form-container">
 
-      <label htmlFor="bloodType">What is your bloodType ?</label>
-      <br />
-      <select
-        id="bloodType"
-        value={formData.bloodType}
-        onChange={handleChange}
-        name="bloodType"
-      >
-        <option value="B+">B+</option>
-        <option value="B-">B-</option>
-        <option value="A-">A-</option>
-        <option value="A+">A+</option>
-        <option value="O+">O+</option>
-        <option value="O-">O-</option>
-        <option value="AB+">AB+</option>
-        <option value="AB-">AB-</option>
-      </select>
-      <br />
-      <br />
-      <button>Submit</button>
-    </form>
+      <form onSubmit={register}>
+        <input
+          type="text"
+          placeholder="First Name"
+          onChange={handleChange}
+          name="firstName"
+          value={formData.firstName}
+        />
+        <input
+          type="text"
+          placeholder="Last Name"
+          onChange={handleChange}
+          name="lastName"
+          value={formData.lastName}
+        />
+        <input
+          type="text"
+          placeholder="bankId"
+          onChange={handleChange}
+          name="bankId"
+          value={formData.bankId}
+        />
+        <input
+          type="text"
+          placeholder="phone"
+          onChange={handleChange}
+          name="phone"
+          value={formData.phone}
+        />
+        <input
+          type="number"
+          placeholder="weight"
+          onChange={handleChange}
+          name="weight"
+          value={formData.weight}
+        />
+        <input
+          type="email"
+          placeholder="Email"
+          onChange={handleChange}
+          name="email"
+          value={formData.email}
+        />
+        <input
+          type="text"
+          value={formData.address}
+          placeholder="address"
+          onChange={handleChange}
+          name="address"
+        />
+        <input
+          type="date"
+          value={formData.birth}
+          placeholder="birth"
+          onChange={handleChange}
+          name="birth"
+        />
+        <input
+          type="password"
+          value={formData.password}
+          placeholder="password"
+          onChange={handleChange}
+          name="password"
+        />
+
+        <label htmlFor="bloodType">What is your bloodType ?</label>
+        <br />
+        <select
+          id="bloodType"
+          value={formData.bloodType}
+          onChange={handleChange}
+          name="bloodType"
+        >
+          <option value="B+">B+</option>
+          <option value="B-">B-</option>
+          <option value="A-">A-</option>
+          <option value="A+">A+</option>
+          <option value="O+">O+</option>
+          <option value="O-">O-</option>
+          <option value="AB+">AB+</option>
+          <option value="AB-">AB-</option>
+        </select>
+        <br />
+        <br />
+        <button>Submit</button>
+      </form>
+    </div>
+
   );
 }
