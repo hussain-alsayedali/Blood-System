@@ -11,57 +11,60 @@ datasource db {
 }
 
 model nurse {
-  nurseId   Int      @id @default(autoincrement())
-  bankId    String   @unique
-  createdAt DateTime @default(now())
-  email     String   @unique @db.VarChar(255)
-  phone     String   @unique
-  weight    Float
-  birth     DateTime
-  address   String
-  firstName String
-  lastName  String
-  password  String
+  nurseId          Int                @id @default(autoincrement())
+  bankId           String             @unique
+  createdAt        DateTime           @default(now())
+  email            String             @unique @db.VarChar(255)
+  phone            String             @unique
+  weight           Float
+  birth            DateTime
+  address          String
+  firstName        String
+  lastName         String
+  password         String
+  DonationRequest  DonationRequest[]
+  ReceivingRequest ReceivingRequest[]
 }
 
 model Recipient {
-  recipientId    Int         @id @default(autoincrement())
-  currentUrgency String
-  bankId         String      @unique
-  currentMoney   Int         @default(0)
-  createdAt      DateTime    @default(now())
-  email          String      @unique @db.VarChar(255)
-  phone          String      @unique
-  weight         Float
-  birth          DateTime
-  address        String
-  firstName      String
-  lastName       String
-  password       String
-  infections     infection[]
-  blood          Blood       @relation(fields: [bloodType], references: [type])
-  bloodType      String
-  BloodBag       BloodBag[]
+  recipientId      Int                @id @default(autoincrement())
+  currentUrgency   String
+  bankId           String             @unique
+  currentMoney     Int                @default(0)
+  createdAt        DateTime           @default(now())
+  email            String             @unique @db.VarChar(255)
+  phone            String             @unique
+  weight           Float
+  birth            DateTime
+  address          String
+  firstName        String
+  lastName         String
+  password         String
+  infections       infection[]
+  blood            Blood              @relation(fields: [bloodType], references: [type])
+  bloodType        String
+  BloodBag         BloodBag[]
+  ReceivingRequest ReceivingRequest[]
 }
 
 model Donor {
-  donorId      Int         @id @default(autoincrement())
-  currentMoney Int         @default(0)
-  bankId       String      @unique
-  createdAt    DateTime    @default(now())
-  email        String      @unique @db.VarChar(255)
-  phone        String      @unique
-  weight       Float
-  birth        DateTime
-  address      String
-  firstName    String
-  lastName     String
-  password     String
-  diseases     infection[]
-  blood        Blood       @relation(fields: [bloodType], references: [type])
-  bloodType    String
-  BloodBag     BloodBag[]
-  Donation     Donation[]
+  donorId         Int               @id @default(autoincrement())
+  currentMoney    Int               @default(0)
+  bankId          String            @unique
+  createdAt       DateTime          @default(now())
+  email           String            @unique @db.VarChar(255)
+  phone           String            @unique
+  weight          Float
+  birth           DateTime
+  address         String
+  firstName       String
+  lastName        String
+  password        String
+  diseases        infection[]
+  blood           Blood             @relation(fields: [bloodType], references: [type])
+  bloodType       String
+  BloodBag        BloodBag[]
+  DonationRequest DonationRequest[]
 }
 
 model infection {
@@ -92,26 +95,46 @@ model Blood {
 }
 
 model BloodBag {
-  bagId                Int        @id @default(autoincrement())
-  givenTo              Recipient? @relation(fields: [recipientRecipientId], references: [recipientId])
-  recipientRecipientId Int?
-  recipientDate        DateTime?
-  donationDetails      Donation   @relation(fields: [donationId], references: [donationId])
-  Donor                Donor?     @relation(fields: [donorDonorId], references: [donorId])
-  donorDonorId         Int?
-  donationId           Int        @unique
-  BloodBank            BloodBank? @relation(fields: [bloodBankId], references: [bloodBankId])
-  bloodBankId          Int?
+  bagId            Int                @id @default(autoincrement())
+  takingDate       DateTime           @default(now())
+  givenTo          Recipient?         @relation(fields: [recipientId], references: [recipientId])
+  recipientId      Int?
+  recipientDate    DateTime?
+  Donor            Donor?             @relation(fields: [donorId], references: [donorId])
+  donorId          Int?
+  donationId       Int                @unique
+  BloodBank        BloodBank?         @relation(fields: [bloodBankId], references: [bloodBankId])
+  bloodBankId      Int?
+  DonationRequest  DonationRequest[]
+  ReceivingRequest ReceivingRequest[]
 }
 
-model Donation {
-  donationId       Int       @id @unique @default(autoincrement())
-  donationDate     DateTime
-  amount           Int
-  opperationStatus String
-  donorId          Donor     @relation(fields: [donorDonorId], references: [donorId])
-  donorDonorId     Int
-  BloodBag         BloodBag?
+model DonationRequest {
+  id              Int       @id @unique @default(autoincrement())
+  requestDate     DateTime  @default(now())
+  donor           Donor     @relation(fields: [donorId], references: [donorId])
+  donorId         Int
+  bloodBag        BloodBag? @relation(fields: [bloodBagId], references: [bagId])
+  bloodBagId      Int?
+  operationStatus String?
+  requestStatus   String?   @default("waiting")
+  updateDate      DateTime?
+  nurse           nurse?    @relation(fields: [nurseId], references: [nurseId])
+  nurseId         Int?
+}
+
+model ReceivingRequest {
+  id              Int       @id @unique @default(autoincrement())
+  requestDate     DateTime  @default(now())
+  recipient       Recipient @relation(fields: [recipientId], references: [recipientId])
+  recipientId     Int
+  bloodBagId      Int?
+  updateDate      DateTime?
+  bloodBag        BloodBag? @relation(fields: [bloodBagId], references: [bagId])
+  operationStatus String?
+  requestStatus   String?   @default("waiting")
+  nurse           nurse?    @relation(fields: [nurseId], references: [nurseId])
+  nurseId         Int?
 }
 
 model BloodBank {

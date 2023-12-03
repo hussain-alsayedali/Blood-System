@@ -43,3 +43,15 @@
 
 //   res.json({ user });
 // });
+// model Donation {
+//     donationId       Int       @id @unique @default(autoincrement())
+//     donationDate     DateTime
+//     amount           Int
+//     opperationStatus String
+//     donorId          Donor     @relation(fields: [donorDonorId], references: [donorId])
+//     donorDonorId     Int
+//     BloodBag         BloodBag?
+//   }
+// donationDetails  Donation           @relation(fields: [donationId], references: [donationId])
+//   Donation        Donation[]
+//
