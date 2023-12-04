@@ -4,7 +4,7 @@ import boss from "../assets/satiyah.jpg";
 import { Link } from "react-router-dom";
 import Axios from "axios";
 import { useDispatch } from "react-redux";
-import logoIcon from "../assets/blood-donation.png"
+import logoIcon from "../assets/blood-donation.png";
 import "./Styles/Login.css"; // Import the CSS file
 function Login() {
   const [email, setEmail] = useState("");
@@ -19,11 +19,15 @@ function Login() {
     e.preventDefault();
     setError("");
 
-    Axios.post(`http://localhost:2121/${role}/login`, {
-      email,
-      password,
-      role,
-    })
+    Axios.post(
+      `http://localhost:2121/${role}/login`,
+      {
+        email,
+        password,
+        role,
+      },
+      { withCredentials: true }
+    )
       .then((response) => {
         console.log(response);
         // dispatch({ type: "SET_USER", payload: response.data.user }); // Dispatch SET_USER action
@@ -47,7 +51,6 @@ function Login() {
         <img src={logoIcon} alt="BloodWave logo" className="logo-img" />
         <h1>BloodWave</h1>
       </div>
-
       <div className="login-container">
         {isSignup ? (
           <div className="signup-form">
@@ -60,7 +63,9 @@ function Login() {
             <Link to="/signupNurse">
               <button>Sign up as Nurse</button>
             </Link>
-            <div className="signup-text" onClick={() => setIsSignup(false)}>Login instead</div>
+            <div className="signup-text" onClick={() => setIsSignup(false)}>
+              Login instead
+            </div>
           </div>
         ) : (
           <form className="login-form" onSubmit={handleLogin}>
@@ -88,7 +93,9 @@ function Login() {
             <button type="submit">Login</button>
             {/* Render an error message if login fails */}
             {error && <p className="error-message">{error}</p>}
-            <div className="login-text" onClick={() => setIsSignup(true)}>Do you want to sign up?</div>
+            <div className="login-text" onClick={() => setIsSignup(true)}>
+              Do you want to sign up?
+            </div>
           </form>
         )}
 
@@ -96,9 +103,6 @@ function Login() {
           <button>Browse as guest</button>
         </Link>
       </div>
-
-
-
       {/* to be deleted... hack buttons */}
       ---------------------- <br></br>
       developers buttons
@@ -114,6 +118,5 @@ function Login() {
     </div>
   );
 }
-
 
 export default Login;

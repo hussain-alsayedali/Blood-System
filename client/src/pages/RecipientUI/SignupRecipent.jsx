@@ -143,6 +143,5 @@ export default function SignupRecipent() {
         <button>Submit</button>
       </form>
     </div>
-
   );
 }

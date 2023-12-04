@@ -47,3 +47,12 @@ exports.getRecipient = async (req, res) => {
     console.log(e);
   }
 };
+
+exports.getCurrentNurse = async (req, res) => {
+  try {
+    console.log(req.currentNurse);
+    res.json(req.user);
+  } catch (e) {
+    console.log(e);
+  }
+};

@@ -68,15 +68,15 @@ module.exports = function (passport) {
       },
       async (email, password, done) => {
         try {
-          const currentNurse = await prisma.nurse.findUnique({
+          const user = await prisma.nurse.findUnique({
             where: { email: email },
           });
-          if (!currentNurse) {
+          if (!user) {
             return done(null, false, { message: "Invalid nurse email." });
           }
-          const isMatch = await bcrypt.compare(password, currentNurse.password);
+          const isMatch = await bcrypt.compare(password, user.password);
           if (isMatch) {
-            return done(null, currentNurse);
+            return done(null, user);
           }
           return done(null, false, { message: "Invalid nurse password." });
         } catch (err) {
@@ -89,42 +89,45 @@ module.exports = function (passport) {
   // Serialize and deserialize logic for each user type
 
   passport.serializeUser((user, done) => {
+    // Serialize the user based on a unique identifier (e.g., user ID)
     console.log(user);
-    // const isNurse = prisma.nurse.findUnique({ where: { id: user.id } });
-    // const isDonor = prisma.donor.findUnique({ where: { id: user.id } });
-    // const isRecipient = prisma.recipient.findUnique({ where: { id: user.id } });
-
-    // Promise.all([isNurse, isDonor, isRecipient]).then(
-    //   ([nurse, donor, recipient]) => {
-    //     let userType = null;
-    //     if (nurse) {
-    //       userType = "nurse";
-    //     } else if (donor) {
-    //       userType = "donor";
-    //     } else if (recipient) {
-    //       userType = "recipient";
-    //     }
-    //     done(null, { id: user.id, type: userType });
-    //     // done(null, { id: user.id, type: userType });
-    //   }
-    // );
-    done(null, user);
+    done(null, { id: user.id, type: user.type });
   });
 
   passport.deserializeUser(async (serializedUser, done) => {
-    const { id, type } = serializedUser;
     try {
-      let user = null;
-      if (type === "donor") {
-        user = await prisma.donor.findUnique({ where: { id } });
-      } else if (type === "recipient") {
-        user = await prisma.recipient.findUnique({ where: { id } });
-      } else if (type === "nurse") {
-        user = await prisma.nurse.findUnique({ where: { id } });
+      console.log("enterd deserialzed");
+      console.log(serializedUser);
+      let userType = serializedUser.type;
+      console.log("the serialzed user :");
+      console.log(serializedUser);
+      console.log(userType);
+
+      if (userType === "recipient") {
+        user = await prisma.recipient.findUnique({
+          where: {
+            id: serializedUser.id,
+          },
+        });
+        done(null, user);
+      } else if (userType === "donor") {
+        user = await prisma.donor.findUnique({
+          where: {
+            id: serializedUser.id,
+          },
+        });
+        done(null, user);
+      } else {
+        user = await prisma.nurse.findUnique({
+          where: {
+            id: serializedUser.id,
+          },
+        });
+        done(null, user);
       }
-      done(null, user);
-    } catch (err) {
-      done(err);
+    } catch (error) {
+      console.log(error);
+      done(error, null);
     }
   });
 };

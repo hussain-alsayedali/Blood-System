@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import React, { useState } from "react";
 import Axios from "axios";
-import '../../components/Styles/signup.css'
+import "../../components/Styles/signup.css";
 export default function SignupNurse() {
   const [formData, setFormData] = React.useState({
     firstName: "",
@@ -23,7 +23,7 @@ export default function SignupNurse() {
     Axios({
       method: "POST",
       data: formData,
-      // withCredentials: true,
+      withCredentials: true,
       url: "http://localhost:2121/nurse/signup",
       // crossDomain: true,
     })

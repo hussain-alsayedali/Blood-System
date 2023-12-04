@@ -6,9 +6,16 @@ const { ensureAuth, ensureGuest, isAuthed } = require("../middleware/auth");
 
 router.post("/signup", isAuthed, authController.postSignupNurse);
 router.post("/login", isAuthed, authController.postLogin);
+
+// get all
 router.get("/getAllRecipients", isAuthed, nurseController.getAllRecipient);
 router.get("/getAllDonors", isAuthed, nurseController.getAllDonors);
+
+// get one using id
 router.get("/getDonor", isAuthed, nurseController.getDonor);
 router.get("/getRecipient", isAuthed, nurseController.getRecipient);
+
+// get current nurse info
+router.get("/getCurrentNurse", isAuthed, nurseController.getCurrentNurse);
 
 module.exports = router;

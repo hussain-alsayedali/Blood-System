@@ -55,3 +55,71 @@
 // donationDetails  Donation           @relation(fields: [donationId], references: [donationId])
 //   Donation        Donation[]
 //
+
+// console.log("seriaze User" + user);
+// console.log(user);
+// const isNurse = prisma.nurse.findUnique({ where: { id: user.id } });
+// const isDonor = prisma.donor.findUnique({ where: { id: user.id } });
+// const isRecipient = prisma.recipient.findUnique({ where: { id: user.id } });
+
+// Promise.all([isNurse, isDonor, isRecipient]).then(
+//   ([nurse, donor, recipient]) => {
+//     let userType = null;
+//     if (nurse) {
+//       userType = "nurse";
+//     } else if (donor) {
+//       userType = "donor";
+//     } else if (recipient) {
+//       userType = "recipient";
+//     }
+//     done(null, { id: user.id, type: userType });
+// done(null, { id: user.id, type: userType });
+//   }
+// );
+// done(null, user);
+
+// if (serializedUser.strategy === "nurse") {
+//     const user = await prisma.nurse.findUnique({
+//       where: {
+//         nurseId: serializedUser.nurseId,
+//       },
+//     });
+//     done(null, user);
+//   } else if (serializedUser.strategy === "recipient") {
+//     const user = await prisma.recipient.findUnique({
+//       where: {
+//         recipientId: serializedUser.recipientId,
+//       },
+//     });
+//     done(null, user);
+//   } else {
+//     const user = await prisma.donor.findUnique({
+//       where: {
+//         donorId: serializedUser.donorId,
+//       },
+//     });
+//     done(null, user);
+//   }
+// passport.serializeUser((user, done) => {
+//     console.log(user);
+//     const isNurse = prisma.$exists.nurse({ id: user.id });
+//     const isDonor = prisma.$exists.donor({ id: user.id });
+//     const isRecipient = prisma.$exists.recipient({ id: user.id });
+
+//     Promise.all([isNurse, isDonor, isRecipient]).then(
+//       ([nurse, donor, recipient]) => {
+//         console.log(isNurse, isDonor, isRecipient);
+//         let userType = null;
+//         if (nurse) {
+//           userType = "nurse";
+//         } else if (donor) {
+//           userType = "donor";
+//         } else if (recipient) {
+//           userType = "recipient";
+//         }
+//         console.log(user.id, userType);
+//         done(null, { id: user.id, type: userType });
+//         // done(null, { id: user.id, type: userType });
+//       }
+//     );
+//   });

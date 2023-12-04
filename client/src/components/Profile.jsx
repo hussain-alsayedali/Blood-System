@@ -30,6 +30,17 @@ function Profile() {
       })
       .catch((error) => console.error(error));
   }, []);
+  useEffect(() => {
+    Axios({
+      method: "GET",
+      url: "http://localhost:2121/nurse/getCurrentNurse",
+      withCredentials: true,
+    })
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((error) => console.error(error));
+  }, []);
   console.log("users are ");
   console.log(users);
   return (
