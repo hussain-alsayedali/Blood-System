@@ -90,18 +90,12 @@ module.exports = function (passport) {
 
   passport.serializeUser((user, done) => {
     // Serialize the user based on a unique identifier (e.g., user ID)
-    console.log(user);
     done(null, { id: user.id, type: user.type });
   });
 
   passport.deserializeUser(async (serializedUser, done) => {
     try {
-      console.log("enterd deserialzed");
-      console.log(serializedUser);
       let userType = serializedUser.type;
-      console.log("the serialzed user :");
-      console.log(serializedUser);
-      console.log(userType);
 
       if (userType === "recipient") {
         user = await prisma.recipient.findUnique({
@@ -123,6 +117,7 @@ module.exports = function (passport) {
             id: serializedUser.id,
           },
         });
+
         done(null, user);
       }
     } catch (error) {

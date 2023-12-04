@@ -50,7 +50,7 @@ exports.getRecipient = async (req, res) => {
 
 exports.getCurrentNurse = async (req, res) => {
   try {
-    console.log(req.currentNurse);
+    console.log(req.user);
     res.json(req.user);
   } catch (e) {
     console.log(e);
