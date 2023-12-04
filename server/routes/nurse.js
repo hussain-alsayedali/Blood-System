@@ -19,4 +19,6 @@ router.get("/getRecipient", isAuthed, nurseController.getRecipient);
 // get current nurse info
 router.get("/getCurrentNurse", isAuthed, nurseController.getCurrentNurse);
 
+// delete user
+router.delete("/deleteUser", isAuthed, nurseController.deleteUser);
 module.exports = router;

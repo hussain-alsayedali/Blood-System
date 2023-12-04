@@ -67,3 +67,29 @@ exports.getCurrentNurse = async (req, res) => {
     console.log(e);
   }
 };
+exports.deleteUser = async (req, res) => {
+  try {
+    console.log("clicked");
+    console.log(req.query);
+    const userType = req.query.type;
+    const userId = parseInt(req.query.id);
+    if (userType === "donor") {
+      await prisma.donor.delete({
+        where: {
+          id: userId,
+        },
+      });
+    } else if (userType === "recipient") {
+      await prisma.recipient.delete({
+        where: {
+          id: userId,
+        },
+      });
+    } else {
+      res.json("err");
+    }
+    res.json("succes");
+  } catch (e) {
+    console.log(e);
+  }
+};

@@ -4,10 +4,10 @@ import Axios from "axios";
 
 function Control() {
   const [search, setSearch] = useState("");
-
   const [users, setUsers] = useState([
     // Add more people baba
   ]);
+
   useEffect(() => {
     Axios({
       method: "GET",
@@ -26,6 +26,18 @@ function Control() {
 
   const handleSearchChange = (event) => {
     setSearch(event.target.value);
+  };
+
+  const deleteUser = (userId, userType) => {
+    Axios({
+      method: "DELETE",
+      url: `http://localhost:2121/nurse/deleteUser?id=${userId}&type=${userType}`,
+      withCredentials: true,
+      data: {
+        _method: "DELETE",
+        // Other request data...
+      },
+    });
   };
 
   return (
@@ -71,7 +83,12 @@ function Control() {
               <td>{user.phone}</td>
               <td>
                 <button className="action-btn edit-btn">Edit</button>
-                <button className="action-btn delete-btn">Delete</button>
+                <button
+                  className="action-btn delete-btn"
+                  onClick={() => deleteUser(user.id, user.type)}
+                >
+                  Delete
+                </button>
               </td>
             </tr>
           ))}
