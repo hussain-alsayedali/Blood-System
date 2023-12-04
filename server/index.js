@@ -79,24 +79,25 @@ app.use(passport.session());
 //Use flash messages for errors, info, ect...
 app.use(flash());
 
-// منين منين
+// Setup Routes For Which The Server Is Listening  منين منين
 app.use("/", mainRoutes);
 app.use("/nurse", nurseRoutes);
 app.use("/donor", donorRoutes);
 app.use("/recipient", recipientRoutes);
 
 //Setup Routes For Which The Server Is Listening
-app.get("/test", async (req, res) => {
-  res.json("snip");
-});
-app.post("/", (req, res) => {
-  let data = req.body;
-  res.send("Data Received: " + JSON.stringify(data));
-});
+
 async function main() {
   console.log("منين منين");
+  for (let i = 0; i < 30; i++) {
+    await prisma.bloodBag.create({
+      data: {
+        donorId: 2,
+      },
+    });
+  }
 }
-main();
+// main();
 
 app.listen(process.env.PORT, () => {
   console.log("Server is running, you better catch it!");

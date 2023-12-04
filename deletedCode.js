@@ -159,3 +159,30 @@
 //   weight: 35,
 //   phone: "054352341",
 // },
+// return (
+//     <div className="Storage-container">
+//       <h1 className="title">Blood Inventory Storage</h1>
+//       <table className="data-table">
+//         <thead>
+//           <tr>
+//             <th>Blood Type</th>
+//             <th>Bags Available</th>
+//           </tr>
+//         </thead>
+//         <tbody>
+//           {bloodInventory.map((inventory, index) => {
+//             // Extract blood type and bags from the object
+//             const bloodType = Object.keys(inventory)[0];
+//             const bags = inventory[bloodType];
+
+//             return (
+//               <tr key={index}>
+//                 <td>{bloodType}</td>
+//                 <td>{bags}</td>
+//               </tr>
+//             );
+//           })}
+//         </tbody>
+//       </table>
+//     </div>
+//   );

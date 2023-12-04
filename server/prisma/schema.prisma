@@ -98,14 +98,13 @@ model Blood {
 }
 
 model BloodBag {
-  id               Int                @id @default(autoincrement())
+  id               Int                @id @unique @default(autoincrement())
   takingDate       DateTime           @default(now())
   givenTo          Recipient?         @relation(fields: [recipientId], references: [id])
   recipientId      Int?
   recipientDate    DateTime?
-  Donor            Donor?             @relation(fields: [donorId], references: [id])
-  donorId          Int?
-  donationId       Int                @unique
+  Donor            Donor              @relation(fields: [donorId], references: [id])
+  donorId          Int
   BloodBank        BloodBank?         @relation(fields: [bloodBankId], references: [id])
   bloodBankId      Int?
   DonationRequest  DonationRequest[]

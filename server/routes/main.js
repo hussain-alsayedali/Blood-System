@@ -8,6 +8,6 @@ router.get("/", isAuthed, homeController.getIndex);
 
 router.post("/signupnurse", isAuthed, authController.postSignupNurse);
 
-router.get("/meow", isAuthed, homeController.meow);
+router.get("/getBloodGrouped", isAuthed, homeController.getBloodGrouped);
 
 module.exports = router;

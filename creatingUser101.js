@@ -54,3 +54,10 @@ const nurse = await prisma.nurse.create({
     password: "123456789",
   },
 });
+
+// creating blood bag
+await prisma.bloodBag.create({
+  data: {
+    donorId: 2,
+  },
+});
