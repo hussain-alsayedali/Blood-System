@@ -10,6 +10,7 @@ router.post("/login", isAuthed, authController.postLogin);
 // get all
 router.get("/getAllRecipients", isAuthed, nurseController.getAllRecipient);
 router.get("/getAllDonors", isAuthed, nurseController.getAllDonors);
+router.get("/getAll", isAuthed, nurseController.getAll);
 
 // get one using id
 router.get("/getDonor", isAuthed, nurseController.getDonor);

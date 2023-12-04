@@ -8,6 +8,7 @@ exports.test = (req, res) => {
 exports.getAllRecipient = async (req, res) => {
   try {
     const allRecipients = await prisma.recipient.findMany({});
+
     res.json(allRecipients);
   } catch (e) {
     console.log(e);
@@ -17,6 +18,16 @@ exports.getAllDonors = async (req, res) => {
   try {
     const allDonors = await prisma.donor.findMany({});
     res.json(allDonors);
+  } catch (e) {
+    console.log(e);
+  }
+};
+exports.getAll = async (req, res) => {
+  try {
+    const allDonors = await prisma.donor.findMany({});
+    const allRecipients = await prisma.recipient.findMany({});
+    const allUsers = [...allDonors, ...allRecipients];
+    res.json(allUsers);
   } catch (e) {
     console.log(e);
   }

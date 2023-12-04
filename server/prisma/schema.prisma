@@ -51,7 +51,7 @@ model Recipient {
 
 model Donor {
   id              Int               @id @default(autoincrement())
-  type            String            @default("recipient")
+  type            String            @default("donor")
   currentMoney    Int               @default(0)
   bankId          String            @unique
   createdAt       DateTime          @default(now())
