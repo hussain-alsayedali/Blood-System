@@ -1,6 +1,8 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import React, { useState } from "react";
 import Axios from "axios";
+import { useLocation } from "react-router-dom";
+
 export default function SignupRecipent() {
   const [formData, setFormData] = React.useState({
     firstName: "",
@@ -15,7 +17,12 @@ export default function SignupRecipent() {
     password: "",
     bloodType: "B+",
   });
-  console.log(formData);
+  const location = useLocation();
+  // const user = location.state.user;
+  console.log(location.pathname);
+  console.log(location.search);
+  console.log(location.state);
+  // console.log(user);
 
   function handleChange(event) {
     console.log(event);

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./Control.css";
 import Axios from "axios";
+import { Link } from "react-router-dom";
 
 function Control() {
   const [search, setSearch] = useState("");
@@ -82,7 +83,19 @@ function Control() {
               <td>{user.weight}</td>
               <td>{user.phone}</td>
               <td>
-                <button className="action-btn edit-btn">Edit</button>
+                {console.log(user)}
+
+                <Link
+                  to={{
+                    pathname:
+                      user.type == "donor"
+                        ? "/nurse/donorEdit"
+                        : "/nurse/recipientEdit",
+                    state: { user: user },
+                  }}
+                >
+                  <button className="action-btn edit-btn">Edit</button>
+                </Link>
                 <button
                   className="action-btn delete-btn"
                   onClick={() => deleteUser(user.id, user.type)}

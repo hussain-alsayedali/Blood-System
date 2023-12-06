@@ -1,5 +1,10 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  useLocation,
+  BrowserRouter as Router,
+  Routes,
+  Route,
+} from "react-router-dom";
 import Nav from "./pages/NurseUI/Nav/Nav";
 import Dashboard_Nurse from "./pages/NurseUI/Dashboard/Dashboard";
 import Storage_Nurse from "./pages/NurseUI/Storage/Storage";
@@ -38,6 +43,8 @@ function App() {
                   <Route path="/storage" element={<Storage_Nurse />} />
                   <Route path="/control" element={<Control_Nurse />} />
                   <Route path="/profile" element={<Profile />} />
+                  <Route path="/donorEdit" element={<SignupDonor />} />
+                  <Route path="/recipientEdit" element={<SignupRecipent />} />
                 </Routes>
               </main>
             </>

@@ -1,6 +1,8 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import React, { useState } from "react";
 import Axios from "axios";
+import { useLocation } from "react-router-dom";
+
 export default function SignupDonor() {
   const [formData, setFormData] = React.useState({
     firstName: "",
@@ -14,8 +16,12 @@ export default function SignupDonor() {
     password: "",
     bloodType: "B+",
   });
-
-  console.log(formData);
+  const location = useLocation();
+  // const user = location.state.user;
+  console.log(location.pathname);
+  console.log(location.search);
+  console.log(location.state);
+  // console.log(user);
   const register = (event) => {
     event.preventDefault(); // Prevent default form submission behavior
     Axios({
@@ -42,7 +48,6 @@ export default function SignupDonor() {
 
   return (
     <div className="form-container">
-
       <form onSubmit={register}>
         <input
           type="text"
@@ -130,6 +135,5 @@ export default function SignupDonor() {
         <button>Submit</button>
       </form>
     </div>
-
   );
 }
