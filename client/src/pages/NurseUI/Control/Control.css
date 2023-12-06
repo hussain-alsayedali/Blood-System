@@ -1,97 +1,100 @@
 .control-container {
-    background-color: #242526;
-    color: #c0c0c0;
-    padding: 20px;
-    border-radius: 10px;
-    width: 80%;
-    margin: auto;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-  }
-  
-  .title {
-    text-align: center;
-    font-size: 2em;
-    margin-bottom: 20px;
-  }
-  
-  .search-input {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 20px;
-    border-radius: 5px;
-    border: none;
-    background-color: #3d3d3d;
-    color: #c0c0c0;
-  }
-  
-  .data-table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-  
-  .data-table thead {
-    background-color: #3d3d3d;
-  }
-  
-  .data-table th,
-  .data-table td {
-    padding: 10px;
-    text-align: center;
-    /* border: 1px solid #c0c0c0; */
-  }
-  
-  .data-table th {
-    font-size: 1.2em;
-  }
-  
-  .action-btn {
-    padding: 5px 10px;
-    border-radius: 5px;
-    border: none;
-    margin-right: 5px;
-    cursor: pointer;
-  }
-  
-  .edit-btn {
-    background-color: #4caf50;
-  }
-  
-  .delete-btn {
-    background-color: #f44336;
-  }
+  background-color: #242526;
+  color: #c0c0c0;
+  padding: 20px;
+  border-radius: 10px;
+  width: 80%;
+  margin: auto;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
 
+.title {
+  text-align: center;
+  font-size: 2em;
+  margin-bottom: 20px;
+}
+
+.search-input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  border: none;
+  background-color: #3d3d3d;
+  color: #c0c0c0;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.data-table thead {
+  background-color: #3d3d3d;
+}
+
+.data-table th,
+.data-table td {
+  padding: 10px;
+  text-align: center;
+  /* border: 1px solid #c0c0c0; */
+}
+
+.data-table th {
+  font-size: 1.2em;
+}
+
+.action-btn {
+  padding: 5px 10px;
+  border-radius: 5px;
+  border: none;
+  margin-right: 5px;
+  cursor: pointer;
+}
+
+.edit-btn {
+  background-color: #4caf50;
+}
+
+.delete-btn {
+  background-color: #f44336;
+}
+
+input {
+  width: 90%;
+}
 
 /* Responsive table */
 @media (max-width: 668px) {
   .data-table {
-      border: 0;
-    }
-  
-    .data-table thead {
-      display: none;
-    }
-  
-    .data-table tr {
-      margin-bottom: 10px;
-      display: block;
-      border-bottom: 2px solid #ddd;
-    }
-  
-    .data-table td {
-      display: block;
-      text-align: right;
-      font-size: 13px;
-      border-bottom: 1px dotted #ccc;
-    }
-  
-    .data-table td::before {
-      content: attr(data-label);
-      float: left;
-      text-transform: uppercase;
-      font-weight: bold;
-    }
-  
-    .data-table td:last-child {
-      border-bottom: 0;
-    }
+    border: 0;
   }
+
+  .data-table thead {
+    display: none;
+  }
+
+  .data-table tr {
+    margin-bottom: 10px;
+    display: block;
+    border-bottom: 2px solid #ddd;
+  }
+
+  .data-table td {
+    display: block;
+    text-align: right;
+    font-size: 13px;
+    border-bottom: 1px dotted #ccc;
+  }
+
+  .data-table td::before {
+    content: attr(data-label);
+    float: left;
+    text-transform: uppercase;
+    font-weight: bold;
+  }
+
+  .data-table td:last-child {
+    border-bottom: 0;
+  }
+}
