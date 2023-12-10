@@ -89,13 +89,26 @@ app.use("/recipient", recipientRoutes);
 
 async function main() {
   console.log("منين منين");
-  for (let i = 0; i < 30; i++) {
-    await prisma.bloodBag.create({
-      data: {
-        donorId: 2,
-      },
-    });
-  }
+  // await prisma.diseaseCatalog.create({
+  //   data: {
+  //     diseaseName: "cold",
+  //   },
+  // });
+  // await prisma.diseaseCatalog.create({
+  //   data: {
+  //     diseaseName: "hiv",
+  //   },
+  // });
+  // await prisma.diseaseCatalog.create({
+  //   data: {
+  //     diseaseName: "cancer",
+  //   },
+  // });
+  // await prisma.diseaseCatalog.create({
+  //   data: {
+  //     diseaseName: "flu",
+  //   },
+  // });
 }
 // main();
 

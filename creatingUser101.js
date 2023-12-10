@@ -61,3 +61,10 @@ await prisma.bloodBag.create({
     donorId: 2,
   },
 });
+
+//  creating disease
+await prisma.diseaseCatalog.create({
+  data: {
+    diseaseName: "cold",
+  },
+});
