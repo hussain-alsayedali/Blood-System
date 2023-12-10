@@ -71,17 +71,17 @@ model Donor {
 }
 
 model infection {
-  id                      Int            @id @default(autoincrement())
-  diseaseName             DiseaseCatalog @relation(fields: [diseaseCatalogDiseaseId], references: [id])
-  dateOfInfection         DateTime       @default(now())
-  dateOfheal              DateTime?
-  strength                String
-  cured                   Boolean        @default(false)
-  Recipient               Recipient?     @relation(fields: [recipientRecipientId], references: [id])
-  recipientRecipientId    Int?
-  Donor                   Donor?         @relation(fields: [donorId], references: [id])
-  donorId                 Int?
-  diseaseCatalogDiseaseId Int
+  id                   Int            @id @default(autoincrement())
+  diseaseName          DiseaseCatalog @relation(fields: [diseaseId], references: [id])
+  dateOfInfection      DateTime       @default(now())
+  dateOfheal           DateTime?
+  strength             String
+  cured                Boolean        @default(false)
+  Recipient            Recipient?     @relation(fields: [recipientRecipientId], references: [id])
+  recipientRecipientId Int?
+  Donor                Donor?         @relation(fields: [donorId], references: [id])
+  donorId              Int?
+  diseaseId            Int
 }
 
 model DiseaseCatalog {
