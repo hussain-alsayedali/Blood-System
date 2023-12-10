@@ -13,7 +13,7 @@ exports.getLogin = (req, res) => {
   });
 };
 
-exports.postLogin = (req, res, next) => {
+exports.postLoginNurse = (req, res, next) => {
   console.log("entered the login");
   console.log(req.body);
   passport.authenticate("nurse", (err, user, info) => {
@@ -52,7 +52,45 @@ exports.postLogin = (req, res, next) => {
     });
   })(req, res, next);
 };
+exports.postLoginDonor = (req, res, next) => {
+  console.log("entered the login");
+  console.log(req.body);
+  passport.authenticate("donor", (err, user, info) => {
+    if (err) {
+      console.log("first err" + err);
 
+      return next(err);
+    }
+    if (!user) {
+      console.log("second err" + err);
+      req.flash("errors", { msg: "Invalid email or password." });
+      return res.redirect("/login");
+    }
+    // Compare the provided password with the stored hashed password
+    bcrypt.compare(req.body.password, user.password, (err, isMatch) => {
+      if (err) {
+        console.log(err);
+        return next(err);
+      }
+      if (isMatch) {
+        req.logIn(user, (err) => {
+          if (err) {
+            console.log(err);
+
+            return next(err);
+          }
+          res.json("true");
+          // res.redirect("/profile");
+        });
+      } else {
+        console.log("last err");
+
+        req.flash("errors", { msg: "Invalid email or password." });
+        res.redirect("/login");
+      }
+    });
+  })(req, res, next);
+};
 exports.logout = (req, res) => {
   req.logout(() => {
     console.log("User has logged out.");

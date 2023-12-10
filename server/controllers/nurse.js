@@ -4,6 +4,9 @@ const prisma = new PrismaClient();
 exports.test = (req, res) => {
   console.log(req);
 };
+exports.getSession = (req, res) => {
+  res.json(req.session);
+};
 
 exports.getAllRecipient = async (req, res) => {
   try {

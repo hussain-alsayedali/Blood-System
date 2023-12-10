@@ -73,14 +73,14 @@ model Donor {
 model infection {
   id                      Int            @id @default(autoincrement())
   diseaseName             DiseaseCatalog @relation(fields: [diseaseCatalogDiseaseId], references: [id])
-  dateOfInfection         DateTime
+  dateOfInfection         DateTime       @default(now())
   dateOfheal              DateTime?
   strength                String
-  cured                   Boolean
+  cured                   Boolean        @default(false)
   Recipient               Recipient?     @relation(fields: [recipientRecipientId], references: [id])
   recipientRecipientId    Int?
-  Donor                   Donor?         @relation(fields: [donorDonorId], references: [id])
-  donorDonorId            Int?
+  Donor                   Donor?         @relation(fields: [donorId], references: [id])
+  donorId                 Int?
   diseaseCatalogDiseaseId Int
 }
 
@@ -101,6 +101,7 @@ model BloodBag {
   id               Int                @id @unique @default(autoincrement())
   takingDate       DateTime           @default(now())
   givenTo          Recipient?         @relation(fields: [recipientId], references: [id])
+  status           String             @default("good")
   recipientId      Int?
   recipientDate    DateTime?
   Donor            Donor              @relation(fields: [donorId], references: [id])
