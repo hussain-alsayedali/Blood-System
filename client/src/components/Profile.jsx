@@ -4,19 +4,19 @@ import Axios from "axios";
 
 function Profile() {
   const [user, setUsers] = useState({
-    donorId: 69,
-    currentMoney: 10000000,
-    bankId: "jaxing",
-    createdAt: "2023-12-01T05:09:33.609Z",
-    email: "hussain@gama.com",
-    phone: "05045353421231132",
-    weight: 433,
-    birth: "1990-01-01T00:00:00.000Z",
-    address: "jarodiyah",
-    firstName: "hussain",
-    lastName: "alsayedali",
-    password: "$2b$10$g/aNIBatIq0W0dZzLjB7Bu8OG5rEt/Jb4IbSHjI4AG/wkC.3RIoka",
-    bloodType: "pdf",
+    donorId: 0,
+    currentMoney: 0,
+    bankId: "",
+    createdAt: "",
+    email: "",
+    phone: "",
+    weight: 0,
+    birth: "",
+    address: "",
+    firstName: "",
+    lastName: "",
+    password: "",
+    bloodType: "",
   });
   // useEffect(() => {
   //   Axios({

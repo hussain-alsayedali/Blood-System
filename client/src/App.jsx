@@ -5,17 +5,32 @@ import {
   Routes,
   Route,
 } from "react-router-dom";
+
+
+//signups
+import SignupDonor from "./pages/DonorUI/SignupDonor";
+import SignupRecipent from "./pages/RecipientUI/SignupRecipent";
+import SignupNurse from "./pages/NurseUI/SignupNurse";
+
+//styles:
+import "./components/Styles/App.css";
+
+//Nurse imports
 import Nav from "./pages/NurseUI/Nav/Nav";
 import Dashboard_Nurse from "./pages/NurseUI/Dashboard/Dashboard";
 import Storage_Nurse from "./pages/NurseUI/Storage/Storage";
 import Control_Nurse from "./pages/NurseUI/Control/Control";
-import Profile from "./components/Profile"; // Profile component
+
+//common
+import Profile from "./components/Profile";
 import NotFound from "./components/NotFound";
 import Login from "./components/Login";
-import SignupDonor from "./pages/DonorUI/SignupDonor";
-import SignupRecipent from "./pages/RecipientUI/SignupRecipent";
-import SignupNurse from "./pages/NurseUI/SignupNurse";
-import "./components/Styles/App.css";
+
+//Donor imports
+import Nav_Donor from "./pages/DonorUI/Nav/Nav";
+import Donate_Donor from "./pages/DonorUI/Donate/Donate";
+import Storage_Donor from "./pages/DonorUI/Storage/Storage";
+import Medical_Donor from "./pages/DonorUI/Medical/Medical";
 
 // App component definition
 function App() {
@@ -51,7 +66,23 @@ function App() {
           }
         />
 
-        <Route path="/patient/*" element={<NotFound />} />
+        <Route
+          path="/donor/*"
+          element={
+            <>
+              <Nav_Donor />
+              <main className="main">
+                <Routes>
+                  <Route path="/" element={<Donate_Donor />} />
+                  <Route path="/donate" element={<Donate_Donor />} />
+                  <Route path="/storage" element={<Storage_Donor />} />
+                  <Route path="/medical" element={<Medical_Donor />} />
+                  <Route path="/profile" element={<Profile />} />
+                </Routes>
+              </main>
+            </>
+          }
+        />
 
         <Route path="*" element={<NotFound />} />
       </Routes>

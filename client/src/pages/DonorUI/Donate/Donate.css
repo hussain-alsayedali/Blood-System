@@ -1,0 +1,73 @@
+/* Donate.css */
+.donate-container {
+    width: 80%;
+    margin: auto;
+    max-width: 600px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.donate-container h1,
+.donate-container h2 {
+    text-align: center;
+}
+
+.donate-container p {
+    text-align: center;
+    color: #666;
+}
+
+.donation-history {
+    margin-top: 20px;
+    border-top: 1px solid #eee;
+    padding-top: 20px;
+}
+
+.donation-history ul {
+    list-style: none;
+    padding: 0;
+}
+
+.donation-history li {
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.donation-history li:last-child {
+    border-bottom: none;
+}
+
+.donation-form {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.donation-form textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    height: 100px;
+    resize: vertical;
+}
+
+.donation-form button {
+    padding: 10px 20px;
+    background-color: #5cb85c;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.donation-form button:hover {
+    background-color: #4cae4c;
+}
+
+.not-eligible-message {
+    color: #d9534f;
+    text-align: center;
+}
