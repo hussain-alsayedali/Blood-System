@@ -1,0 +1,68 @@
+.medical-container {
+    background-color: #121212;
+    color: #fff;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.medical-container h2 {
+    color: #ff5555;
+}
+
+.search-area,
+.update-area {
+    margin-bottom: 30px;
+}
+
+.updateForm {
+    justify-content: space-between;
+}
+
+input,
+textarea {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: #222;
+    border: 1px solid #555;
+    color: #fff;
+}
+
+
+.medical-container {
+    background-color: #121212;
+    color: #fff;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.medical-container h2 {
+    color: #e6e6e6;
+}
+
+.history-area ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.history-area li {
+    background-color: #222;
+    padding: 10px;
+    margin-bottom: 5px;
+    border-left: 5px solid transparent;
+}
+
+.history-area li.highlight {
+    border-left-color: #ff5555;
+}
+
+
+/* Adding responsiveness */
+@media (max-width: 600px) {
+
+    input,
+    textarea,
+    button {
+        width: 100%;
+    }
+}

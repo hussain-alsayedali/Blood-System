@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Axios from "axios";
+import './Styles/Storage.css'
 function Storage() {
     // const bloodInventory = [
     //   { type: "A+", bags: 120 },

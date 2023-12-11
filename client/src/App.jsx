@@ -18,20 +18,22 @@ import "./components/Styles/App.css";
 //Nurse imports
 import Nav from "./pages/NurseUI/Nav/Nav";
 import Dashboard_Nurse from "./pages/NurseUI/Dashboard/Dashboard";
-import Storage_Nurse from "./pages/NurseUI/Storage/Storage";
 import Control_Nurse from "./pages/NurseUI/Control/Control";
 
 //common
 import Profile from "./components/Profile";
 import NotFound from "./components/NotFound";
 import Login from "./components/Login";
+import Storage from './components/Storage'
 
 //Donor imports
 import Nav_Donor from "./pages/DonorUI/Nav/Nav";
 import Donate_Donor from "./pages/DonorUI/Donate/Donate";
-import Storage_Donor from "./pages/DonorUI/Storage/Storage";
 import Medical_Donor from "./pages/DonorUI/Medical/Medical";
 
+//Recipient imports
+import Recieve_Recipient from './pages/RecipientUI/Recieve/Recieve'
+import Nav_Recipient from './pages/RecipientUI/Nav/Nav'
 // App component definition
 function App() {
   return (
@@ -55,7 +57,7 @@ function App() {
                   <Route path="/" element={<Dashboard_Nurse />} />
                   <Route path="/" element={<Dashboard_Nurse />} />
                   <Route path="/dashboard" element={<Dashboard_Nurse />} />
-                  <Route path="/storage" element={<Storage_Nurse />} />
+                  <Route path="/storage" element={<Storage />} />
                   <Route path="/control" element={<Control_Nurse />} />
                   <Route path="/profile" element={<Profile />} />
                   <Route path="/donorEdit" element={<SignupDonor />} />
@@ -75,7 +77,7 @@ function App() {
                 <Routes>
                   <Route path="/" element={<Donate_Donor />} />
                   <Route path="/donate" element={<Donate_Donor />} />
-                  <Route path="/storage" element={<Storage_Donor />} />
+                  <Route path="/storage" element={<Storage />} />
                   <Route path="/medical" element={<Medical_Donor />} />
                   <Route path="/profile" element={<Profile />} />
                 </Routes>
@@ -84,6 +86,24 @@ function App() {
           }
         />
 
+
+        <Route
+          path="/recipient/*"
+          element={
+            <>
+              <Nav_Recipient />
+              <main className="main">
+                <Routes>
+                  <Route path="/" element={<Recieve_Recipient />} />
+                  <Route path="/receive" element={<Recieve_Recipient />} />
+                  <Route path="/storage" element={<Storage />} />
+                  <Route path="/medical" element={<Medical_Donor />} />
+                  <Route path="/profile" element={<Profile />} />
+                </Routes>
+              </main>
+            </>
+          }
+        />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>
