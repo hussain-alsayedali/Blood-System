@@ -98,3 +98,10 @@ exports.addInfection = async (req, res) => {
     res.json("error");
   }
 };
+
+exports.getAllDiseases = async (req, res) => {
+  try {
+    const allDiseases = await prisma.diseaseCatalog.findMany({});
+    res(allDiseases);
+  } catch (e) {}
+};
