@@ -12,4 +12,14 @@ router.get("/readyToDonate", isAuthed, donorController.isReadyToDonate);
 router.get("/getAllRequests", isAuthed, donorController.getAllRequests);
 router.post("/createRequest", isAuthed, donorController.createDonationRequest);
 
+// infections
+router.get("/getAllInfections", isAuthed, donorController.getAllInfections);
+router.get("/getCuredInfections", isAuthed, donorController.getCuredInfections);
+router.get(
+  "/getUncuredInfections",
+  isAuthed,
+  donorController.getUnCuredInfections
+);
+router.get("/addInfection", isAuthed, donorController.addInfection);
+
 module.exports = router;

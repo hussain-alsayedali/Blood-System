@@ -68,3 +68,10 @@ await prisma.diseaseCatalog.create({
     diseaseName: "cold",
   },
 });
+await prisma.infection.create({
+  data: {
+    strength: "strong",
+    donorId: donor.id,
+    diseaseId: diseases.id,
+  },
+});

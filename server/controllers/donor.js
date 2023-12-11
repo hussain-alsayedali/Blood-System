@@ -53,3 +53,48 @@ exports.getAllRequests = (req, res) => {
     console.log(e);
   }
 };
+exports.getAllInfections = async (req, res) => {
+  try {
+    const allinfections = req.user.infections;
+
+    res.json(allinfections);
+  } catch (e) {
+    console.log(e);
+    res.json("error");
+  }
+};
+exports.getCuredInfections = async (req, res) => {
+  try {
+    const allinfections = req.user.infections;
+    const curedInfections = allinfections.filter(
+      (infection) => infection.cured === "true"
+    );
+    res.json(curedInfections);
+  } catch (e) {}
+};
+exports.getUnCuredInfections = async (req, res) => {
+  try {
+    const allinfections = req.user.infections;
+    const curedInfections = allinfections.filter(
+      (infection) => infection.cured === "false"
+    );
+    res.json(curedInfections);
+  } catch (e) {}
+};
+exports.addInfection = async (req, res) => {
+  try {
+    const diseaseId = req.body.diseaseId;
+    const diseaseStrength = req.body.strength;
+    await prisma.infection.create({
+      data: {
+        strength: diseaseStrength,
+        donorId: req.user.id,
+        diseaseId: diseaseId,
+      },
+    });
+    res.json("success");
+  } catch (e) {
+    console.log(e);
+    res.json("error");
+  }
+};
