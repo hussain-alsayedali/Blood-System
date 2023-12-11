@@ -14,7 +14,7 @@ const Donate = () => {
 
     const checkEligibility = async () => {
         try {
-            const response = await Axios.get('http://localhost:2121/getAllDiseases', {
+            const response = await Axios.get('http://localhost:2121/getUnCuredInfections', {
                 withCredentials: true
             });
             setIsEligible(response.data.length === 0);

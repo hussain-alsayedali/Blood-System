@@ -1,29 +1,33 @@
-html{
+html {
   background-color: #202020;
 
 }
+
 .content {
-    display: flex;
-    height: 100vh;
-  }
-  
-  .nav {
-    flex: 0 0 250px; /* flex-grow | flex-shrink | flex-basis */
-    height: 100%;
-  }
-  
-  main {
-    flex-grow: 1;
-    padding: 1em; /* Add this for some space around the content */
-    margin-left: 290px;
-    overflow-y: auto; /* Add scroll if needed */
-    box-sizing: border-box;
+  display: flex;
+  height: 100vh;
+}
+
+.nav {
+  flex: 0 0 250px;
+  /* flex-grow | flex-shrink | flex-basis */
+  height: 100%;
+}
+
+main {
+  flex-grow: 1;
+  padding: 1em;
+  /* Add this for some space around the content */
+  margin-left: 290px;
+  overflow-y: auto;
+  /* Add scroll if needed */
+  box-sizing: border-box;
 
 }
 
 @media (max-width: 668px) {
-main{
+  main {
     margin-left: 100px;
 
-}
+  }
 }

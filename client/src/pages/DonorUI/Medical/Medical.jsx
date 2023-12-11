@@ -7,20 +7,17 @@ const Medical = () => {
     const [medicalHistory, setMedicalHistory] = useState([]);
 
     useEffect(() => {
-        // Function to fetch medical history from your backend
         const fetchMedicalHistory = async () => {
             try {
-                // Fetching the medical history from your endpoint
-                const response = await Axios.get('http://localhost:2121/getAllInfections', {
-                    withCredentials: true // Including credentials if you use them for authentication
+                const response = await Axios.get('http://localhost:2121/getUnCuredInfections', {
+                    withCredentials: true
                 });
-                setMedicalHistory(response.data); // Assuming response.data contains the medical history
+                setMedicalHistory(response.data);
             } catch (error) {
                 console.error('Error fetching medical history:', error);
             }
         };
 
-        // Call the function to fetch data
         fetchMedicalHistory();
     }, []);
 

@@ -52,6 +52,10 @@
   cursor: pointer;
 }
 
+.disease-btn {
+  background-color: rgb(214, 100, 13);
+}
+
 .edit-btn {
   background-color: #4caf50;
 }

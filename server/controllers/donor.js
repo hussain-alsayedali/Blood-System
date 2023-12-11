@@ -83,8 +83,20 @@ exports.getUnCuredInfections = async (req, res) => {
 };
 exports.addInfection = async (req, res) => {
   try {
-    const diseaseId = req.body.diseaseId;
+    // Ensure user is authenticated and IDs are integers
+    if (!req.user || typeof req.user.id !== "number") {
+      return res
+        .status(401)
+        .json({ error: "User not authenticated or invalid user ID." });
+    }
+
+    const diseaseId = parseInt(req.body.diseaseId, 10);
     const diseaseStrength = req.body.strength;
+
+    if (isNaN(diseaseId)) {
+      return res.status(400).json({ error: "Invalid disease ID." });
+    }
+
     await prisma.infection.create({
       data: {
         strength: diseaseStrength,
@@ -92,16 +104,20 @@ exports.addInfection = async (req, res) => {
         diseaseId: diseaseId,
       },
     });
+
     res.json("success");
   } catch (e) {
-    console.log(e);
-    res.json("error");
+    console.error(e);
+
+    json({ error: "An error occurred while adding the infection." });
   }
 };
-
 exports.getAllDiseases = async (req, res) => {
   try {
+    console.log("Found all diseases");
     const allDiseases = await prisma.diseaseCatalog.findMany({});
-    res(allDiseases);
-  } catch (e) {}
+    res.json(allDiseases);
+  } catch (e) {
+    console.log(e);
+  }
 };

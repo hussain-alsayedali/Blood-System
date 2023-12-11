@@ -20,7 +20,7 @@ router.get(
   isAuthed,
   donorController.getUnCuredInfections
 );
-router.get("/addInfection", isAuthed, donorController.addInfection);
+router.post("/addInfection", isAuthed, donorController.addInfection);
 router.get("/getDiseases", isAuthed, donorController.getAllDiseases);
 
 module.exports = router;

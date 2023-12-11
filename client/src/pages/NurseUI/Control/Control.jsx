@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from "react";
 import "./Control.css";
 import Axios from "axios";
-
+import Modal from '../../../components/Modal'; // this is the popup window for Diseases
 function Control() {
   const [search, setSearch] = useState("");
   const [users, setUsers] = useState([]);
   const [editingId, setEditingId] = useState(null);
   const [formData, setFormData] = useState({});
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedUser, setSelectedUser] = useState(null);
+  const [newDisease, setNewDisease] = useState('');
 
   useEffect(() => {
     Axios({
@@ -15,7 +18,6 @@ function Control() {
       withCredentials: true,
     })
       .then((res) => {
-        console.log(res.data);
         setUsers(res.data);
       })
       .catch((error) => console.error(error));
@@ -51,10 +53,70 @@ function Control() {
     });
   };
 
+  const openModal = (user) => {
+    setSelectedUser(user);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
+  // for filling the drop down
+  const [diseases, setDiseases] = useState([]);
+  useEffect(() => {
+    console.log("test0")
+    Axios.get('http://localhost:2121/donor/getDiseases', {
+      withCredentials: true,
+    })
+      .then((response) => {
+        console.log("test1")
+        console.log('Diseases received:', response.data);
+        setDiseases(response.data);
+      })
+      .catch((error) => {
+        console.log("test3")
+        console.error('Error fetching diseases:', error);
+      });
+  }, []);
+
+  const addInfection = (e) => {
+    e.preventDefault();
+
+    if (!newDisease) {
+      alert('Please select a disease to add.');
+      return;
+    }
+
+    const infectionData = {
+      strength: "mid", //todo ui later
+      donorId: selectedUser.id,
+      diseaseId: newDisease,
+    };
+
+    Axios.post('http://localhost:2121/donor/addInfection', infectionData, {
+      withCredentials: true,
+    })
+      .then((response) => {
+        console.log(response);
+        console.log('Infection added:', response.data);
+        // Update the UI or state as necessary
+      })
+      .catch((error) => {
+        console.error('Error adding infection:', error);
+        alert('An error occurred while trying to add the disease.');
+      });
+
+    // Clear the state variables if needed
+    setNewDisease('');
+    // Set strength back to default or empty if you're managing it in the state
+  };
+
   return (
     <div className="control-container">
       <h1 className="title">Admin Control</h1>
 
+      {/* THIS IS THE SEARCH BAR */}
       <input
         className="search-input"
         type="number"
@@ -63,6 +125,40 @@ function Control() {
         onChange={handleSearchChange}
       />
 
+      {/* THIS IS THE POPUP WINDOW FOR DISEASES. */}
+      <Modal isOpen={isModalOpen} onClose={closeModal}>
+        <h2>Patient Medical History</h2>
+        {selectedUser && (
+          <div className="patient-history">
+            <p>{`History for user ID: ${selectedUser.id}`}</p>
+            {/* Display the current disease status */}
+            <div className="current-disease">
+              <h3>Current Disease Status</h3>
+              <p>{selectedUser.diseaseStatus || "No disease reported"}</p>
+            </div>
+            {/* Display the requests to change the disease status */}
+            <div className="change-requests">
+              <h3>Change Requests</h3>
+              <p>No change requests.</p>
+            </div>
+            {/* Form to change disease status */}
+            <form onSubmit={addInfection} className="add-status-form">
+              <h3>Add a Disease</h3>
+              <select
+                value={newDisease}
+                onChange={(e) => setNewDisease(e.target.value)}
+              >
+                {diseases.map((disease) => (
+                  <option key={disease.id} value={disease.id}>{disease.diseaseName}</option>
+                ))}
+              </select>
+              <button type="submit">Add Status</button>
+            </form>
+          </div>
+        )}
+      </Modal>
+
+      {/* THIS IS THE TABLE TO DISPLAY ALL USERS */}
       <table className="data-table">
         <thead>
           <tr>
@@ -143,7 +239,6 @@ function Control() {
               )}
               </td>
               <td>
-                {console.log(user)}
                 {editingId === user.id ? (
                   <button
                     className="action-btn save-btn"
@@ -165,6 +260,10 @@ function Control() {
                 >
                   Delete
                 </button>
+                <button
+                  className="action-btn disease-btn"
+
+                  onClick={() => openModal(user)}>Disease</button>
               </td>
             </tr>
           ))}
