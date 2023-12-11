@@ -23,4 +23,6 @@ router.get(
 router.post("/addInfection", isAuthed, donorController.addInfection);
 router.get("/getDiseases", isAuthed, donorController.getAllDiseases);
 
+router.post("/submitDonation", isAuthed, donorController.submitDonation);
+
 module.exports = router;

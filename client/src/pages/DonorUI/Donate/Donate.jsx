@@ -1,82 +1,94 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Axios from 'axios';
-import './Donate.css';
+
 const Donate = () => {
-    // State to store user's eligibility to donate
-    const [isEligible, setIsEligible] = useState(false);
-    const [donationHistory, setDonationHistory] = useState([]);
-    const [newDonation, setNewDonation] = useState('');
+    const [user, setUser] = useState({
+        id: '',
+        firstName: '',
+        lastName: '',
+        bloodType: '',
+        weight: '',
+        birth: '', // Added to store the user's birth date
+    });
+    const [constraints, setConstraints] = useState([]); // Added to store donation constraints
 
     useEffect(() => {
-        checkEligibility();
-        fetchDonationHistory();
+        Axios({
+            method: 'GET',
+            url: 'http://localhost:2121/donor/currentDonor',
+            withCredentials: true, // This is important for sessions to work
+        })
+            .then((res) => {
+                setUser({
+                    id: res.data.id,
+                    firstName: res.data.firstName,
+                    lastName: res.data.lastName,
+                    bloodType: res.data.bloodType,
+                    weight: res.data.weight,
+                    birth: res.data.birth,
+                });
+
+                return Axios.get('http://localhost:2121/donor/readyToDonate', {
+                    withCredentials: true
+                });
+            })
+            .then((response) => {
+                // If there are constraints, update the state
+                if (response.data && !response.data.ready) {
+                    setConstraints(response.data.constraints);
+                }
+            })
+            .catch((error) => console.error(error));
     }, []);
 
-    const checkEligibility = async () => {
-        try {
-            const response = await Axios.get('http://localhost:2121/getUnCuredInfections', {
-                withCredentials: true
-            });
-            setIsEligible(response.data.length === 0);
-        } catch (error) {
-            console.error('Error checking eligibility:', error);
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        if (constraints.length > 0) {
+            // If there are constraints, show an alert and do not proceed
+            alert('You cannot donate at this time due to the following constraints: ' + constraints.join(', '));
+            console.error('Cannot donate due to constraints:', constraints);
+            return;
         }
-    };
-
-    const fetchDonationHistory = async () => {
-        try {
-            const response = await Axios.get('http://localhost:2121/getAllRequests', {
-                withCredentials: true
-            });
-            setDonationHistory(response.data);
-        } catch (error) {
-            console.error('Error fetching donation history:', error);
-        }
-    };
-
-    const handleNewDonationChange = (e) => {
-        setNewDonation(e.target.value);
-    };
-
-    const submitDonationRequest = async () => {
-        try {
-            await Axios.post('http://localhost:2121/createRequest', {
-                donationDetails: newDonation
-            }, {
-                withCredentials: true
-            });
-            setNewDonation('');
-            fetchDonationHistory();
-        } catch (error) {
-            console.error('Error submitting donation request:', error);
-        }
+        // Handle the submission logic here for a successful donation
+        // ...
     };
 
     return (
         <div>
-            <h1>Donate</h1>
-            {isEligible ? (
-                <>
-                    <h2>Create a New Donation Request</h2>
-                    <textarea value={newDonation} onChange={handleNewDonationChange}></textarea>
-                    <button onClick={submitDonationRequest}>Submit Request</button>
-                </>
-            ) : (
-                <p>You are not eligible to donate at this time.</p>
-            )}
-            <h2>Past Donation Requests</h2>
-            {donationHistory.length > 0 ? (
-                <ul>
-                    {donationHistory.map((request) => (
-                        <li key={request.id}>
-                            <div>Request: {request.details}</div>
-                            <div>Status: {request.status}</div>
-                        </li>
-                    ))}
-                </ul>
-            ) : (
-                <p>No past donation requests.</p>
-            )}
+            <h1>Donate Blood</h1>
+            <form onSubmit={handleSubmit}>
+                <div>
+                    <label>ID:</label>
+                    <input type="text" value={user.id} readOnly />
+                </div>
+                <div>
+                    <label>Name:</label>
+                    <input
+                        type="text"
+                        value={`${user.firstName} ${user.lastName}`}
+                        readOnly
+                    />
+                </div>
+                <div>
+                    <label>Blood Type:</label>
+                    <input type="text" value={user.bloodType} readOnly />
+                </div>
+                <div>
+                    <label>Weight:</label>
+                    <input type="text" value={user.weight} readOnly />
+                </div>
+                <div>
+                    <label>Donation Constraints:</label>
+                    <ul>
+                        {constraints.map((constraint, index) => (
+                            <li key={index}>{constraint}</li>
+                        ))}
+                    </ul>
+                </div>
+                <button type="submit">
+                    Submit a Blood Bag(450 mL)
+                </button>
+            </form>
         </div>
     );
 };

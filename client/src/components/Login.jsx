@@ -105,6 +105,7 @@ function Login() {
       </div>
       {/* to be deleted... hack buttons */}
       ---------------------- <br></br>
+      <p>donor acc: don@don.com | pass: adminadmin</p>
       developers buttons
       <Link to="/nurse">
         <button>Nurse</button>

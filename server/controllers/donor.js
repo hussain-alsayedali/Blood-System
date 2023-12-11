@@ -15,22 +15,33 @@ exports.getCurrentDonor = (req, res) => {
 exports.isReadyToDonate = (req, res) => {
   try {
     const donor = req.user;
-    let constrains = [];
+    console.log("==============================منيين منيين" + req.user);
+    let constraints = [];
+
+    if (!donor || typeof donor.weight === "undefined") {
+      return res.status(400).send("User information is incomplete or missing.");
+    }
+    // Check donor weight
     if (donor.weight < 50) {
-      constrains.push("Weight is Low , it should be above 50 KG");
+      constraints.push("Weight is low, it should be above 50 KG");
     }
     if (donor.weight > 150) {
-      constrains.push("Weight is high , it should be less than 150 KG");
+      constraints.push("Weight is high, it should be less than 150 KG");
     }
 
-    let age = new Date().getFullYear() - new Date(user.birth).getFullYear();
+    // Calculate donor age
+    let age = new Date().getFullYear() - new Date(donor.birth).getFullYear(); // Changed user.birth to donor.birth
     if (age < 17) {
-      constrains.push("age is low, it Should be 17 years at least");
+      constraints.push("Age is low, it should be 17 years at least");
     }
 
-    res.json({ ready: constrains.length === 0, constrains: constrains });
+    // Send response
+    res.json({ ready: constraints.length === 0, constraints: constraints });
   } catch (e) {
-    console.log(e);
+    console.error(e);
+    res
+      .status(500)
+      .send("An error occurred while checking donation eligibility.");
   }
 };
 
@@ -119,5 +130,37 @@ exports.getAllDiseases = async (req, res) => {
     res.json(allDiseases);
   } catch (e) {
     console.log(e);
+  }
+};
+
+exports.submitDonation = async (req, res) => {
+  try {
+    // Assuming the request body contains the blood bag's details.
+    const { donorId, quantity } = req.body;
+
+    // Check if the donor exists
+    const donor = await prisma.donor.findUnique({
+      where: { id: donorId },
+    });
+
+    if (!donor) {
+      return res.status(404).json({ error: "Donor not found." });
+    }
+
+    // Create a new blood bag record
+    const bloodBag = await prisma.bloodBag.create({
+      data: {
+        Donor: { connect: { id: donorId } },
+        quantity,
+        status: "good",
+      },
+    });
+
+    return res.status(201).json(bloodBag);
+  } catch (error) {
+    console.error(error);
+    return res
+      .status(500)
+      .json({ error: "An error occurred while submitting the donation." });
   }
 };
