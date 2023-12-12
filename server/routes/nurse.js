@@ -16,6 +16,19 @@ router.get("/getAllDonors", isAuthed, nurseController.getAllDonors);
 router.get("/getAll", isAuthed, nurseController.getAll);
 router.get("/getSession", isAuthed, nurseController.getSession);
 
+// patieint requests
+router.get("/getAllRequestes", isAuthed, nurseController.getAllRequestes);
+router.get(
+  "/getWaitingRequestes",
+  isAuthed,
+  nurseController.getWaitingRequests
+);
+router.post(
+  "/acceptRecipientRequest",
+  isAuthed,
+  nurseController.acceptRecipientRequest
+);
+
 // get one using id
 router.get("/getDonor", isAuthed, nurseController.getDonor);
 router.get("/getRecipient", isAuthed, nurseController.getRecipient);
@@ -25,4 +38,5 @@ router.get("/getCurrentNurse", isAuthed, nurseController.getCurrentNurse);
 
 // delete user
 router.delete("/deleteUser", isAuthed, nurseController.deleteUser);
+
 module.exports = router;

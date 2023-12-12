@@ -152,3 +152,121 @@ exports.addInfection = async (req, res) => {
     console.error(e);
   }
 };
+
+exports.getAllRequestes = async (req, res) => {
+  try {
+    const donationRequestes = await prisma.donationRequest.findMany({});
+    const recivingRequestes = await prisma.receivingRequest.findMany({});
+
+    res.json({
+      recivingRequestes: recivingRequestes,
+      donationRequestes: donationRequestes,
+    });
+  } catch (e) {
+    console.log(e);
+  }
+};
+exports.getWaitingRequests = async (req, res) => {
+  try {
+    const donationRequestes = await prisma.donationRequest.findMany({
+      where: {
+        status: "waiting",
+      },
+    });
+    const recivingRequestes = await prisma.receivingRequest.findMany({
+      where: {
+        status: "waiting",
+      },
+    });
+
+    res.json({
+      recivingRequestes: recivingRequestes,
+      donationRequestes: donationRequestes,
+    });
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+exports.acceptRecipientRequest = async (req, res) => {
+  try {
+    const reqestId = parseInt(req.body.reqestId);
+    const recipintId = parseInt(req.body.recipintId);
+    console.log(reqestId, recipintId);
+    const recipintBloodType = await prisma.recipient.findUnique({
+      where: {
+        id: recipintId,
+      },
+      select: {
+        bloodType: true,
+      },
+    });
+    console.log(recipintBloodType);
+    const notTakenBloodBag = await prisma.bloodBag.findFirst({
+      where: {
+        status: "good",
+        Donor: {
+          bloodType: recipintBloodType.bloodType,
+        },
+      },
+    });
+    if (notTakenBloodBag) {
+      const updatedBloodBag = await prisma.bloodBag.update({
+        where: {
+          id: notTakenBloodBag.id,
+        },
+        data: {
+          status: "taken",
+          givenTo: recipintId,
+        },
+      });
+    }
+
+    const updateRecivingRequest = await prisma.receivingRequest.update({
+      where: {
+        id: reqestId,
+      },
+      data: {
+        updateDate: new Date(),
+        operationStatus: "success",
+        requestStatus: "accepted",
+        nurseId: req.user.id,
+        bloodBagId: notTakenBloodBag.id,
+      },
+    });
+
+    res.json("succes");
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+exports.declineRecipientRequest = async (req, res) => {
+  try {
+    const reqestId = parseInt(req.body.reqestId);
+    const recipintId = parseInt(req.body.recipintId);
+    console.log(reqestId, recipintId);
+    const updateRecivingRequest = await prisma.receivingRequest.update({
+      where: {
+        id: reqestId,
+      },
+      data: {
+        updateDate: new Date(),
+        requestStatus: "rejected",
+        nurseId: req.user.id,
+      },
+    });
+    res.json("succses");
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+// exports.acceptDonationRequest = async (req, res) => {
+//   try{
+
+//   }
+//   catch(e){
+//     console.log(e)
+//   }
+// };
