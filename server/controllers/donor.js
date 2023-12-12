@@ -47,7 +47,7 @@ exports.isReadyToDonate = (req, res) => {
 
 exports.createDonationRequest = async (req, res) => {
   try {
-    await prisma.donor.create({
+    await prisma.donationRequest.create({
       data: {
         donorId: req.user.id,
       },

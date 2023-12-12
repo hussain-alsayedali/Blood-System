@@ -15,6 +15,7 @@ const mainRoutes = require("./routes/main");
 const nurseRoutes = require("./routes/nurse");
 const donorRoutes = require("./routes/donor");
 const recipientRoutes = require("./routes/recipient");
+const patientRoutes = require("./routes/patient");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const { data } = require("autoprefixer");
@@ -84,6 +85,7 @@ app.use("/", mainRoutes);
 app.use("/nurse", nurseRoutes);
 app.use("/donor", donorRoutes);
 app.use("/recipient", recipientRoutes);
+app.use("/patient", patientRoutes);
 
 //Setup Routes For Which The Server Is Listening
 
