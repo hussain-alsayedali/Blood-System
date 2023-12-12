@@ -193,7 +193,7 @@ exports.acceptRecipientRequest = async (req, res) => {
     const reqestId = parseInt(req.body.reqestId);
     const recipintId = parseInt(req.body.recipintId);
     const bloodType = req.body.bloodType;
-    console.log(reqestId, recipintId);
+    console.log(reqestId, recipintId, bloodType);
 
     console.log(recipintBloodType);
     const notTakenBloodBag = await prisma.bloodBag.findFirst({
