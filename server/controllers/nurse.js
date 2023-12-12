@@ -192,21 +192,15 @@ exports.acceptRecipientRequest = async (req, res) => {
   try {
     const reqestId = parseInt(req.body.reqestId);
     const recipintId = parseInt(req.body.recipintId);
+    const bloodType = req.body.bloodType;
     console.log(reqestId, recipintId);
-    const recipintBloodType = await prisma.recipient.findUnique({
-      where: {
-        id: recipintId,
-      },
-      select: {
-        bloodType: true,
-      },
-    });
+
     console.log(recipintBloodType);
     const notTakenBloodBag = await prisma.bloodBag.findFirst({
       where: {
         status: "good",
         Donor: {
-          bloodType: recipintBloodType.bloodType,
+          bloodType: bloodType,
         },
       },
     });
