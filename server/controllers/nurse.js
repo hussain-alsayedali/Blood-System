@@ -27,8 +27,32 @@ exports.getAllDonors = async (req, res) => {
 };
 exports.getAll = async (req, res) => {
   try {
-    const allDonors = await prisma.donor.findMany({});
-    const allRecipients = await prisma.recipient.findMany({});
+    const allDonors = await prisma.donor.findMany({
+      include: {
+        infections: {
+          include: {
+            disease: {
+              select: {
+                diseaseName: true,
+              },
+            },
+          },
+        },
+      },
+    });
+    const allRecipients = await prisma.recipient.findMany({
+      include: {
+        infections: {
+          include: {
+            disease: {
+              select: {
+                diseaseName: true,
+              },
+            },
+          },
+        },
+      },
+    });
     const allUsers = [...allDonors, ...allRecipients];
     res.json(allUsers);
   } catch (e) {
@@ -94,5 +118,37 @@ exports.deleteUser = async (req, res) => {
     res.json("succes");
   } catch (e) {
     console.log(e);
+  }
+};
+
+exports.addInfection = async (req, res) => {
+  try {
+    // Ensure user is authenticated and IDs are integers
+    if (!req.user || typeof req.user.id !== "number") {
+      return res
+        .status(401)
+        .json({ error: "User not authenticated or invalid user ID." });
+    }
+
+    console.log(req.body);
+    const diseaseRecievedId = parseInt(req.body.diseaseId);
+    const diseaseStrength = req.body.strength;
+    const donorId = parseInt(req.body.donorId);
+    console.log(diseaseRecievedId + diseaseStrength);
+    if (isNaN(diseaseRecievedId)) {
+      return res.status(400).json({ error: "Invalid disease ID." });
+    }
+
+    await prisma.infection.create({
+      data: {
+        strength: diseaseStrength,
+        donorId: donorId,
+        diseaseId: diseaseRecievedId,
+      },
+    });
+
+    res.json("success");
+  } catch (e) {
+    console.error(e);
   }
 };

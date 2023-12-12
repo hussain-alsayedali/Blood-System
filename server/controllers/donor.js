@@ -101,9 +101,11 @@ exports.addInfection = async (req, res) => {
         .json({ error: "User not authenticated or invalid user ID." });
     }
 
-    const diseaseId = parseInt(req.body.diseaseId, 10);
+    console.log(req.body);
+    const diseaseRecievedId = parseInt(req.body.diseaseId);
     const diseaseStrength = req.body.strength;
-
+    const donorId = req.body.donorId;
+    console.log(diseaseRecievedId + diseaseStrength);
     if (isNaN(diseaseId)) {
       return res.status(400).json({ error: "Invalid disease ID." });
     }
@@ -111,16 +113,14 @@ exports.addInfection = async (req, res) => {
     await prisma.infection.create({
       data: {
         strength: diseaseStrength,
-        donorId: req.user.id,
-        diseaseId: diseaseId,
+        donorId: req.body.donorid,
+        diseaseId: diseaseRecievedId,
       },
     });
 
     res.json("success");
   } catch (e) {
     console.error(e);
-
-    json({ error: "An error occurred while adding the infection." });
   }
 };
 exports.getAllDiseases = async (req, res) => {

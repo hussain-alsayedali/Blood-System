@@ -4,9 +4,11 @@ const authController = require("../controllers/auth");
 const nurseController = require("../controllers/nurse");
 const { ensureAuth, ensureGuest, isAuthed } = require("../middleware/auth");
 
+// posts
 router.post("/signup", isAuthed, authController.postSignupNurse);
 router.post("/login", isAuthed, authController.postLoginNurse);
 router.post("/logout", isAuthed, authController.logout);
+router.post("/addInfection", isAuthed, nurseController.addInfection);
 
 // get all
 router.get("/getAllRecipients", isAuthed, nurseController.getAllRecipient);

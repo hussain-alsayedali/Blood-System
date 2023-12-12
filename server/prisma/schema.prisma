@@ -63,7 +63,7 @@ model Donor {
   firstName       String
   lastName        String
   password        String
-  diseases        infection[]
+  infections      infection[]
   blood           Blood             @relation(fields: [bloodType], references: [type])
   bloodType       String
   BloodBag        BloodBag[]
@@ -72,7 +72,7 @@ model Donor {
 
 model infection {
   id                   Int            @id @default(autoincrement())
-  diseaseName          DiseaseCatalog @relation(fields: [diseaseId], references: [id])
+  disease              DiseaseCatalog @relation(fields: [diseaseId], references: [id])
   dateOfInfection      DateTime       @default(now())
   dateOfheal           DateTime?
   strength             String

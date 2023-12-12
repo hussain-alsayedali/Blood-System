@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./Control.css";
 import Axios from "axios";
-import Modal from '../../../components/Modal'; // this is the popup window for Diseases
+import Modal from "../../../components/Modal"; // this is the popup window for Diseases
 function Control() {
   const [search, setSearch] = useState("");
   const [users, setUsers] = useState([]);
@@ -9,7 +9,7 @@ function Control() {
   const [formData, setFormData] = useState({});
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
-  const [newDisease, setNewDisease] = useState('');
+  const [newDisease, setNewDisease] = useState("");
 
   useEffect(() => {
     Axios({
@@ -19,6 +19,7 @@ function Control() {
     })
       .then((res) => {
         setUsers(res.data);
+        console.log(res.data);
       })
       .catch((error) => console.error(error));
   }, []);
@@ -55,6 +56,7 @@ function Control() {
 
   const openModal = (user) => {
     setSelectedUser(user);
+    console.log(user);
     setIsModalOpen(true);
   };
 
@@ -65,18 +67,18 @@ function Control() {
   // for filling the drop down
   const [diseases, setDiseases] = useState([]);
   useEffect(() => {
-    console.log("test0")
-    Axios.get('http://localhost:2121/donor/getDiseases', {
+    console.log("test0");
+    Axios.get("http://localhost:2121/donor/getDiseases", {
       withCredentials: true,
     })
       .then((response) => {
-        console.log("test1")
-        console.log('Diseases received:', response.data);
+        console.log("test1");
+        console.log("Diseases received:", response.data);
         setDiseases(response.data);
       })
       .catch((error) => {
-        console.log("test3")
-        console.error('Error fetching diseases:', error);
+        console.log("test3");
+        console.error("Error fetching diseases:", error);
       });
   }, []);
 
@@ -84,7 +86,7 @@ function Control() {
     e.preventDefault();
 
     if (!newDisease) {
-      alert('Please select a disease to add.');
+      alert("Please select a disease to add.");
       return;
     }
 
@@ -93,22 +95,26 @@ function Control() {
       donorId: selectedUser.id,
       diseaseId: newDisease,
     };
-
-    Axios.post('http://localhost:2121/donor/addInfection', infectionData, {
+    console.log("the new diseseas is " + newDisease);
+    Axios({
+      method: "POST",
+      data: infectionData,
       withCredentials: true,
+      url: "http://localhost:2121/nurse/addInfection",
+      // crossDomain: true,
     })
       .then((response) => {
         console.log(response);
-        console.log('Infection added:', response.data);
+        console.log("Infection added:", response.data);
         // Update the UI or state as necessary
       })
       .catch((error) => {
-        console.error('Error adding infection:', error);
-        alert('An error occurred while trying to add the disease.');
+        console.error("Error adding infection:", error);
+        alert("An error occurred while trying to add the disease.");
       });
 
     // Clear the state variables if needed
-    setNewDisease('');
+    setNewDisease("");
     // Set strength back to default or empty if you're managing it in the state
   };
 
@@ -134,7 +140,10 @@ function Control() {
             {/* Display the current disease status */}
             <div className="current-disease">
               <h3>Current Disease Status</h3>
-              <p>{selectedUser.diseaseStatus || "No disease reported"}</p>
+              <p>
+                {selectedUser.infections[0].disease.diseaseName ||
+                  "No disease reported"}
+              </p>
             </div>
             {/* Display the requests to change the disease status */}
             <div className="change-requests">
@@ -149,7 +158,9 @@ function Control() {
                 onChange={(e) => setNewDisease(e.target.value)}
               >
                 {diseases.map((disease) => (
-                  <option key={disease.id} value={disease.id}>{disease.diseaseName}</option>
+                  <option key={disease.id} value={disease.id}>
+                    {disease.diseaseName}
+                  </option>
                 ))}
               </select>
               <button type="submit">Add Status</button>
@@ -178,65 +189,71 @@ function Control() {
             <tr key={user.id + user.type}>
               <td>{user.id}</td>
               <td>{user.type}</td>
-              <td>{editingId === user.id ? (
-                <input
-                  name="name"
-                  value={formData.firstName}
-                  onChange={handleInputChange}
-                />
-              ) : (
-                `${user.firstName} ${user.lastName}`
-              )}
+              <td>
+                {editingId === user.id ? (
+                  <input
+                    name="name"
+                    value={formData.firstName}
+                    onChange={handleInputChange}
+                  />
+                ) : (
+                  `${user.firstName} ${user.lastName}`
+                )}
               </td>
-              <td>{editingId === user.id ? (
-                <input
-                  name="birth"
-                  value={new Date(formData.birth).getFullYear()}
-                  onChange={handleInputChange}
-                />
-              ) : (
-                new Date().getFullYear() - new Date(user.birth).getFullYear()
-              )}
+              <td>
+                {editingId === user.id ? (
+                  <input
+                    name="birth"
+                    value={new Date(formData.birth).getFullYear()}
+                    onChange={handleInputChange}
+                  />
+                ) : (
+                  new Date().getFullYear() - new Date(user.birth).getFullYear()
+                )}
               </td>
-              <td>{editingId === user.id ? (
-                <input
-                  name="bloodType"
-                  value={formData.bloodType}
-                  onChange={handleInputChange}
-                />
-              ) : (
-                user.bloodType
-              )}
+              <td>
+                {editingId === user.id ? (
+                  <input
+                    name="bloodType"
+                    value={formData.bloodType}
+                    onChange={handleInputChange}
+                  />
+                ) : (
+                  user.bloodType
+                )}
               </td>
-              <td>{editingId === user.id ? (
-                <input
-                  name="email"
-                  value={formData.email}
-                  onChange={handleInputChange}
-                />
-              ) : (
-                user.email
-              )}
+              <td>
+                {editingId === user.id ? (
+                  <input
+                    name="email"
+                    value={formData.email}
+                    onChange={handleInputChange}
+                  />
+                ) : (
+                  user.email
+                )}
               </td>
-              <td>{editingId === user.id ? (
-                <input
-                  name="weight"
-                  value={formData.weight}
-                  onChange={handleInputChange}
-                />
-              ) : (
-                user.weight
-              )}
+              <td>
+                {editingId === user.id ? (
+                  <input
+                    name="weight"
+                    value={formData.weight}
+                    onChange={handleInputChange}
+                  />
+                ) : (
+                  user.weight
+                )}
               </td>
-              <td>{editingId === user.id ? (
-                <input
-                  name="phone"
-                  value={formData.phone}
-                  onChange={handleInputChange}
-                />
-              ) : (
-                user.phone
-              )}
+              <td>
+                {editingId === user.id ? (
+                  <input
+                    name="phone"
+                    value={formData.phone}
+                    onChange={handleInputChange}
+                  />
+                ) : (
+                  user.phone
+                )}
               </td>
               <td>
                 {editingId === user.id ? (
@@ -262,8 +279,10 @@ function Control() {
                 </button>
                 <button
                   className="action-btn disease-btn"
-
-                  onClick={() => openModal(user)}>Disease</button>
+                  onClick={() => openModal(user)}
+                >
+                  Disease
+                </button>
               </td>
             </tr>
           ))}

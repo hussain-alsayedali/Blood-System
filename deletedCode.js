@@ -186,3 +186,6 @@
 //       </table>
 //     </div>
 //   );
+// Axios.post("http://localhost:2121/donor/addInfection", infectionData, {
+//   withCredentials: true,
+// })
