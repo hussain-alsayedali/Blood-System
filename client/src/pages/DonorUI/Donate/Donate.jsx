@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Axios from 'axios';
-
+import './Donate.css'
 const Donate = () => {
     const [user, setUser] = useState({
         id: '',
@@ -44,14 +44,49 @@ const Donate = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (constraints.length > 0) {
-            // If there are constraints, show an alert and do not proceed
             alert('You cannot donate at this time due to the following constraints: ' + constraints.join(', '));
             console.error('Cannot donate due to constraints:', constraints);
             return;
         }
-        // Handle the submission logic here for a successful donation
-        // ...
+
+        // Submit the donation to the backend.
+        Axios.post('http://localhost:2121/donor/createDonationRequest', {
+            donorId: user.id,
+            // Include any additional data your backend requires here.
+        }, {
+            withCredentials: true
+        })
+            .then(response => {
+                alert("Donation request was sent successfully");
+                // Refresh the donation requests list after successful submission
+                return fetchDonationRequests(); // Make sure to return this promise
+            })
+            .then(() => {
+                console.log("Donation requests have been refreshed successfully.");
+            })
+            .catch(error => {
+                // console.error("An error occurred:", error);
+                // alert("An error occurred. Please try again later.");
+            });
     };
+
+
+    const [donationRequests, setDonationRequests] = useState([]);
+    useEffect(() => {
+        console.log('Attempting to fetch donation requests');
+        Axios({
+            method: 'GET',
+            url: 'http://localhost:2121/donor/getAllRequests',
+            withCredentials: true,
+        })
+            .then((response) => {
+                console.log("Donation requests fetched successfully:", response.data);
+                setDonationRequests(response.data);
+            })
+            .catch((error) => {
+                console.error('Error fetching donation requests', error);
+            });
+    }, []);
 
     return (
         <div>
@@ -82,6 +117,7 @@ const Donate = () => {
                     <ul>
                         {constraints.map((constraint, index) => (
                             <li key={index}>{constraint}</li>
+
                         ))}
                     </ul>
                 </div>
@@ -89,6 +125,24 @@ const Donate = () => {
                     Submit a Blood Bag(450 mL)
                 </button>
             </form>
+
+            {/* Section to display donation requests */}
+            <div className="donation-requests">
+                <h2>My Donation Requests</h2>
+                {donationRequests.length > 0 ? (
+                    <ul>
+                        {donationRequests.map(request => (
+                            <li key={request.id} className="donation-request-item">
+                                <p className="request-date">Date: {new Date(request.requestDate).toLocaleDateString()}</p>
+                                <p className="request-status">Status: {request.requestStatus}</p>
+                                {/* Add more details as needed */}
+                            </li>
+                        ))}
+                    </ul>
+                ) : (
+                    <p className="no-requests-message">No donation requests found.</p>
+                )}
+            </div>
         </div>
     );
 };

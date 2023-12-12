@@ -71,3 +71,42 @@
     color: #d9534f;
     text-align: center;
 }
+
+/* DonationRequests.css */
+.donation-requests {
+    width: 80%;
+    margin: auto;
+    max-width: 600px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.donation-requests h2 {
+    text-align: center;
+}
+
+.donation-requests ul {
+    list-style: none;
+    padding: 0;
+}
+
+.donation-request-item {
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.donation-request-item:last-child {
+    border-bottom: none;
+}
+
+.request-date,
+.request-status {
+    text-align: center;
+    color: #666;
+}
+
+.no-requests-message {
+    text-align: center;
+    color: #c2c2c2;
+}
