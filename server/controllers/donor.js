@@ -15,7 +15,6 @@ exports.getCurrentDonor = (req, res) => {
 exports.isReadyToDonate = (req, res) => {
   try {
     const donor = req.user;
-    console.log("==============================منيين منيين" + req.user);
     let constraints = [];
 
     if (!donor || typeof donor.weight === "undefined") {
@@ -47,23 +46,46 @@ exports.isReadyToDonate = (req, res) => {
 
 exports.createDonationRequest = async (req, res) => {
   try {
-    await prisma.donationRequest.create({
+    const donorId = req.body.donorId;
+
+    const donationRequest = await prisma.donationRequest.create({
       data: {
-        donorId: req.user.id,
+        donorId: donorId,
       },
     });
+    res.status(201).json(donationRequest);
   } catch (e) {
-    console.log(e);
+    console.error(e);
+    res.status(500).json({
+      error: "An error occurred while creating the donation request.",
+    });
   }
 };
 
-exports.getAllRequests = (req, res) => {
+exports.getAllRequests = async (req, res) => {
+  console.log("inside requests");
+  // Check if the user is authenticated
+  if (!req.user) {
+    // If not, return a 401 Unauthorized response
+    return res.status(401).json({ message: "Unauthorized access." });
+  }
+
   try {
-    res.json(req.user.DonationRequest);
+    const donationRequests = await prisma.DonationRequest.findMany({
+      where: {
+        donorId: req.user.id,
+      },
+    });
+    console.log("found the donation requests");
+    res.json(donationRequests);
   } catch (e) {
-    console.log(e);
+    console.error(e);
+    res
+      .status(500)
+      .json({ message: "An error occurred while fetching donation requests." });
   }
 };
+
 exports.getAllInfections = async (req, res) => {
   try {
     const allinfections = req.user.infections;

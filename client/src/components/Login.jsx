@@ -106,6 +106,9 @@ function Login() {
       {/* to be deleted... hack buttons */}
       ---------------------- <br></br>
       <p>donor acc: don@don.com | pass: adminadmin</p>
+      <p>donor no constraints: dd@dd.dd | adminadmin </p>
+      <p>nurse: admin@admin.com | adminadmin</p>
+
       developers buttons
       <Link to="/nurse">
         <button>Nurse</button>

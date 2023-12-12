@@ -10,7 +10,11 @@ router.post("/login", isAuthed, authController.postLoginDonor);
 router.get("/currentDonor", isAuthed, donorController.getCurrentDonor);
 router.get("/readyToDonate", isAuthed, donorController.isReadyToDonate);
 router.get("/getAllRequests", isAuthed, donorController.getAllRequests);
-router.post("/createRequest", isAuthed, donorController.createDonationRequest);
+router.post(
+  "/createDonationRequest",
+  isAuthed,
+  donorController.createDonationRequest
+);
 
 // infections
 router.get("/getAllInfections", isAuthed, donorController.getAllInfections);
