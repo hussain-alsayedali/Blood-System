@@ -229,6 +229,21 @@ exports.acceptRecipientRequest = async (req, res) => {
       },
     });
 
+    const theRecipient = await prisma.recipient.findUnique({
+      where: {
+        id: recipintId,
+      },
+    });
+
+    prisma.recipient.update({
+      where: {
+        id: recipintId,
+      },
+      data: {
+        currentMoney: parseInt(theRecipient.currentMoney) + 50,
+      },
+    });
+
     res.json("succes");
   } catch (e) {
     console.log(e);
@@ -256,11 +271,66 @@ exports.declineRecipientRequest = async (req, res) => {
   }
 };
 
-// exports.acceptDonationRequest = async (req, res) => {
-//   try{
+exports.acceptDonationRequest = async (req, res) => {
+  try {
+    const reqestId = parseInt(req.body.reqestId);
+    const recivedDonorId = parseInt(req.body.donorId);
 
-//   }
-//   catch(e){
-//     console.log(e)
-//   }
-// };
+    const newBloodBag = await prisma.bloodBag.create({
+      data: {
+        donorId: recivedDonorId,
+      },
+    });
+    const updatedRequest = await prisma.donationRequest.update({
+      where: {
+        id: reqestId,
+      },
+      data: {
+        updateDate: new Date(),
+        operationStatus: "success",
+        requestStatus: "accepted",
+        nurseId: req.user.id,
+        bloodBagId: newBloodBag.id,
+      },
+    });
+
+    const theDonor = await prisma.donor.findUnique({
+      where: {
+        id: recivedDonorId,
+      },
+    });
+
+    await prisma.donor.update({
+      where: {
+        id: recivedDonorId,
+      },
+      data: {
+        currentMoney: parseInt(theDonor.currentMoney) + 50,
+      },
+    });
+    res.json("succses");
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+exports.declineDonationRequest = async (req, res) => {
+  try {
+    const reqestId = parseInt(req.body.reqestId);
+    const recivedDonorId = parseInt(req.body.donorId);
+
+    const updateRecivingRequest = await prisma.donationRequest.update({
+      where: {
+        id: reqestId,
+      },
+      data: {
+        updateDate: new Date(),
+        requestStatus: "rejected",
+        nurseId: req.user.id,
+      },
+    });
+    res.json("Rejected");
+  } catch (e) {
+    console.log(e);
+  }
+};

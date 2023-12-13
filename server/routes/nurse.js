@@ -23,10 +23,27 @@ router.get(
   isAuthed,
   nurseController.getWaitingRequests
 );
+
+// accept and decline donation and reciving requests
 router.post(
   "/acceptRecipientRequest",
   isAuthed,
   nurseController.acceptRecipientRequest
+);
+router.post(
+  "/declineRecipientRequest",
+  isAuthed,
+  nurseController.declineRecipientRequest
+);
+router.post(
+  "/acceptDonationRequest",
+  isAuthed,
+  nurseController.acceptDonationRequest
+);
+router.post(
+  "/declineDonationRequest",
+  isAuthed,
+  nurseController.declineDonationRequest
 );
 
 // get one using id
