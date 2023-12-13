@@ -90,10 +90,7 @@ app.use("/patient", patientRoutes);
 //Setup Routes For Which The Server Is Listening
 
 async function main() {
-<<<<<<< HEAD
   console.log("منين منين  منين منين");
-=======
->>>>>>> b710a2baa284b5db213c2b677840fad5b8160225
   // await prisma.diseaseCatalog.create({
   //   data: {
   //     diseaseName: "cold",
