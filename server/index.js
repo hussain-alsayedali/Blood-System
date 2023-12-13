@@ -55,7 +55,7 @@ app
 app.use(logger("dev"));
 
 //Use forms for put / delete
-// app.use(methodOverride("_method"));
+app.use(methodOverride("_method"));
 
 app.use(
   expressSession({

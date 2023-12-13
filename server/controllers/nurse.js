@@ -337,11 +337,12 @@ exports.declineDonationRequest = async (req, res) => {
 
 exports.editPatientInfo = async (req, res) => {
   try {
+    console.log(req.body);
     const patientType = req.body.patientType;
-    const patientId = parseInt(req.body.patientId);
-    const changedName = req.body.name.split(" ");
-    const firstName = changedName[0];
-    const lastName = changedName[1];
+    const patientId = parseInt(req.body.id);
+
+    const firstName = req.body.firstName;
+    const lastName = req.body.lastName;
     const changedBirth = new Date(req.body.birth);
     const changedEmail = req.body.email;
     const changedWeight = req.body.weight;

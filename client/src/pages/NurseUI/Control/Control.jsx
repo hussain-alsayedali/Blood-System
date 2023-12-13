@@ -5,7 +5,7 @@ import Modal from "../../../components/Modal"; // this is the popup window for D
 function Control() {
   const [search, setSearch] = useState("");
   const [users, setUsers] = useState([]);
-  const [editingId, setEditingId] = useState(null);
+  const [editingObj, setEditingObj] = useState({ id: 0, type: "" });
   const [formData, setFormData] = useState({});
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
@@ -37,13 +37,33 @@ function Control() {
   };
 
   const startEditing = (user) => {
-    setEditingId(user.id);
+    // setEditingId(user.id);
+    setEditingObj({ id: user.id, type: user.type });
     setFormData(user);
   };
 
   const saveChanges = (user) => {
     // TODO: save the changes to the backend
-    setEditingId(null);
+    Axios({
+      method: "POST",
+      data: {
+        ...formData,
+        _method: "PUT", // Include the method override as a form field or query parameter
+      },
+      withCredentials: true,
+      url: "http://localhost:2121/nurse/editPatientInfo",
+      // crossDomain: true,
+    })
+      .then((response) => {
+        console.log(response);
+        console.log("edited User added:", response.data);
+        // Update the UI or state as necessary
+      })
+      .catch((error) => {
+        console.error("Error adding infection:", error);
+        alert("An error occurred while trying to add the disease.");
+      });
+    setEditingObj({});
   };
 
   const deleteUser = (userId, userType) => {
@@ -190,7 +210,7 @@ function Control() {
               <td>{user.id}</td>
               <td>{user.type}</td>
               <td>
-                {editingId === user.id ? (
+                {editingObj.id === user.id && editingObj.type === user.type ? (
                   <input
                     name="name"
                     value={formData.firstName}
@@ -201,10 +221,11 @@ function Control() {
                 )}
               </td>
               <td>
-                {editingId === user.id ? (
+                {editingObj.id === user.id && editingObj.type === user.type ? (
                   <input
+                    type="date"
                     name="birth"
-                    value={new Date(formData.birth).getFullYear()}
+                    value={formData.birth}
                     onChange={handleInputChange}
                   />
                 ) : (
@@ -212,7 +233,7 @@ function Control() {
                 )}
               </td>
               <td>
-                {editingId === user.id ? (
+                {editingObj.id === user.id && editingObj.type === user.type ? (
                   <input
                     name="bloodType"
                     value={formData.bloodType}
@@ -223,7 +244,7 @@ function Control() {
                 )}
               </td>
               <td>
-                {editingId === user.id ? (
+                {editingObj.id === user.id && editingObj.type === user.type ? (
                   <input
                     name="email"
                     value={formData.email}
@@ -234,7 +255,7 @@ function Control() {
                 )}
               </td>
               <td>
-                {editingId === user.id ? (
+                {editingObj.id === user.id && editingObj.type === user.type ? (
                   <input
                     name="weight"
                     value={formData.weight}
@@ -245,7 +266,7 @@ function Control() {
                 )}
               </td>
               <td>
-                {editingId === user.id ? (
+                {editingObj.id === user.id && editingObj.type === user.type ? (
                   <input
                     name="phone"
                     value={formData.phone}
@@ -256,7 +277,7 @@ function Control() {
                 )}
               </td>
               <td>
-                {editingId === user.id ? (
+                {editingObj.id === user.id && editingObj.type === user.type ? (
                   <button
                     className="action-btn save-btn"
                     onClick={() => saveChanges(user)}
