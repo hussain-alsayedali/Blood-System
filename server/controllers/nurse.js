@@ -334,3 +334,54 @@ exports.declineDonationRequest = async (req, res) => {
     console.log(e);
   }
 };
+
+exports.editPatientInfo = async (req, res) => {
+  try {
+    const patientType = req.body.patientType;
+    const patientId = parseInt(req.body.patientId);
+    const changedName = req.body.name.split(" ");
+    const firstName = changedName[0];
+    const lastName = changedName[1];
+    const changedBirth = new Date(req.body.birth);
+    const changedEmail = req.body.email;
+    const changedWeight = req.body.weight;
+    const changedPhone = req.body.phone;
+    const changedBloodType = req.body.bloodType;
+
+    if (patientType === "recipient") {
+      await prisma.recipient.update({
+        where: {
+          id: patientId,
+        },
+        data: {
+          firstName: firstName,
+          lastName: lastName,
+          birth: changedBirth,
+          email: changedEmail,
+          weight: changedWeight,
+          phone: changedPhone,
+          bloodType: changedBloodType,
+        },
+      });
+    } else {
+      await prisma.donor.update({
+        where: {
+          id: patientId,
+        },
+        data: {
+          firstName: firstName,
+          lastName: lastName,
+          birth: changedBirth,
+          email: changedEmail,
+          weight: changedWeight,
+          phone: changedPhone,
+          bloodType: changedBloodType,
+        },
+      });
+    }
+    res.json("succes");
+  } catch (e) {
+    console.log(e);
+    res.json("fail");
+  }
+};

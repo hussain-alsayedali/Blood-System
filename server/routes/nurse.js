@@ -46,6 +46,8 @@ router.post(
   nurseController.declineDonationRequest
 );
 
+router.put("/editPatientInfo", isAuthed, nurseController.editPatientInfo);
+
 // get one using id
 router.get("/getDonor", isAuthed, nurseController.getDonor);
 router.get("/getRecipient", isAuthed, nurseController.getRecipient);
