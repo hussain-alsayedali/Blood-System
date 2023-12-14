@@ -17,49 +17,22 @@ function RecipientRequests() {
 
     const [selectedUrgency, setSelectedUrgency] = useState("All");
     const [clickedUrgency, setClickedUrgency] = useState("");
-    const [patients, setPatients] = useState([
-        {
-            id: 1,
-            name: "Ali",
-            bloodType: "A+",
-            phone: "050342532",
-            urgency: "Critical",
-            date: "2023-11-21",
-        },
-        {
-            id: 2,
-            name: "Feras",
-            bloodType: "B+",
-            phone: "050342532",
-            urgency: "Low",
-            date: "2023-11-23",
-        },
-        {
-            id: 3,
-            name: "Messi",
-            bloodType: "A-",
-            phone: "053342532",
-            urgency: "Mid",
-            date: "2023-11-22",
-        },
-        {
-            id: 3,
-            name: "Messi",
-            bloodType: "AB+",
-            phone: "053342532",
-            urgency: "Served",
-            date: "2023-11-22",
-        },
-        {
-            id: 3,
-            name: "Messi",
-            bloodType: "O+",
-            phone: "053342532",
-            urgency: "Critical",
-            date: "2023-11-22",
-        },
-        // Add more patient data as needed
-    ]);
+    const [patients, setPatients] = useState([]); // Now starts as an empty array
+
+    // Fetch recipient requests on component mount
+    useEffect(() => {
+        Axios({
+            method: 'GET',
+            url: 'http://localhost:2121/nurse/getWaitingRequestes', // Update this URL to match your route
+            withCredentials: true,
+        })
+            .then((res) => {
+                setPatients(res.data.recivingRequestes);
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }, []);
 
     const sortedPatients = patients.sort(
         (a, b) => new Date(a.date) - new Date(b.date)
@@ -104,6 +77,11 @@ function RecipientRequests() {
     };
 
 
+    const formatDate = (dateString) => {
+        const options = { year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' };
+        return new Date(dateString).toLocaleDateString(undefined, options);
+    };
+
     return (
         <div className="dashboard-container">
             {clickedUrgency && (
@@ -132,9 +110,9 @@ function RecipientRequests() {
                 <table>
                     <thead>
                         <tr>
+                            <th>ID</th>
                             <th>Name</th>
                             <th>Blood Type</th>
-                            <th>Phone</th>
                             <th>Urgency</th>
                             <th>Date</th>
                             <th>Give blood type</th>
@@ -143,17 +121,17 @@ function RecipientRequests() {
                     <tbody>
                         {filteredPatients.map((patient, index) => (
                             <tr key={index}>
-                                <td>{patient.name}</td>
-                                <td>{patient.bloodType}</td>
-                                <td>{patient.phone}</td>
+                                <td>{patient.recipientId}</td>
+                                <td>{patient.recipient.firstName + " " + patient.recipient.lastName}</td>
+                                <td>{patient.recipient.bloodType}</td>
                                 <td
-                                    style={{ color: getUrgencyLabel(patient.urgency).color }}
-                                    dangerouslySetInnerHTML={getUrgencyLabel(patient.urgency)}
+                                    style={{ color: getUrgencyLabel(patient.recipient.currentUrgency).color }}
+                                    dangerouslySetInnerHTML={getUrgencyLabel(patient.recipient.currentUrgency)}
                                 ></td>
-                                <td>{patient.date}</td>
+                                <td>{formatDate(patient.requestDate)}</td>
                                 <td>
-                                    {patient.urgency !== "Served" &&
-                                        bloodTypeCompatibility[patient.bloodType].map(
+                                    {patient.recipient.currentUrgency !== "Served" &&
+                                        bloodTypeCompatibility[patient.recipient.bloodType].map(
                                             (bloodType) => (
                                                 <button
                                                     onClick={() => handleServeClick(patient, bloodType)}

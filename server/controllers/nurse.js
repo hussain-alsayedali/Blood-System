@@ -174,10 +174,16 @@ exports.getWaitingRequests = async (req, res) => {
       where: {
         requestStatus: "waiting",
       },
+      include: {
+        donor: true,
+      },
     });
     const recivingRequestes = await prisma.receivingRequest.findMany({
       where: {
         requestStatus: "waiting",
+      },
+      include: {
+        recipient: true,
       },
     });
     const infectionRequests = await prisma.infectionRequest.findMany({
