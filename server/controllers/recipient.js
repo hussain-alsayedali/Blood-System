@@ -97,3 +97,18 @@ exports.createRecivingRequest = async (req, res) => {
     console.log(e);
   }
 };
+exports.addInfectionRequest = async (req, res) => {
+  try {
+    const recivedDiseaseId = req.body.diseaseId;
+    prisma.infectionRequest.create({
+      data: {
+        diseaseId: recivedDiseaseId,
+        donorId: req.user.id,
+      },
+    });
+    res.json("succes");
+  } catch (e) {
+    console.log(e);
+    res.json("wrong" + e);
+  }
+};

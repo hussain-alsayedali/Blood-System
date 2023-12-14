@@ -386,3 +386,66 @@ exports.editPatientInfo = async (req, res) => {
     res.json("fail");
   }
 };
+
+exports.declineInfectionRequest = async (req, res) => {
+  try {
+    const requestId = req.body.requestId;
+
+    const theRequest = await prisma.infectionRequest.update({
+      where: {
+        id: requestId,
+      },
+      data: {
+        updateDate: new Date(),
+        requestStatus: "rejected",
+        nurseId: req.user.id,
+      },
+    });
+    req.json("succes");
+  } catch (e) {
+    console.log(e);
+    res.json("wrong " + e);
+  }
+};
+
+exports.acceptInfectionRequest = async (req, res) => {
+  try {
+    const requestId = parseInt(req.body.requestId);
+    const requesterType = req.body.requesterType;
+    const requesterId = req.body.requesterId;
+
+    const theRequest = await prisma.infectionRequest.update({
+      where: {
+        id: requestId,
+      },
+      data: {
+        updateDate: new Date(),
+        requestStatus: "accepted",
+        nurseId: req.user.id,
+      },
+    });
+
+    // Creating the infection
+    if (requesterType == "donor") {
+      await prisma.infection.create({
+        data: {
+          strength: "mid",
+          donorId: requesterId,
+          diseaseId: theRequest.diseaseCatalogId,
+        },
+      });
+    } else if (requesterType == "recipient") {
+      await prisma.infection.create({
+        data: {
+          strength: "mid",
+          recipientId: requesterId,
+          diseaseId: theRequest.diseaseCatalogId,
+        },
+      });
+    }
+    res.json("succes");
+  } catch (e) {
+    console.log(e);
+    res.json("wrong" + e);
+  }
+};

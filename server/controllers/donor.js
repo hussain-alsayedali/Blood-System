@@ -186,3 +186,20 @@ exports.submitDonation = async (req, res) => {
       .json({ error: "An error occurred while submitting the donation." });
   }
 };
+
+exports.addInfectionRequest = async (req, res) => {
+  try {
+    const recivedDiseaseId = req.body.diseaseId;
+
+    prisma.infectionRequest.create({
+      data: {
+        diseaseId: recivedDiseaseId,
+        donorId: req.user.id,
+      },
+    });
+    res.json("succes");
+  } catch (e) {
+    console.log(e);
+    res.json("wrong " + e);
+  }
+};

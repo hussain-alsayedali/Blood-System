@@ -25,6 +25,12 @@ router.get(
   donorController.getUnCuredInfections
 );
 router.post("/addInfection", isAuthed, donorController.addInfection);
+router.post(
+  "/addInfectionRequest",
+  isAuthed,
+  donorController.addInfectionRequest
+);
+
 router.get("/getDiseases", isAuthed, donorController.getAllDiseases);
 
 router.post("/submitDonation", isAuthed, donorController.submitDonation);

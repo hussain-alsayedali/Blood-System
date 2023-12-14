@@ -21,6 +21,11 @@ router.get(
   recipientController.getUnCuredInfections
 );
 router.post("/addInfection", isAuthed, recipientController.addInfection);
+router.post(
+  "/addInfectionRequest",
+  isAuthed,
+  recipientController.addInfectionRequest
+);
 router.get("/getDiseases", isAuthed, recipientController.getAllDiseases);
 
 router.get("/getDiseases", isAuthed, recipientController.getAllDiseases);

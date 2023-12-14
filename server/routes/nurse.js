@@ -46,6 +46,18 @@ router.post(
   nurseController.declineDonationRequest
 );
 
+// accept and decline infection request
+router.post(
+  "/declineInfectionRequest",
+  isAuthed,
+  nurseController.declineInfectionRequest
+);
+router.post(
+  "/acceptInfectionRequest",
+  isAuthed,
+  nurseController.acceptInfectionRequest
+);
+
 router.post("/editPatientInfo", isAuthed, nurseController.editPatientInfo);
 
 // get one using id
