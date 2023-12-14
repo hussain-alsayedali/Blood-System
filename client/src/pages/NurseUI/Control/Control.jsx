@@ -160,10 +160,15 @@ function Control() {
             {/* Display the current disease status */}
             <div className="current-disease">
               <h3>Current Disease Status</h3>
-              <p>
-                {selectedUser.infections[0].disease.diseaseName ||
-                  "No disease reported"}
-              </p>
+              {selectedUser && selectedUser.infections && selectedUser.infections.length > 0 ? (
+                <ul>
+                  {selectedUser.infections.map((infection, index) => (
+                    <li key={index}>{infection.disease.diseaseName}</li>
+                  ))}
+                </ul>
+              ) : (
+                <p>No disease reported</p>
+              )}
             </div>
             {/* Display the requests to change the disease status */}
             <div className="change-requests">
