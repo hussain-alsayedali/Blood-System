@@ -157,7 +157,7 @@ exports.getAllRequestes = async (req, res) => {
   try {
     const donationRequestes = await prisma.donationRequest.findMany({});
     const recivingRequestes = await prisma.receivingRequest.findMany({});
-    const infectionRequests = await prisma.infectionRequests.findMany({});
+    const infectionRequests = await prisma.infectionRequest.findMany({});
 
     res.json({
       recivingRequestes: recivingRequestes,
@@ -172,12 +172,12 @@ exports.getWaitingRequests = async (req, res) => {
   try {
     const donationRequestes = await prisma.donationRequest.findMany({
       where: {
-        status: "waiting",
+        requestStatus: "waiting",
       },
     });
     const recivingRequestes = await prisma.receivingRequest.findMany({
       where: {
-        status: "waiting",
+        requestStatus: "waiting",
       },
     });
     const infectionRequests = await prisma.infectionRequest.findMany({
