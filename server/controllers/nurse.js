@@ -182,7 +182,7 @@ exports.getWaitingRequests = async (req, res) => {
     });
     const infectionRequests = await prisma.infectionRequest.findMany({
       where: {
-        status: "waiting",
+        requestStatus: "waiting",
       },
     });
     res.json({

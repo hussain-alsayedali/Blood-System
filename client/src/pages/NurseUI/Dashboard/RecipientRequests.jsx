@@ -103,18 +103,6 @@ function RecipientRequests() {
         );
     };
 
-    useEffect(() => {
-        Axios({
-            method: "GET",
-            url: "http://localhost:2121/nurse/getSession",
-            withCredentials: true,
-        })
-            .then((res) => {
-                console.log(res.data);
-            })
-            .catch((error) => console.error(error));
-        // setSelectedItem(itemName);
-    });
 
     return (
         <div className="dashboard-container">

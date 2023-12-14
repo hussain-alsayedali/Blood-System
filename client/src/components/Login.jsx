@@ -108,7 +108,7 @@ function Login() {
       <p>donor acc: don@don.com | pass: adminadmin</p>
       <p>donor no constraints: dd@dd.dd | adminadmin </p>
       <p>nurse: admin@admin.com | adminadmin</p>
-
+      <p>recipient: recipient@r.com | adminadmin</p>
       developers buttons
       <Link to="/nurse">
         <button>Nurse</button>

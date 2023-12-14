@@ -93,6 +93,7 @@ exports.createRecivingRequest = async (req, res) => {
         recipientId: req.user.id,
       },
     });
+    res.json("A request has been sent succefully.");
   } catch (e) {
     console.log(e);
   }
