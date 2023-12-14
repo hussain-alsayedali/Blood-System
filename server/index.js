@@ -11,11 +11,15 @@ const methodOverride = require("method-override");
 const flash = require("express-flash");
 const logger = require("morgan");
 const path = require("path");
+
+// Routes
 const mainRoutes = require("./routes/main");
 const nurseRoutes = require("./routes/nurse");
 const donorRoutes = require("./routes/donor");
 const recipientRoutes = require("./routes/recipient");
 const patientRoutes = require("./routes/patient");
+const guestRoutes = require("./routes/guest");
+
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const { data } = require("autoprefixer");
@@ -86,6 +90,7 @@ app.use("/nurse", nurseRoutes);
 app.use("/donor", donorRoutes);
 app.use("/recipient", recipientRoutes);
 app.use("/patient", patientRoutes);
+app.use("/guest", guestRoutes);
 
 //Setup Routes For Which The Server Is Listening
 
