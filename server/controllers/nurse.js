@@ -157,10 +157,12 @@ exports.getAllRequestes = async (req, res) => {
   try {
     const donationRequestes = await prisma.donationRequest.findMany({});
     const recivingRequestes = await prisma.receivingRequest.findMany({});
+    const infectionRequests = await prisma.infectionRequests.findMany({});
 
     res.json({
       recivingRequestes: recivingRequestes,
       donationRequestes: donationRequestes,
+      infectionRequests: infectionRequests,
     });
   } catch (e) {
     console.log(e);
@@ -178,10 +180,15 @@ exports.getWaitingRequests = async (req, res) => {
         status: "waiting",
       },
     });
-
+    const infectionRequests = await prisma.infectionRequest.findMany({
+      where: {
+        status: "waiting",
+      },
+    });
     res.json({
       recivingRequestes: recivingRequestes,
       donationRequestes: donationRequestes,
+      infectionRequests: infectionRequests,
     });
   } catch (e) {
     console.log(e);
