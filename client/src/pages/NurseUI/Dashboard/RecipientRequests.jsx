@@ -27,7 +27,9 @@ function RecipientRequests() {
             withCredentials: true,
         })
             .then((res) => {
+                console.log(res.data.recivingRequestes)
                 setPatients(res.data.recivingRequestes);
+                console.log(res.data.recivingRequestes)
             })
             .catch((error) => {
                 console.error(error);
@@ -76,6 +78,31 @@ function RecipientRequests() {
         );
     };
 
+    const handleRejectClick = (patient) => {
+        // Call the backend to reject the request
+        Axios({
+            method: 'POST',
+            url: 'http://localhost:2121/nurse/declineRecipientRequest',
+            data: {
+                requestId: patient.id,
+                recipientId: patient.recipientId
+            },
+            withCredentials: true,
+        })
+            .then((res) => {
+                // Update the patient's urgency status in the state to reflect rejection
+                setPatients(
+                    patients.map((p) =>
+                        p.id === patient.id
+                            ? { ...p, recipient: { ...p.recipient, currentUrgency: "Rejected" } }
+                            : p
+                    )
+                );
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    };
 
     const formatDate = (dateString) => {
         const options = { year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' };
@@ -132,14 +159,26 @@ function RecipientRequests() {
                                 <td>
                                     {patient.recipient.currentUrgency !== "Served" &&
                                         bloodTypeCompatibility[patient.recipient.bloodType].map(
-                                            (bloodType) => (
+                                            (bloodType, btIndex) => (
                                                 <button
+                                                    key={btIndex}
                                                     onClick={() => handleServeClick(patient, bloodType)}
                                                 >
                                                     {bloodType}
                                                 </button>
                                             )
                                         )}
+                                </td>
+                                <td>
+                                    {patient.recipient.currentUrgency !== "Served" && (
+                                        <button
+                                            className="reject-button"
+                                            onClick={() => handleRejectClick(patient)}
+                                        >
+                                            Reject
+                                        </button>
+                                    )}
+                                    {patient.recipient.currentUrgency === "Rejected" && <span>Rejected</span>}
                                 </td>
                             </tr>
                         ))}
