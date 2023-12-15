@@ -10,13 +10,14 @@ const Recipient = () => {
         bloodType: '',
     });
 
+    const [requests, setRequests] = useState([]); // State for storing receiving requests
+
+    // Fetch user data
     useEffect(() => {
-        Axios({
-            method: 'GET',
-            url: 'http://localhost:2121/recipient/currentRecipient',
+        Axios.get('http://localhost:2121/recipient/currentRecipient', {
             withCredentials: true,
         })
-            .then((res) => {
+            .then(res => {
                 setUser({
                     id: res.data.id,
                     firstName: res.data.firstName,
@@ -24,13 +25,22 @@ const Recipient = () => {
                     bloodType: res.data.bloodType,
                 });
             })
-            .catch((error) => console.error(error));
+            .catch(error => console.error(error));
+    }, []);
+
+    // Fetch the receiving requests
+    useEffect(() => {
+        Axios.get('http://localhost:2121/recipient/getAllRequests', {
+            withCredentials: true,
+        })
+            .then(res => {
+                setRequests(res.data);
+            })
+            .catch(error => console.error(error));
     }, []);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
-        // Log that we are starting the submit process
         console.log('Starting the submit process');
 
         Axios.post('http://localhost:2121/recipient/createRequest', {
@@ -40,26 +50,20 @@ const Recipient = () => {
             withCredentials: true
         })
             .then(response => {
-                // Log the response from the server
                 console.log('Response from server:', response);
-
-                // Check if the response has a specific property or status you expect
                 if (response && response.status === 200) {
-                    // If the response is as expected, show the alert
                     alert("Request was sent successfully");
                 } else {
-                    // If the response is not as expected, log the issue
                     console.log('Unexpected response', response);
                 }
-
-                // Handle additional actions after successful submission if necessary
             })
             .catch(error => {
-                // Log any error that occurs during the request
                 console.error("An error occurred while submitting the request:", error);
                 alert("An error occurred. Please try again later.");
             });
     };
+
+    console.log(requests);
     return (
         <div>
             <h1>Receive Blood</h1>
@@ -84,6 +88,35 @@ const Recipient = () => {
                     Submit Blood Request
                 </button>
             </form>
+
+
+            <h2>Requests History</h2>
+            {requests.length > 0 ? (
+                <ul>
+                    {requests.map(request => {
+                        // Create a new Date object from the request date
+                        const readableDate = new Date(request.requestDate).toLocaleString('en-US', {
+                            year: 'numeric',
+                            month: 'long',
+                            day: 'numeric',
+                            hour: '2-digit',
+                            minute: '2-digit',
+                            second: '2-digit',
+                        });
+
+                        // Return the list item with formatted date and status
+                        return (
+                            <li key={request.id} style={{ marginBottom: '10px' }}>
+                                <div><strong>Date:</strong> {readableDate}</div>
+                                <div><strong>Status:</strong> {request.requestStatus}</div>
+                                {/* Add additional details here as needed */}
+                            </li>
+                        );
+                    })}
+                </ul>
+            ) : (
+                <p>No requests found.</p>
+            )}
         </div>
     );
 };

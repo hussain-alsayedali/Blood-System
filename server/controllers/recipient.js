@@ -11,9 +11,15 @@ exports.getCurrentRecipient = (req, res) => {
     console.log(e);
   }
 };
-exports.getAllRequests = (req, res) => {
+exports.getAllRequests = async (req, res) => {
   try {
-    res.json(req.user.ReceivingRequest);
+    const allRquests = await prisma.receivingRequest.findMany({
+      where: {
+        recipientId: req.user.id,
+      },
+    });
+    res.json(allRquests);
+    console.log(allRquests);
   } catch (e) {
     console.log(e);
   }
