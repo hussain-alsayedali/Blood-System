@@ -52,9 +52,9 @@ function RecipientRequests() {
 
     const getUrgencyLabel = (urgency) => {
         switch (urgency) {
-            case "Critical":
+            case "CRITICAL":
                 return {
-                    __html: `<img src="${criticalImage}" alt="Critical" img class="urgency-image"/> Critical`,
+                    __html: `<img src="${criticalImage}" alt="CRITICAL" img class="urgency-image"/> CRITICAL`,
                     color: "red",
                 };
             case "Mid":

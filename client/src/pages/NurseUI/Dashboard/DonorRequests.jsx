@@ -20,6 +20,7 @@ const DonorRequests = () => {
     }, []);
 
     const handleAccept = (requestId) => {
+        console.log(donationRequests)
         // Placeholder for accept logic
         console.log('Accepted request:', requestId);
     };
@@ -37,13 +38,11 @@ const DonorRequests = () => {
                 <table>
                     <thead>
                         <tr>
-                            <th>ID</th>
+                            <th>Request ID</th>
                             <th>Request Date</th>
                             <th>Donor ID</th>
-                            <th>Blood Bag ID</th>
-                            <th>Operation Status</th>
-                            <th>Request Status</th>
-                            <th>Date</th>
+                            <th>Phone</th>
+                            <th>Status</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -53,10 +52,8 @@ const DonorRequests = () => {
                                 <td>{request.id}</td>
                                 <td>{new Date(request.requestDate).toLocaleString()}</td>
                                 <td>{request.donorId}</td>
-                                <td>{request.bloodBagId || 'N/A'}</td>
-                                <td>{request.operationStatus || 'Not started'}</td>
+                                <td>{request.donor.phone}</td>
                                 <td>{request.requestStatus}</td>
-                                <td>{request.updateDate ? new Date(request.updateDate).toLocaleString() : 'N/A'}</td>
                                 <td>
                                     <button onClick={() => handleAccept(request.id)}>Accept</button>
                                     <button onClick={() => handleDecline(request.id)}>Decline</button>
