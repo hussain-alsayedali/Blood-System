@@ -66,6 +66,9 @@ exports.getDonor = async (req, res) => {
     const donor = await prisma.donor.findUnique({
       where: {
         donorId: parseInt(req.body.donorId),
+        include: {
+          bloodBag: true,
+        },
       },
     });
     res.json(donor);
@@ -79,6 +82,9 @@ exports.getRecipient = async (req, res) => {
     const recipient = await prisma.recipient.findUnique({
       where: {
         recipientId: req.body.recipientId,
+        include: {
+          bloodBag: true,
+        },
       },
     });
     res.json(recipient);
