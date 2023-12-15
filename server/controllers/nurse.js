@@ -1,6 +1,6 @@
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
-const sendEmail = require("./sendEmail");
+const sendEmail = require("./email");
 
 exports.test = (req, res) => {
   console.log(req);
@@ -307,7 +307,8 @@ exports.declineRecipientRequest = async (req, res) => {
 
 exports.acceptDonationRequest = async (req, res) => {
   try {
-    const reqestId = parseInt(req.body.reqestId);
+    console.log(req.body);
+    const requestId = parseInt(req.body.requestId);
     const recivedDonorId = parseInt(req.body.donorId);
 
     const newBloodBag = await prisma.bloodBag.create({
@@ -317,7 +318,7 @@ exports.acceptDonationRequest = async (req, res) => {
     });
     const updatedRequest = await prisma.donationRequest.update({
       where: {
-        id: reqestId,
+        id: requestId,
       },
       data: {
         updateDate: new Date(),
@@ -355,12 +356,12 @@ exports.acceptDonationRequest = async (req, res) => {
 
 exports.declineDonationRequest = async (req, res) => {
   try {
-    const reqestId = parseInt(req.body.reqestId);
+    const requestId = parseInt(req.body.requestId);
     const recivedDonorId = parseInt(req.body.donorId);
 
     const updateRecivingRequest = await prisma.donationRequest.update({
       where: {
-        id: reqestId,
+        id: requestId,
       },
       data: {
         updateDate: new Date(),

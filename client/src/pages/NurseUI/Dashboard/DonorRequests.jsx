@@ -19,15 +19,52 @@ const DonorRequests = () => {
             });
     }, []);
 
-    const handleAccept = (requestId) => {
-        console.log(donationRequests)
-        // Placeholder for accept logic
-        console.log('Accepted request:', requestId);
+    const handleAccept = (requestId, donorId) => {
+        Axios({
+            method: 'POST',
+            url: 'http://localhost:2121/nurse/acceptDonationRequest',
+            data: {
+                requestId,
+                donorId
+            },
+            withCredentials: true,
+        })
+            .then((response) => {
+                console.log('Request accepted:', response);
+                // Update the donationRequests state to reflect the change
+                setDonationRequests(prevRequests =>
+                    prevRequests.map(request =>
+                        request.id === requestId ? { ...request, requestStatus: 'accepted' } : request
+                    )
+                );
+            })
+            .catch((error) => {
+                console.error('Error accepting request:', error);
+            });
     };
 
-    const handleDecline = (requestId) => {
-        // Placeholder for decline logic
-        console.log('Declined request:', requestId);
+    const handleDecline = (requestId, donorId) => {
+        Axios({
+            method: 'POST',
+            url: 'http://localhost:2121/nurse/declineDonationRequest',
+            data: {
+                requestId,
+                donorId
+            },
+            withCredentials: true,
+        })
+            .then((response) => {
+                console.log('Request declined:', response);
+                // Update the donationRequests state to reflect the change
+                setDonationRequests(prevRequests =>
+                    prevRequests.map(request =>
+                        request.id === requestId ? { ...request, requestStatus: 'rejected' } : request
+                    )
+                );
+            })
+            .catch((error) => {
+                console.error('Error declining request:', error);
+            });
     };
 
     return (
@@ -55,8 +92,8 @@ const DonorRequests = () => {
                                 <td>{request.donor.phone}</td>
                                 <td>{request.requestStatus}</td>
                                 <td>
-                                    <button onClick={() => handleAccept(request.id)}>Accept</button>
-                                    <button onClick={() => handleDecline(request.id)}>Decline</button>
+                                    <button onClick={() => handleAccept(request.id, request.donorId)}>Accept</button>
+                                    <button onClick={() => handleDecline(request.id, request.donorId)}>Decline</button>
                                 </td>
                             </tr>
                         ))}
