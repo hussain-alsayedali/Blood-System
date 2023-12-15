@@ -97,6 +97,29 @@ app.use("/guest", guestRoutes);
 
 async function main() {
   console.log("منين منين  منين منين");
+  // const donor = await prisma.donor.create({
+  //   data: {
+  //     bankId: "1s2jagen12qw1xw",
+  //     email: "mzowwasgenxsaw@agmajils.com",
+  //     phone: "11a52xz1jgenw223",
+  //     weight: 99,
+  //     birth: new Date(),
+  //     address: "almnia",
+  //     firstName: "ahmed",
+  //     lastName: "mohsen",
+  //     password: "123456789",
+  //     bloodType: "A-",
+  //   },
+  // });
+  // for (let i = 0; i < 60; i++) {
+  //   await prisma.bloodBag.create({
+  //     data: {
+  //       donorId: donor.id,
+  //     },
+  //   });
+  // }
+
+  // console.log("finished");
 }
 main();
 
