@@ -26,6 +26,7 @@ model nurse {
   DonationRequest  DonationRequest[]
   ReceivingRequest ReceivingRequest[]
   InfectionRequest InfectionRequest[]
+  BloodDrive       BloodDrive[]
 }
 
 model Recipient {
@@ -162,6 +163,14 @@ model InfectionRequest {
 model BloodBank {
   id        Int        @id @default(autoincrement())
   bloodBags BloodBag[]
+}
+
+model BloodDrive {
+  id           Int      @id @default(autoincrement())
+  startingDate DateTime @default(now())
+  endingDate   DateTime
+  nurseStarted nurse    @relation(fields: [nurseId], references: [id])
+  nurseId      Int
 }
 
 model Session {
