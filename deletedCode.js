@@ -189,3 +189,24 @@
 // Axios.post("http://localhost:2121/donor/addInfection", infectionData, {
 //   withCredentials: true,
 // })
+// const transporter = nodemailer.createTransport({
+//     service: "gmail",
+//     auth: {
+//       user: "bloodwaveproject@gmail.com",
+//       pass: "secret",
+//     },
+//   });
+//   const mailOptions = {
+//     from: "bloodwaveproject@gmail.com",
+//     to: "hussain.alsayedali@gmail.com",
+//     subject: "Hello from Node.js",
+//     text: "This is the body of the email",
+//   };
+
+//   transporter.sendMail(mailOptions, function (error, info) {
+//     if (error) {
+//       console.log(error);
+//     } else {
+//       console.log("Email sent: " + info.response);
+//     }
+//   });

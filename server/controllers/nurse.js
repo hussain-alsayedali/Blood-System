@@ -1,5 +1,6 @@
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
+const sendEmail = require("./sendEmail");
 
 exports.test = (req, res) => {
   console.log(req);

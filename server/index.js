@@ -23,8 +23,9 @@ const guestRoutes = require("./routes/guest");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const { data } = require("autoprefixer");
+const nodemailer = require("nodemailer");
 
-const authController = require("./controllers/auth");
+//const authController = require("./controllers/auth");
 //enablieng cors
 app.use(
   cors({
@@ -96,28 +97,8 @@ app.use("/guest", guestRoutes);
 
 async function main() {
   console.log("منين منين  منين منين");
-  // await prisma.diseaseCatalog.create({
-  //   data: {
-  //     diseaseName: "cold",
-  //   },
-  // });
-  // await prisma.diseaseCatalog.create({
-  //   data: {
-  //     diseaseName: "hiv",
-  //   },
-  // });
-  // await prisma.diseaseCatalog.create({
-  //   data: {
-  //     diseaseName: "cancer",
-  //   },
-  // });
-  // await prisma.diseaseCatalog.create({
-  //   data: {
-  //     diseaseName: "flu",
-  //   },
-  // });
 }
-// main();
+main();
 
 app.listen(process.env.PORT, () => {
   console.log("Server is running, you better catch it!");
