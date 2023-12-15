@@ -257,7 +257,11 @@ exports.acceptRecipientRequest = async (req, res) => {
         currentMoney: parseInt(theRecipient.currentMoney) + 50,
       },
     });
-
+    sendEmail(
+      theRecipient.email,
+      "Request has been approved",
+      "thanks for ur transaction"
+    );
     res.json("succes");
   } catch (e) {
     console.log(e);
@@ -279,6 +283,16 @@ exports.declineRecipientRequest = async (req, res) => {
         nurseId: req.user.id,
       },
     });
+    const theRecipient = await prisma.recipient.findUnique({
+      where: {
+        id: recipintId,
+      },
+    });
+    sendEmail(
+      theRecipient.email,
+      "Request has been declined",
+      "sorry for inconvinece"
+    );
     res.json("succses");
   } catch (e) {
     console.log(e);
@@ -322,6 +336,11 @@ exports.acceptDonationRequest = async (req, res) => {
         currentMoney: parseInt(theDonor.currentMoney) + 50,
       },
     });
+    sendEmail(
+      theDonor.email,
+      "Request has been approved",
+      "thanks for ur transaction"
+    );
     res.json("succses");
   } catch (e) {
     console.log(e);
@@ -343,6 +362,16 @@ exports.declineDonationRequest = async (req, res) => {
         nurseId: req.user.id,
       },
     });
+    const theDonor = await prisma.donor.findUnique({
+      where: {
+        id: recivedDonorId,
+      },
+    });
+    sendEmail(
+      theDonor.email,
+      "Request has been declined",
+      "sorry for inconvinece"
+    );
     res.json("Rejected");
   } catch (e) {
     console.log(e);
