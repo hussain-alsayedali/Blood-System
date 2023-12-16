@@ -150,12 +150,19 @@ exports.getCuredInfections = async (req, res) => {
 };
 exports.getUnCuredInfections = async (req, res) => {
   try {
-    const allinfections = req.user.infections;
+    const allinfections = await prisma.infection.findMany({
+      where: {
+        donorId: req.user.id,
+      },
+    });
     const curedInfections = allinfections.filter(
       (infection) => infection.cured === "false"
     );
     res.json(curedInfections);
-  } catch (e) {}
+  } catch (e) {
+    console.log(e);
+    res.json("error " + e);
+  }
 };
 exports.addInfection = async (req, res) => {
   try {
