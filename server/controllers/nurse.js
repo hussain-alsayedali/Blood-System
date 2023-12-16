@@ -276,12 +276,12 @@ exports.acceptRecipientRequest = async (req, res) => {
 
 exports.declineRecipientRequest = async (req, res) => {
   try {
-    const reqestId = parseInt(req.body.reqestId);
-    const recipintId = parseInt(req.body.recipintId);
-    console.log(reqestId, recipintId);
+    const requestId = parseInt(req.body.requestId);
+    const recipientId = parseInt(req.body.recipientId);
+    console.log(requestId, recipientId);
     const updateRecivingRequest = await prisma.receivingRequest.update({
       where: {
-        id: reqestId,
+        id: requestId,
       },
       data: {
         updateDate: new Date(),
@@ -291,10 +291,13 @@ exports.declineRecipientRequest = async (req, res) => {
     });
     const theRecipient = await prisma.recipient.findUnique({
       where: {
-        id: recipintId,
+        id: recipientId,
       },
     });
-    sendEmail(
+    console.log("========================");
+    console.log(theRecipient);
+    console.log(theRecipient.email);
+    await sendEmail(
       theRecipient.email,
       "Request has been declined",
       "sorry for inconvinece"
@@ -356,6 +359,7 @@ exports.acceptDonationRequest = async (req, res) => {
 
 exports.declineDonationRequest = async (req, res) => {
   try {
+    console.log(req.body);
     const requestId = parseInt(req.body.requestId);
     const recivedDonorId = parseInt(req.body.donorId);
 
