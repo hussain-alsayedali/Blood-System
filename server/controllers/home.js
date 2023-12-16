@@ -43,13 +43,18 @@ module.exports = {
           },
         },
       });
+      let message = "there is no blood drive currently";
       if (bloodDrive)
-        res.json({
-          bloodDrive: bloodDrive,
-          message:
-            "there is a blood drive, go to donate to get 300 extra in your account",
-        });
-      res.json({ message: "there is no blood drive currently" });
-    } catch (e) {}
+        message =
+          "there is a blood drive, go to donate to get 300 extra in your account";
+
+      res.json({
+        bloodDrive: bloodDrive,
+        message: message,
+      });
+    } catch (e) {
+      console.log("error" + e);
+      res.json(e);
+    }
   },
 };
