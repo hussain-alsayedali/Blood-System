@@ -31,6 +31,10 @@ router.post(
   donorController.addInfectionRequest
 );
 
+// get all the money in the current donor account,
+
+router.post("/getAllMoney", isAuthed, donorController.getAllMoney);
+
 router.get("/getDiseases", isAuthed, donorController.getAllDiseases);
 
 router.post("/submitDonation", isAuthed, donorController.submitDonation);

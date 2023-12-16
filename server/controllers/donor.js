@@ -246,3 +246,25 @@ exports.addInfectionRequest = async (req, res) => {
     res.json("wrong " + e);
   }
 };
+
+exports.getAllMoney = async (req, res) => {
+  try {
+    const currentMoney = req.user.currentMoney;
+
+    await prisma.donor.update({
+      where: {
+        id: req.user.id,
+      },
+      data: {
+        currentMoney: 0,
+      },
+    });
+    res.json(
+      currentMoney +
+        " has been sent to your account , thanks for your high quality blood"
+    );
+  } catch (e) {
+    console.log(e);
+    res.json("internal error");
+  }
+};
