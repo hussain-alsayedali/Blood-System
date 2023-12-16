@@ -13,6 +13,7 @@ const InfectionRequests = () => {
         })
             .then((res) => {
                 setInfectionRequests(res.data.infectionRequests);
+                console.log(res.data.infectionRequests)
             })
             .catch((error) => {
                 console.error(error);
