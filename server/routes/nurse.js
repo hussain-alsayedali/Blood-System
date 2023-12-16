@@ -24,6 +24,12 @@ router.get(
   nurseController.getWaitingRequests
 );
 
+//
+router.get(
+  "/getWaitingInfectionRequests",
+  isAuthed,
+  nurseController.getWaitingInfectionRequests
+);
 // creating a bloodDrive
 router.post("/createBloodDrive", isAuthed, nurseController.createBloodDrive);
 

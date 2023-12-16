@@ -211,6 +211,24 @@ exports.getWaitingRequests = async (req, res) => {
   }
 };
 
+exports.getWaitingInfectionRequests = async (req, res) => {
+  try {
+    const infectionRequests = await prisma.infectionRequest.findMany({
+      where: {
+        requestStatus: "waiting",
+      },
+      include: {
+        disease: true,
+      },
+    });
+    res.json({
+      infectionRequests: infectionRequests,
+    });
+  } catch (e) {
+    console.log(e);
+  }
+};
+
 exports.acceptRecipientRequest = async (req, res) => {
   try {
     const requestId = parseInt(req.body.requestId);
