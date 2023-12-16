@@ -338,12 +338,25 @@ exports.acceptDonationRequest = async (req, res) => {
       },
     });
 
+    // check if there a blood drive currently to give the donor extra money
+    const bloodDrive = await prisma.bloodDrive.findFirst({
+      where: {
+        endingDate: {
+          gte: new Date(),
+        },
+      },
+    });
+
+    let extraMoney = 0;
+    if (bloodDrive) {
+      extraMoney = 300;
+    }
     await prisma.donor.update({
       where: {
         id: recivedDonorId,
       },
       data: {
-        currentMoney: parseInt(theDonor.currentMoney) + 50,
+        currentMoney: parseInt(theDonor.currentMoney) + 50 + extraMoney,
       },
     });
     sendEmail(
