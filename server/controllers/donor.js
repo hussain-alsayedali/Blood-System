@@ -12,7 +12,7 @@ exports.getCurrentDonor = (req, res) => {
     console.log(e);
   }
 };
-exports.isReadyToDonate = (req, res) => {
+exports.isReadyToDonate = async (req, res) => {
   try {
     const donor = req.user;
     let constraints = [];
@@ -26,6 +26,49 @@ exports.isReadyToDonate = (req, res) => {
     }
     if (donor.weight > 150) {
       constraints.push("Weight is high, it should be less than 150 KG");
+    }
+
+    // check if there any existing waiting donation request for the current donor
+    const existingDonationRequests = await prisma.donationRequest.findMany({
+      where: {
+        donorId: req.user.id,
+        requestStatus: "waiting",
+      },
+    });
+    if (existingDonationRequests.length > 0) {
+      constraints.push(
+        "you already have a waiting request, please wait while the nurse are working on it"
+      );
+    }
+
+    // check if the user donated in the last 2 months
+    const twoMonthsAgo = new Date();
+    twoMonthsAgo.setMonth(twoMonthsAgo.getMonth() - 2);
+    const existingBloodBags = await prisma.bloodBag.findMany({
+      where: {
+        donorId: req.user.id,
+        takingDate: {
+          gte: twoMonthsAgo,
+        },
+      },
+    });
+
+    if (existingBloodBags.length > 0) {
+      const lastDonatedBloodBag = await prisma.bloodBag.findFirst({
+        where: {
+          donorId: req.user.id,
+        },
+        orderBy: {
+          takingDate: "desc",
+        },
+      });
+      const lastDonationDate = lastDonatedBloodBag.takingDate
+        .toISOString()
+        .slice(0, 10);
+      constraints.push(
+        "You already donated in the last 2 months, we apperciate your high morals, but your body needs some rest, your Last donation was at :" +
+          lastDonationDate
+      );
     }
 
     // Calculate donor age
