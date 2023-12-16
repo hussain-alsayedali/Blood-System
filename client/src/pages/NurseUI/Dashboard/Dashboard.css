@@ -109,3 +109,25 @@ button:hover {
 .urgency-image {
   vertical-align: middle;
 }
+
+.header-tab {
+  padding: 10px 20px;
+  border: none;
+  background-color: #333;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.header-tab.active {
+  background-color: #c53636;
+}
+
+.header-tab:hover {
+  background-color: #444;
+}
+
+.header-tab.active:hover {
+  background-color: #c53636;
+  color: #fff;
+}
