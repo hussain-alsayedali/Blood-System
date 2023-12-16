@@ -28,7 +28,9 @@ router.post(
 );
 router.get("/getDiseases", isAuthed, recipientController.getAllDiseases);
 
-router.get("/getDiseases", isAuthed, recipientController.getAllDiseases);
+// add money to account
+router.post("/addMoney", isAuthed, recipientController.addMoney);
+
 router.post(
   "/createRequest",
   isAuthed,

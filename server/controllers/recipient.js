@@ -119,3 +119,25 @@ exports.addInfectionRequest = async (req, res) => {
     res.json("wrong" + e);
   }
 };
+
+exports.addMoney = async (req, res) => {
+  try {
+    const addedMoney = parseInt(req.body.addedMoney);
+
+    const currentRecipient = await prisma.recipient.update({
+      where: {
+        id: req.user.id,
+      },
+      data: {
+        currentMoney: req.user.currentMoney + addedMoney,
+      },
+    });
+    res.json(
+      currentMoney +
+        " has been added to ur hospital account , we wish you a succsful treatment 🩸"
+    );
+  } catch (e) {
+    console.log(e);
+    res.json("internal error " + e);
+  }
+};
