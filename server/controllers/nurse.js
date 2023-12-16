@@ -210,12 +210,10 @@ exports.getWaitingRequests = async (req, res) => {
 
 exports.acceptRecipientRequest = async (req, res) => {
   try {
-    const reqestId = parseInt(req.body.reqestId);
-    const recipintId = parseInt(req.body.recipintId);
+    const requestId = parseInt(req.body.requestId);
+    const recipientId = parseInt(req.body.recipientId);
     const bloodType = req.body.bloodType;
-    console.log(reqestId, recipintId, bloodType);
-
-    console.log(recipintBloodType);
+    console.log(requestId, recipientId, bloodType);
     const notTakenBloodBag = await prisma.bloodBag.findFirst({
       where: {
         status: "good",
@@ -231,14 +229,16 @@ exports.acceptRecipientRequest = async (req, res) => {
         },
         data: {
           status: "taken",
-          givenTo: recipintId,
+          givenTo: {
+            connect: { id: recipientId },
+          },
         },
       });
     }
 
     const updateRecivingRequest = await prisma.receivingRequest.update({
       where: {
-        id: reqestId,
+        id: requestId,
       },
       data: {
         updateDate: new Date(),
@@ -251,13 +251,13 @@ exports.acceptRecipientRequest = async (req, res) => {
 
     const theRecipient = await prisma.recipient.findUnique({
       where: {
-        id: recipintId,
+        id: recipientId,
       },
     });
 
     prisma.recipient.update({
       where: {
-        id: recipintId,
+        id: recipientId,
       },
       data: {
         currentMoney: parseInt(theRecipient.currentMoney) + 50,
@@ -268,9 +268,12 @@ exports.acceptRecipientRequest = async (req, res) => {
       "Request has been approved",
       "thanks for ur transaction"
     );
-    res.json("succes");
+    res
+      .status(200)
+      .json({ message: "Success", requestId, recipientId, bloodType });
   } catch (e) {
     console.log(e);
+    res.status(500).json({ message: "An error occurred", error: e });
   }
 };
 

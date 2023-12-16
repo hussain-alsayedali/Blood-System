@@ -23,13 +23,11 @@ function RecipientRequests() {
     useEffect(() => {
         Axios({
             method: 'GET',
-            url: 'http://localhost:2121/nurse/getWaitingRequestes', // Update this URL to match your route
+            url: 'http://localhost:2121/nurse/getWaitingRequestes',
             withCredentials: true,
         })
             .then((res) => {
-                console.log(res.data.recivingRequestes)
                 setPatients(res.data.recivingRequestes);
-                console.log(res.data.recivingRequestes)
             })
             .catch((error) => {
                 console.error(error);
@@ -69,13 +67,29 @@ function RecipientRequests() {
     };
 
     const handleServeClick = (patient, bloodType) => {
-        setPatients(
-            patients.map((p) =>
-                p.id === patient.id
-                    ? { ...p, urgency: "Served", servedBloodType: bloodType }
-                    : p
-            )
-        );
+        Axios({
+            method: 'POST',
+            url: 'http://localhost:2121/nurse/acceptRecipientRequest', // Change the URL to the correct endpoint
+            data: {
+                requestId: patient.id,
+                recipientId: patient.recipientId,
+                bloodType: bloodType
+            },
+            withCredentials: true,
+        })
+            .then((res) => {
+                // Assuming 'res' contains the updated patient data
+                setPatients(
+                    patients.map((p) =>
+                        p.id === patient.id
+                            ? { ...p, recipient: { ...p.recipient, currentUrgency: "Served" }, servedBloodType: bloodType }
+                            : p
+                    )
+                );
+            })
+            .catch((error) => {
+                console.error(error);
+            });
     };
 
     const handleRejectClick = (patient) => {
