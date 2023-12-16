@@ -197,6 +197,9 @@ exports.getWaitingRequests = async (req, res) => {
       where: {
         requestStatus: "waiting",
       },
+      include: {
+        disease: true,
+      },
     });
     res.json({
       recivingRequestes: recivingRequestes,
