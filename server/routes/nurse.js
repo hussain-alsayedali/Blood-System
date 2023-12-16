@@ -24,6 +24,9 @@ router.get(
   nurseController.getWaitingRequests
 );
 
+// creating a bloodDrive
+router.post("/createBloodDrive", isAuthed, nurseController.createBloodDrive);
+
 // accept and decline donation and reciving requests
 router.post(
   "/acceptRecipientRequest",

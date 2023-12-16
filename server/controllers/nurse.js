@@ -499,3 +499,48 @@ exports.acceptInfectionRequest = async (req, res) => {
     res.json("wrong" + e);
   }
 };
+
+exports.createBloodDrive = async (req, res) => {
+  try {
+    const startingDate = new Date(req.body.startingDate);
+    const endingDate = new Date(req.body.endingDate);
+
+    const existingBloodDrives = await prisma.bloodDrive.findMany({
+      where: {
+        OR: [
+          {
+            // New blood drive starts within an existing blood drive range
+            startingDate: { lte: startingDate },
+            endingDate: { gte: startingDate },
+          },
+          {
+            // New blood drive ends within an existing blood drive range
+            startingDate: { lte: endingDate },
+            endingDate: { gte: endingDate },
+          },
+          {
+            // New blood drive completely overlaps with an existing blood drive range
+            startingDate: { gte: startingDate },
+            endingDate: { lte: endingDate },
+          },
+        ],
+      },
+    });
+    if (existingBloodDrives.length > 0)
+      return res.status(400).json({
+        error: "Blood drive date range overlaps with an existing blood drive.",
+      });
+    await prisma.bloodDrive.create({
+      data: {
+        startingDate: startingDate,
+        endingDate: endingDate,
+        nurseId: req.user.id,
+      },
+    });
+    return res
+      .status(200)
+      .json({ message: "Blood drive created successfully." });
+  } catch (e) {
+    console.log(e);
+  }
+};
