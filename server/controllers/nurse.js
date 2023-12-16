@@ -492,7 +492,7 @@ exports.declineInfectionRequest = async (req, res) => {
         nurseId: req.user.id,
       },
     });
-    req.json("succes");
+    res.json("succes");
   } catch (e) {
     console.log(e);
     res.json("wrong " + e);
