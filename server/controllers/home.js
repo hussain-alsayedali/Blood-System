@@ -1,4 +1,5 @@
 const { PrismaClient } = require("@prisma/client");
+const { json } = require("body-parser");
 const prisma = new PrismaClient();
 
 module.exports = {
@@ -32,5 +33,23 @@ module.exports = {
     } catch (e) {
       console.log(e);
     }
+  },
+  getCurrentBloodDrive: async (req, res) => {
+    try {
+      const bloodDrive = await prisma.bloodDrive.findFirst({
+        where: {
+          endingDate: {
+            gte: new Date(),
+          },
+        },
+      });
+      if (bloodDrive)
+        res.json({
+          bloodDrive: bloodDrive,
+          message:
+            "there is a blood drive, go to donate to get 300 extra in your account",
+        });
+      res.json({ message: "there is no blood drive currently" });
+    } catch (e) {}
   },
 };
