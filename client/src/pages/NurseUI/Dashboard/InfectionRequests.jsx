@@ -77,7 +77,7 @@ const InfectionRequests = () => {
                             <th>Request ID</th>
                             <th>Update Date</th>
                             <th>Requester Type</th>
-                            <th>Requester ID</th>
+                            <th>donor ID</th>
                             <th>Status</th>
                             <th>Actions</th>
                         </tr>
@@ -88,7 +88,7 @@ const InfectionRequests = () => {
                                 <td>{request.id}</td>
                                 <td>{new Date(request.updateDate).toLocaleString()}</td>
                                 <td>{request.requesterType}</td>
-                                <td>{request.requesterId}</td>
+                                <td>{request.donorId}</td>
                                 <td>{request.requestStatus}</td>
                                 <td>
                                     <button onClick={() => handleAccept(request.id, request.requesterType, request.requesterId)}>Accept</button>

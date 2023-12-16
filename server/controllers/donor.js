@@ -150,18 +150,37 @@ exports.getCuredInfections = async (req, res) => {
 };
 exports.getUnCuredInfections = async (req, res) => {
   try {
-    const allinfections = await prisma.infection.findMany({
+    const donorId = req.user.id; // Assuming the user is a Donor
+
+    // Only fetch necessary fields
+    const infections = await prisma.infection.findMany({
       where: {
-        donorId: req.user.id,
+        donorId: donorId,
+        cured: false, // Directly filter uncured infections in the query
+      },
+      include: {
+        disease: {
+          select: {
+            diseaseName: true, // Only select the diseaseName field
+          },
+        },
       },
     });
-    const curedInfections = allinfections.filter(
-      (infection) => infection.cured === "false"
-    );
-    res.json(curedInfections);
+
+    // Transform the infections to the desired format
+    const unCuredInfections = infections.map((infection) => ({
+      id: infection.id,
+      dateOfInfection: infection.dateOfInfection,
+      dateOfheal: infection.dateOfheal,
+      strength: infection.strength,
+      cured: infection.cured,
+      diseaseName: infection.disease.diseaseName,
+    }));
+
+    res.json(unCuredInfections);
   } catch (e) {
-    console.log(e);
-    res.json("error " + e);
+    console.error(e);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 };
 exports.addInfection = async (req, res) => {
