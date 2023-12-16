@@ -239,11 +239,11 @@ exports.submitDonation = async (req, res) => {
 
 exports.addInfectionRequest = async (req, res) => {
   try {
-    const recivedDiseaseId = req.body.diseaseId;
-
-    prisma.infectionRequest.create({
+    const recivedDiseaseId = parseInt(req.body.diseaseId);
+    console.log(req.body);
+    await prisma.infectionRequest.create({
       data: {
-        diseaseId: recivedDiseaseId,
+        diseaseCatalogId: recivedDiseaseId,
         donorId: req.user.id,
       },
     });
