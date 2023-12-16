@@ -106,11 +106,11 @@ exports.createRecivingRequest = async (req, res) => {
 };
 exports.addInfectionRequest = async (req, res) => {
   try {
-    const recivedDiseaseId = req.body.diseaseId;
-    prisma.infectionRequest.create({
+    const recivedDiseaseId = parseInt(req.body.diseaseId);
+    await prisma.infectionRequest.create({
       data: {
         diseaseId: recivedDiseaseId,
-        donorId: req.user.id,
+        recipientId: req.user.id,
       },
     });
     res.json("succes");
