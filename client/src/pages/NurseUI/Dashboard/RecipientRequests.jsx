@@ -69,7 +69,7 @@ function RecipientRequests() {
     const handleServeClick = (patient, bloodType) => {
         Axios({
             method: 'POST',
-            url: 'http://localhost:2121/nurse/acceptRecipientRequest', // Change the URL to the correct endpoint
+            url: 'http://localhost:2121/nurse/acceptRecipientRequest',
             data: {
                 requestId: patient.id,
                 recipientId: patient.recipientId,
@@ -78,7 +78,6 @@ function RecipientRequests() {
             withCredentials: true,
         })
             .then((res) => {
-                // Assuming 'res' contains the updated patient data
                 setPatients(
                     patients.map((p) =>
                         p.id === patient.id

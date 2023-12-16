@@ -3,23 +3,35 @@ import Axios from 'axios';
 import './Medical.css';
 
 const Medical = () => {
-
     const [medicalHistory, setMedicalHistory] = useState([]);
+    const [diseases, setDiseases] = useState([]);
+    const [selectedDiseaseId, setSelectedDiseaseId] = useState('');
 
     useEffect(() => {
-        const fetchMedicalHistory = async () => {
-            try {
-                const response = await Axios.get('http://localhost:2121/getUnCuredInfections', {
-                    withCredentials: true
-                });
-                setMedicalHistory(response.data);
-            } catch (error) {
-                console.error('Error fetching medical history:', error);
-            }
-        };
+        // Fetch medical history
+        Axios.get('http://localhost:2121/donor/getUncuredInfections', { withCredentials: true })
+            .then(response => setMedicalHistory(response.data))
+            .catch(error => console.error('Error fetching medical history:', error));
 
-        fetchMedicalHistory();
+        // Fetch all diseases
+        Axios.get('http://localhost:2121/donor/getDiseases', { withCredentials: true })
+            .then(response => setDiseases(response.data))
+            .catch(error => console.error('Error fetching diseases:', error));
     }, []);
+
+    const handleAddInfection = (e) => {
+        e.preventDefault();
+        Axios.post('http://localhost:2121/donor/addInfectionRequest', {
+            diseaseId: selectedDiseaseId
+        }, { withCredentials: true })
+            .then(response => {
+                console.log('Infection request added:', response.data);
+                alert("request sent succefully")
+            })
+            .catch(error => {
+                console.error('Error adding infection request:', error);
+            });
+    };
 
     return (
         <div className="medical-container">
@@ -37,6 +49,24 @@ const Medical = () => {
             ) : (
                 <p>No medical history to display.</p>
             )}
+
+            {/* Add Infection Form */}
+            <form onSubmit={handleAddInfection}>
+                <h3>Add Infection</h3>
+                <select
+                    value={selectedDiseaseId}
+                    onChange={(e) => setSelectedDiseaseId(e.target.value)}
+                    required
+                >
+                    <option value="">Select Disease</option>
+                    {diseases.map((disease) => (
+                        <option key={disease.id} value={disease.id}>
+                            {disease.diseaseName}
+                        </option>
+                    ))}
+                </select>
+                <button type="submit">Add Infection</button>
+            </form>
         </div>
     );
 };
