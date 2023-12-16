@@ -52,7 +52,6 @@ function Control() {
       },
       withCredentials: true,
       url: "http://localhost:2121/nurse/editPatientInfo",
-      // crossDomain: true,
     })
       .then((response) => {
         console.log(response);
@@ -182,6 +181,7 @@ function Control() {
                 value={newDisease}
                 onChange={(e) => setNewDisease(e.target.value)}
               >
+                <option value="" disabled>Select a disease</option>
                 {diseases.map((disease) => (
                   <option key={disease.id} value={disease.id}>
                     {disease.diseaseName}

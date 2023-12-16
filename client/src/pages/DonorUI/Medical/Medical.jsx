@@ -5,21 +5,20 @@ import './Medical.css';
 const Medical = () => {
 
     const [medicalHistory, setMedicalHistory] = useState([]);
-
     useEffect(() => {
-        const fetchMedicalHistory = async () => {
-            try {
-                const response = await Axios.get('http://localhost:2121/getUnCuredInfections', {
-                    withCredentials: true
-                });
+        Axios({
+            method: 'GET',
+            url: 'http://localhost:2121/donor/getUncuredInfections',
+            withCredentials: true,
+        })
+            .then((response) => {
                 setMedicalHistory(response.data);
-            } catch (error) {
-                console.error('Error fetching medical history:', error);
-            }
-        };
-
-        fetchMedicalHistory();
+            })
+            .catch((error) => {
+                console.error(error);
+            });
     }, []);
+    console.log("we are in medical page")
 
     return (
         <div className="medical-container">
@@ -35,7 +34,7 @@ const Medical = () => {
                     ))}
                 </ul>
             ) : (
-                <p>No medical history to display.</p>
+                <p>No medical history to display. v;la</p>
             )}
         </div>
     );
