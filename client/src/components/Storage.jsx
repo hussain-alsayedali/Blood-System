@@ -1,18 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Axios from "axios";
-import './Styles/Storage.css'
-function Storage() {
-    // const bloodInventory = [
-    //   { type: "A+", bags: 120 },
-    //   { type: "A-", bags: 75 },
-    //   { type: "B+", bags: 98 },
-    //   { type: "B-", bags: 60 },
-    //   { type: "O+", bags: 110 },
-    //   { type: "O-", bags: 80 },
-    //   { type: "AB+", bags: 70 },
-    //   { type: "AB-", bags: 50 },
-    // ];
+import './Styles/Storage.css';
 
+function Storage() {
     const [bloodInventory, setBloodInventory] = useState([]);
 
     useEffect(() => {
@@ -23,10 +13,15 @@ function Storage() {
         })
             .then((res) => {
                 console.log(res.data);
-                setBloodInventory([res.data]);
+                // Convert and sort the object into an array
+                const inventoryArray = Object.entries(res.data)
+                    .map(([bloodType, bags]) => ({ bloodType, bags }))
+                    .sort((a, b) => b.bags - a.bags); // Sort from most to least bags
+                setBloodInventory(inventoryArray);
             })
             .catch((error) => console.error(error));
     }, []);
+
     return (
         <div className="Storage-container">
             <h1 className="title">Blood Inventory Storage</h1>
@@ -38,22 +33,16 @@ function Storage() {
                     </tr>
                 </thead>
                 <tbody>
-                    {bloodInventory.map((inventory, index) => {
-                        // Extract blood type and bags from the object
-                        const bloodType = Object.keys(inventory)[0];
-                        const bags = inventory[bloodType];
-
-                        return (
-                            <tr key={index}>
-                                <td>{bloodType}</td>
-                                <td>{bags}</td>
-                            </tr>
-                        );
-                    })}
+                    {bloodInventory.map((inventory, index) => (
+                        <tr key={index}>
+                            <td>{inventory.bloodType}</td>
+                            <td>{inventory.bags}</td>
+                        </tr>
+                    ))}
                 </tbody>
             </table>
         </div>
     );
 }
 
-export default Storage
+export default Storage;
