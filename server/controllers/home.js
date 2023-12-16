@@ -9,6 +9,9 @@ module.exports = {
   getBloodGrouped: async (req, res) => {
     try {
       const bloodBags = await prisma.bloodBag.findMany({
+        where: {
+          status: "good",
+        },
         include: {
           Donor: {
             select: {
