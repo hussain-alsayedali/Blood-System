@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Axios from "axios";
-
+import './Styles/GuestInfo.css';
 export default function GuestInfo() {
   const [bloodBags, setBloodBags] = useState([]);
   const [donors, setDonors] = useState([]);
@@ -93,36 +93,35 @@ export default function GuestInfo() {
       .catch((error) => console.error(error));
   }, []);
   return (
-    <div>
-      <h1>good blood bags :{bloodBags.length}</h1>
-      <h1>donors : {donors.length}</h1>
-      <h1>recipients : {recipients.length}</h1>
-      <h1>recivingRequestes : {recivingRequests.length}</h1>
-      <h1>donationRequestes : {donationRequests.length}</h1>
-      <h1>infectionRequests : {infectionRequests.length}</h1>
-      <h1>
-        recivingRequests in the last 7 days: {recivingRequestsLast7Days.length}
-      </h1>
-      <h1>
-        donationRequests in the last 7 days: {donationRequestsLast7Days.length}
-      </h1>
-      <h1>
-        infectionRequests in the last 7 days:{" "}
-        {infectionRequestsLast7Days.length}
-      </h1>
-      <h1>
-        recivingRequests in the last 28 days:{" "}
-        {recivingRequestsLast28Days.length}
-      </h1>
-      <h1>
-        donationRequests in the last 28 days:{" "}
-        {donationRequestsLast28Days.length}
-      </h1>
-      <h1>
-        infectionRequests in the last 28 days:{" "}
-        {infectionRequestsLast28Days.length}
-      </h1>
-      <h1>blood Drive : {bloodDrive.message}</h1>
+    <div className="page">
+      <div className="card">
+        <h1 className="header">Guest Information Dashboard</h1>
+        <div className="stats">Good Blood Bags: {bloodBags.length}</div>
+        <div className="stats">Donors: {donors.length}</div>
+        <div className="stats">Recipients: {recipients.length}</div>
+        <div className="stats">Receiving Requests: {recivingRequests.length}</div>
+        <div className="stats">Donation Requests: {donationRequests.length}</div>
+        <div className="stats">Infection Requests: {infectionRequests.length}</div>
+        <div className="stats">
+          Receiving Requests in the last 7 days: {recivingRequestsLast7Days.length}
+        </div>
+        <div className="stats">
+          Donation Requests in the last 7 days: {donationRequestsLast7Days.length}
+        </div>
+        <div className="stats">
+          Infection Requests in the last 7 days: {infectionRequestsLast7Days.length}
+        </div>
+        <div className="stats">
+          Receiving Requests in the last 28 days: {recivingRequestsLast28Days.length}
+        </div>
+        <div className="stats">
+          Donation Requests in the last 28 days: {donationRequestsLast28Days.length}
+        </div>
+        <div className="stats">
+          Infection Requests in the last 28 days: {infectionRequestsLast28Days.length}
+        </div>
+        <div className="stats">Blood Drive: {bloodDrive.message}</div>
+      </div>
     </div>
-  );
+  ); 
 }

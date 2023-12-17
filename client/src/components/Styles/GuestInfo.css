@@ -1,0 +1,35 @@
+.page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-color: #121212;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    color: #ffffff;
+  }
+  
+  .card {
+    background-color: #323232;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3);
+    padding: 20px;
+    margin: 20px;
+    max-width: 400px;
+    width: 90%;
+    text-align: center;
+    border: 1px solid #474747;
+  }
+  
+  .header {
+    color: #E0E0E0;
+    margin: 10px 0;
+  }
+  
+  .stats {
+    background: #424242;
+    color: #ffffff;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+  }
