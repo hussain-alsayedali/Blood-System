@@ -1,46 +1,68 @@
-import React, { useState } from 'react';
-import styles from '../../components/Styles/Wallet.module.css'
+import React, { useState, useEffect } from 'react';
+import Axios from 'axios';
+import styles from '../../components/Styles/Wallet.module.css';
 
-const Wallet = () => {
-    // Dummy data for demonstration
-    const [balance, setBalance] = useState(100.0);
-    const [withdrawAmount, setWithdrawAmount] = useState('');
+function Wallet() {
+    const [wallet, setWallet] = useState({
+        currentMoney: 0,
+        // ... other wallet state properties
+    });
+    const [message, setMessage] = useState('');
+
+    useEffect(() => {
+        fetchWalletData();
+    }, []);
+
+    const fetchWalletData = () => {
+        Axios({
+            method: 'GET',
+            url: 'http://localhost:2121/donor/currentDonor',
+            withCredentials: true,
+        })
+            .then((res) => {
+                setWallet(res.data);
+            })
+            .catch((error) => console.error(error));
+    };
 
     const handleWithdraw = () => {
-        // Logic to initiate the withdrawal process
-        // This would involve validation, API call, etc.
-        if (parseFloat(withdrawAmount) <= balance && parseFloat(withdrawAmount) > 0) {
-            alert(`Withdrawal of $${withdrawAmount} initiated!`);
-            // After successful withdrawal, update the balance
-            setBalance(balance - parseFloat(withdrawAmount));
-            // Reset withdrawal amount
-            setWithdrawAmount('');
-        } else {
-            alert(`Invalid withdrawal amount.`);
+        if (wallet.currentMoney === 0) {
+            setMessage('You have no money to take.');
+            return;
         }
+
+        Axios({
+            method: 'POST',
+            url: 'http://localhost:2121/donor/getAllMoney',
+            withCredentials: true,
+        })
+            .then((res) => {
+                setMessage(res.data);
+                fetchWalletData();
+            })
+            .catch((error) => {
+                console.error(error);
+                setMessage('Internal error');
+            });
     };
 
     return (
         <div className={styles.walletContainer}>
-            <h1 className={styles.walletHeader}>Wallet</h1>
-            <div className={styles.walletInfo}>
-                <div>Balance:</div>
-                <div className={styles.moneyAmount}>${balance.toFixed(2)}</div>
+            <h1 className={styles.title}>Wallet</h1>
+            <div className={styles.walletDetails}>
+                <p>
+                    <strong>Current Money:</strong> {wallet.currentMoney}
+                </p>
             </div>
-            <div className={styles.withdrawSection}>
-                <input
-                    type="number"
-                    className={styles.withdrawInput}
-                    value={withdrawAmount}
-                    onChange={(e) => setWithdrawAmount(e.target.value)}
-                    placeholder="Amount to withdraw"
-                />
+            {wallet.currentMoney > 0 ? (
                 <button className={styles.withdrawButton} onClick={handleWithdraw}>
-                    Withdraw
+                    Withdraw All Money
                 </button>
-            </div>
+            ) : (
+                <p>{message || 'You have no money to take.'}</p>
+            )}
         </div>
     );
-};
+}
 
 export default Wallet;
