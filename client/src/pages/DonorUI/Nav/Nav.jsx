@@ -8,6 +8,7 @@ import userIcon from "../../../assets/user.png";
 import logoutIcon from "../../../assets/logout.png";
 import logoIcon from "../../../assets/blood-donation.png";
 import Axios from "axios";
+import walletIcon from "../../../assets/wallet.png";
 
 function Nav() {
     const [selectedItem, setSelectedItem] = useState("Donate");
@@ -61,6 +62,15 @@ function Nav() {
                         to="/donor/profile"
                         isSelected={selectedItem === "Profile"}
                         onItemClick={() => handleItemClick("Profile")}
+
+                    />
+                    <NavItem
+                        imgSrc={walletIcon}
+                        label="wallet"
+                        to="/donor/wallet"
+                        isSelected={selectedItem === "wallet"}
+                        onItemClick={() => handleItemClick("wallet")}
+
                     />
                 </div>
 

@@ -1,0 +1,62 @@
+.walletContainer {
+    background-color: #1a1a1a;
+    /* Dark background */
+    color: #fff;
+    /* Light text */
+    padding: 40px;
+    border-radius: 10px;
+    max-width: 500px;
+    margin: 40px auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.walletHeader {
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.walletInfo,
+.withdrawSection {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.moneyAmount {
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.withdrawButton {
+    background-color: #4CAF50;
+    /* Green background for the button */
+    color: #fff;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 16px;
+}
+
+.withdrawButton:hover {
+    background-color: #45a049;
+    /* Slightly darker green on hover */
+}
+
+.withdrawInput {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    font-size: 16px;
+    color: #333;
+    background-color: #fff;
+    margin-right: 10px;
+}
+
+/* Adjust the width as needed or use responsiveness */
+.withdrawInput {
+    width: 50%;
+}

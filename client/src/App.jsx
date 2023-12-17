@@ -29,6 +29,7 @@ import Storage from "./components/Storage";
 import Nav_Donor from "./pages/DonorUI/Nav/Nav";
 import Donate_Donor from "./pages/DonorUI/Donate/Donate";
 import Medical_Donor from "./pages/DonorUI/Medical/Medical";
+import Wallet_Donor from "./pages/DonorUI/wallet"
 
 //Recipient imports
 import Recieve_Recipient from "./pages/RecipientUI/Recieve/Recieve";
@@ -82,6 +83,7 @@ function App() {
                   <Route path="/storage" element={<Storage />} />
                   <Route path="/medical" element={<Medical_Donor />} />
                   <Route path="/profile" element={<Profile />} />
+                  <Route path="/wallet" element={<Wallet_Donor />} />
                 </Routes>
               </main>
             </>
