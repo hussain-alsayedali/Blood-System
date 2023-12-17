@@ -19,6 +19,7 @@ import Nav from "./pages/NurseUI/Nav/Nav";
 import Dashboard_Nurse from "./pages/NurseUI/Dashboard/Dashboard";
 import Control_Nurse from "./pages/NurseUI/Control/Control";
 import History_Nurse from "./pages/NurseUI/History"
+import Drive_Nurse from "./pages/NurseUI/drive"
 
 //common
 import Profile from "./components/Profile";
@@ -68,6 +69,7 @@ function App() {
                   <Route path="/donorEdit" element={<SignupDonor />} />
                   <Route path="/recipientEdit" element={<SignupRecipent />} />
                   <Route path="/history" element={<History_Nurse />} />
+                  <Route path="/drive" element={<Drive_Nurse />} />
                 </Routes>
               </main>
             </>

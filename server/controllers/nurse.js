@@ -577,6 +577,8 @@ exports.acceptInfectionRequest = async (req, res) => {
 
 exports.createBloodDrive = async (req, res) => {
   try {
+    console.log("===========================");
+    console.log(req.user.id);
     const startingDate = new Date(req.body.startingDate);
     const endingDate = new Date(req.body.endingDate);
 
