@@ -7,6 +7,7 @@ import bag from "../../../assets/bag.png";
 import userIcon from "../../../assets/user.png";
 import logoutIcon from "../../../assets/logout.png";
 import logoIcon from "../../../assets/blood-donation.png";
+import HistoryIcon from "../../../assets/order-history.png";
 import Axios from "axios";
 
 function Nav() {
@@ -61,6 +62,13 @@ function Nav() {
             to="/nurse/profile"
             isSelected={selectedItem === "Profile"}
             onItemClick={() => handleItemClick("Profile")}
+          />
+          <NavItem
+            imgSrc={HistoryIcon}
+            label="Requests History"
+            to="/nurse/history"
+            isSelected={selectedItem === "History"}
+            onItemClick={() => handleItemClick("History")}
           />
         </div>
 

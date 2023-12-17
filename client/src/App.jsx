@@ -18,6 +18,7 @@ import "./components/Styles/App.css";
 import Nav from "./pages/NurseUI/Nav/Nav";
 import Dashboard_Nurse from "./pages/NurseUI/Dashboard/Dashboard";
 import Control_Nurse from "./pages/NurseUI/Control/Control";
+import History_Nurse from "./pages/NurseUI/History"
 
 //common
 import Profile from "./components/Profile";
@@ -66,6 +67,7 @@ function App() {
                   <Route path="/profile" element={<Profile />} />
                   <Route path="/donorEdit" element={<SignupDonor />} />
                   <Route path="/recipientEdit" element={<SignupRecipent />} />
+                  <Route path="/history" element={<History_Nurse />} />
                 </Routes>
               </main>
             </>
