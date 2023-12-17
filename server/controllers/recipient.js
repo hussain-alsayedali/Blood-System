@@ -138,7 +138,7 @@ exports.addMoney = async (req, res) => {
       },
     });
     res.json(
-      currentMoney +
+      addedMoney +
         " has been added to ur hospital account , we wish you a succsful treatment 🩸"
     );
   } catch (e) {
