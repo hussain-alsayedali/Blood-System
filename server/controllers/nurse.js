@@ -60,6 +60,40 @@ exports.getAll = async (req, res) => {
     console.log(e);
   }
 };
+exports.getAllDivided = async (req, res) => {
+  try {
+    const allDonors = await prisma.donor.findMany({
+      include: {
+        infections: {
+          include: {
+            disease: {
+              select: {
+                diseaseName: true,
+              },
+            },
+          },
+        },
+      },
+    });
+    const allRecipients = await prisma.recipient.findMany({
+      include: {
+        infections: {
+          include: {
+            disease: {
+              select: {
+                diseaseName: true,
+              },
+            },
+          },
+        },
+      },
+    });
+    const allUsers = { allDonors: allDonors, allRecipients: allRecipients };
+    res.json(allUsers);
+  } catch (e) {
+    console.log(e);
+  }
+};
 exports.getDonor = async (req, res) => {
   try {
     console.log(req.body);

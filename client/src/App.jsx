@@ -6,7 +6,6 @@ import {
   Route,
 } from "react-router-dom";
 
-
 //signups
 import SignupDonor from "./pages/DonorUI/SignupDonor";
 import SignupRecipent from "./pages/RecipientUI/SignupRecipent";
@@ -24,7 +23,7 @@ import Control_Nurse from "./pages/NurseUI/Control/Control";
 import Profile from "./components/Profile";
 import NotFound from "./components/NotFound";
 import Login from "./components/Login";
-import Storage from './components/Storage'
+import Storage from "./components/Storage";
 
 //Donor imports
 import Nav_Donor from "./pages/DonorUI/Nav/Nav";
@@ -32,8 +31,10 @@ import Donate_Donor from "./pages/DonorUI/Donate/Donate";
 import Medical_Donor from "./pages/DonorUI/Medical/Medical";
 
 //Recipient imports
-import Recieve_Recipient from './pages/RecipientUI/Recieve/Recieve'
-import Nav_Recipient from './pages/RecipientUI/Nav/Nav'
+import Recieve_Recipient from "./pages/RecipientUI/Recieve/Recieve";
+import Nav_Recipient from "./pages/RecipientUI/Nav/Nav";
+
+import GuestInfo from "./components/GuestInfo";
 // App component definition
 function App() {
   return (
@@ -45,6 +46,7 @@ function App() {
         <Route path="/signupDonor" element={<SignupDonor />} />
         <Route path="/signupRecipent" element={<SignupRecipent />} />
         <Route path="/signupnurse" element={<SignupNurse />} />
+        <Route path="/guest" element={<GuestInfo />} />
 
         <Route
           path="/nurse/*"
@@ -85,7 +87,6 @@ function App() {
             </>
           }
         />
-
 
         <Route
           path="/recipient/*"

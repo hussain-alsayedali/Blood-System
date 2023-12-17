@@ -37,6 +37,26 @@ module.exports = {
       console.log(e);
     }
   },
+  getBloodBags: async (req, res) => {
+    try {
+      const bloodBags = await prisma.bloodBag.findMany({
+        where: {
+          status: "good",
+        },
+        include: {
+          Donor: {
+            select: {
+              bloodType: true,
+            },
+          },
+        },
+      });
+      res.json({ bloodBags: bloodBags });
+    } catch (e) {
+      console.log(e);
+      res.json(e);
+    }
+  },
   getCurrentBloodDrive: async (req, res) => {
     try {
       const bloodDrive = await prisma.bloodDrive.findFirst({
