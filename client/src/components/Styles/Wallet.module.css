@@ -29,7 +29,8 @@
     font-weight: bold;
 }
 
-.withdrawButton {
+.withdrawButton,
+.depositButton {
     background-color: #4CAF50;
     /* Green background for the button */
     color: #fff;
@@ -41,7 +42,8 @@
     font-size: 16px;
 }
 
-.withdrawButton:hover {
+.withdrawButton:hover,
+.depositButton:hover {
     background-color: #45a049;
     /* Slightly darker green on hover */
 }

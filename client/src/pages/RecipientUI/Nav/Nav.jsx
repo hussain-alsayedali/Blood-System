@@ -7,6 +7,8 @@ import bag from "../../../assets/bag.png";
 import userIcon from "../../../assets/user.png";
 import logoutIcon from "../../../assets/logout.png";
 import logoIcon from "../../../assets/blood-donation.png";
+import walletIcon from "../../../assets/wallet.png";
+
 import Axios from "axios";
 
 function Nav() {
@@ -61,6 +63,14 @@ function Nav() {
                         to="/recipient/profile"
                         isSelected={selectedItem === "Profile"}
                         onItemClick={() => handleItemClick("Profile")}
+                    />
+                    <NavItem
+                        imgSrc={walletIcon}
+                        label="wallet"
+                        to="/recipient/wallet"
+                        isSelected={selectedItem === "wallet"}
+                        onItemClick={() => handleItemClick("wallet")}
+
                     />
                 </div>
 

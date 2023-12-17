@@ -34,6 +34,7 @@ import Wallet_Donor from "./pages/DonorUI/wallet"
 //Recipient imports
 import Recieve_Recipient from "./pages/RecipientUI/Recieve/Recieve";
 import Nav_Recipient from "./pages/RecipientUI/Nav/Nav";
+import Wallet_Recipient from "./pages/RecipientUI/Wallet"
 
 import GuestInfo from "./components/GuestInfo";
 // App component definition
@@ -102,6 +103,8 @@ function App() {
                   <Route path="/storage" element={<Storage />} />
                   <Route path="/medical" element={<Medical_Donor />} />
                   <Route path="/profile" element={<Profile />} />
+                  <Route path="/wallet" element={<Wallet_Recipient />} />
+
                 </Routes>
               </main>
             </>

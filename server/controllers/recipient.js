@@ -13,13 +13,15 @@ exports.getCurrentRecipient = (req, res) => {
 };
 exports.getAllRequests = async (req, res) => {
   try {
+    console.log("==============");
+    console.log(req.user);
+    console.log("=============");
     const allRquests = await prisma.receivingRequest.findMany({
       where: {
         recipientId: req.user.id,
       },
     });
     res.json(allRquests);
-    console.log(allRquests);
   } catch (e) {
     console.log(e);
   }
@@ -122,6 +124,9 @@ exports.addInfectionRequest = async (req, res) => {
 
 exports.addMoney = async (req, res) => {
   try {
+    console.log("inside adder money");
+    console.log("this is the req.user");
+    console.log(req.user);
     const addedMoney = parseInt(req.body.addedMoney);
 
     const currentRecipient = await prisma.recipient.update({

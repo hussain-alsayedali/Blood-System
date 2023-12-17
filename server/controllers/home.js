@@ -20,11 +20,9 @@ module.exports = {
           },
         },
       });
-      console.log(bloodBags[0].Donor);
       // const { bloodType } = bloodBags[0].Donor;
       // console.log(bloodType);
       let bloodBagsGrouped = bloodBags.reduce((acc, bloodBag) => {
-        console.log(bloodBag);
         const { bloodType } = bloodBag.Donor;
         if (!acc[bloodType]) {
           acc[bloodType] = 0;
