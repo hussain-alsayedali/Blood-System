@@ -578,10 +578,13 @@ exports.acceptInfectionRequest = async (req, res) => {
 exports.createBloodDrive = async (req, res) => {
   try {
     console.log("===========================");
-    console.log(req.user.id);
+
     const startingDate = new Date(req.body.startingDate);
     const endingDate = new Date(req.body.endingDate);
 
+    console.log("starting Date " + startingDate);
+    console.log("ending Date " + endingDate);
+    console.log(req.user);
     const existingBloodDrives = await prisma.bloodDrive.findMany({
       where: {
         OR: [
@@ -604,7 +607,7 @@ exports.createBloodDrive = async (req, res) => {
       },
     });
     if (existingBloodDrives.length > 0)
-      return res.status(400).json({
+      return res.json({
         error: "Blood drive date range overlaps with an existing blood drive.",
       });
     await prisma.bloodDrive.create({

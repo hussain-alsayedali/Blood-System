@@ -210,3 +210,35 @@
 //       console.log("Email sent: " + info.response);
 //     }
 //   });
+
+// useEffect(() => {
+
+// }, []);
+
+// try {
+//   const response = await fetch(
+//     "http://localhost:2121/nurse/createBloodDrive",
+//     {
+//       method: "POST",
+//       headers: {
+//         "Content-Type": "application/json",
+//       },
+//       withCredentials: true,
+//       body: JSON.stringify({ startingDate, endingDate }),
+//     }
+//   );
+
+//   if (response.status === 400 || response.status === 500) {
+//     const result = await response.json();
+//     throw new Error(result.error || "An error occurred");
+//   }
+
+//   if (!response.ok) {
+//     throw new Error("Network response was not ok");
+//   }
+
+//   const result = await response.json();
+//   setMessage(result.message);
+// } catch (error) {
+//   setError(error.message);
+// }

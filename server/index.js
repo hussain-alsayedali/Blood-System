@@ -65,7 +65,7 @@ app.use(methodOverride("_method"));
 app.use(
   expressSession({
     cookie: {
-      maxAge: 60 * 1000, // ms
+      maxAge: 60 * 1000 * 100, // ms
     },
     secret: "a santa at nasa",
     resave: true,
