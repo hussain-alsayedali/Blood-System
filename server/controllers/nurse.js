@@ -624,3 +624,23 @@ exports.createBloodDrive = async (req, res) => {
     console.log(e);
   }
 };
+
+exports.getDonationsWeek = async (req, res) => {
+  try {
+    const currentDate = new Date();
+    const sevenDaysAgo = new Date();
+    sevenDaysAgo.setDate(currentDate.getDate() - 7);
+    const allDonationsInweeks = await prisma.bloodBag.findMany({
+      where: {
+        status: "good",
+        takingDate: {
+          gte: sevenDaysAgo,
+        },
+      },
+    });
+    console.log(allDonationsInweeks);
+    res.json({ allDonationsInweeks: allDonationsInweeks });
+  } catch (e) {
+    console.log(e);
+  }
+};

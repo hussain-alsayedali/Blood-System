@@ -23,6 +23,7 @@ router.get(
   isAuthed,
   nurseController.getWaitingRequests
 );
+router.get("/getDonationsweek", isAuthed, nurseController.getDonationsWeek);
 
 //
 router.get(

@@ -18,6 +18,7 @@ router.post(
 
 // infections
 router.get("/getAllInfections", isAuthed, donorController.getAllInfections);
+
 router.get("/getCuredInfections", isAuthed, donorController.getCuredInfections);
 router.get(
   "/getUncuredInfections",

@@ -10,6 +10,20 @@ function Control() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
   const [newDisease, setNewDisease] = useState("");
+  const [bloodBags, setBloodBags] = useState([]);
+
+  useEffect(() => {
+    Axios({
+      method: "GET",
+      url: "http://localhost:2121/nurse/getDonationsweek",
+      withCredentials: true,
+    })
+      .then((res) => {
+        setBloodBags(res.data);
+        console.log(res.data);
+      })
+      .catch((error) => console.error(error));
+  }, []);
 
   useEffect(() => {
     Axios({
@@ -159,7 +173,9 @@ function Control() {
             {/* Display the current disease status */}
             <div className="current-disease">
               <h3>Current Disease Status</h3>
-              {selectedUser && selectedUser.infections && selectedUser.infections.length > 0 ? (
+              {selectedUser &&
+              selectedUser.infections &&
+              selectedUser.infections.length > 0 ? (
                 <ul>
                   {selectedUser.infections.map((infection, index) => (
                     <li key={index}>{infection.disease.diseaseName}</li>
@@ -181,7 +197,9 @@ function Control() {
                 value={newDisease}
                 onChange={(e) => setNewDisease(e.target.value)}
               >
-                <option value="" disabled>Select a disease</option>
+                <option value="" disabled>
+                  Select a disease
+                </option>
                 {diseases.map((disease) => (
                   <option key={disease.id} value={disease.id}>
                     {disease.diseaseName}
