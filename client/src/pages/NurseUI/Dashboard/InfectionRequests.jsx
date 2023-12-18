@@ -81,8 +81,7 @@ const InfectionRequests = () => {
           <thead>
             <tr>
               <th>Request ID</th>
-              <th>Update Date</th>
-              <th>Requester Type</th>
+              <th>Request Date</th>
               <th>donor ID</th>
               <th>Status</th>
               <th>Actions</th>
@@ -92,8 +91,7 @@ const InfectionRequests = () => {
             {infectionRequests.map((request) => (
               <tr key={request.id}>
                 <td>{request.id}</td>
-                <td>{new Date(request.updateDate).toLocaleString()}</td>
-                <td>{request.requesterType}</td>
+                <td>{request.requestDate}</td>
                 <td>{request.donorId}</td>
                 <td>{request.requestStatus}</td>
                 <td>
@@ -101,7 +99,6 @@ const InfectionRequests = () => {
                     onClick={() =>
                       handleAccept(
                         request.id,
-                        request.requesterType,
                         request.requesterId
                       )
                     }
