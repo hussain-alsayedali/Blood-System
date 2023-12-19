@@ -47,7 +47,7 @@ const Donate = () => {
   useEffect(() => {
     Axios({
       method: "GET",
-      url: "http://localhost:2121/getCurrentBloodDrive",
+      url: "http://localhost:2121/guest/getCurrentBloodDrive",
       withCredentials: true, // This is important for sessions to work
     }).then((res) => {
       console.log(res.data);
@@ -59,7 +59,7 @@ const Donate = () => {
     if (constraints.length > 0) {
       alert(
         "You cannot donate at this time due to the following constraints: " +
-          constraints.join(", ")
+        constraints.join(", ")
       );
       console.error("Cannot donate due to constraints:", constraints);
       return;
