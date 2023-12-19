@@ -149,6 +149,32 @@ export default function GuestInfo() {
       })
       .catch((error) => console.error(error));
   }, []);
+
+  // Additional state to manage the visibility of payment details
+  const [isPaymentsExpanded, setIsPaymentsExpanded] = useState(false);
+
+  // Toggle function for payment details
+  const togglePaymentsVisibility = () => {
+    setIsPaymentsExpanded(!isPaymentsExpanded);
+  }
+
+  const [isBloodDrivesExpanded, setIsBloodDrivesExpanded] = useState(false);
+  // Toggle function for blood drives details
+  const toggleBloodDrivesVisibility = () => {
+    setIsBloodDrivesExpanded(!isBloodDrivesExpanded);
+  };
+
+  const [isDonationsMonthExpanded, setIsDonationsMonthExpanded] = useState(false);
+  const [isDonationsWeekExpanded, setIsDonationsWeekExpanded] = useState(false);
+  // Toggle function for monthly donations details
+  const toggleDonationsMonthVisibility = () => {
+    setIsDonationsMonthExpanded(!isDonationsMonthExpanded);
+  };
+
+  // Toggle function for weekly donations details
+  const toggleDonationsWeekVisibility = () => {
+    setIsDonationsWeekExpanded(!isDonationsWeekExpanded);
+  };
   return (
     <div className="page">
       <div className="card">
@@ -169,8 +195,11 @@ export default function GuestInfo() {
       </div>
 
       <div className="card">
-        <h2 className="header">Payments</h2>
-        {allBloodBags.map((bag) => (
+        <h1 className="header" onClick={togglePaymentsVisibility}>
+          Payments
+          <p className="small">click to display / hide</p>
+        </h1>
+        {isPaymentsExpanded && allBloodBags.map((bag) => (
           <div key={bag.id} className="stats">
             <p><strong>Taking Date:</strong> {formatDate(bag.takingDate)}</p>
             <p><strong>Given To:</strong> {`${bag.Donor.firstName} ${bag.Donor.lastName}`}</p>
@@ -179,22 +208,30 @@ export default function GuestInfo() {
         ))}
       </div>
 
+      {/* Blood Drives Expandable Section */}
       <div className="card">
-        <h2 className="header">Blood Drives</h2>
-        {bloodDrives.map((drive) => {
-          return (
-            <div key={drive.id} className="stats">
-              <p><strong>Starting Date:</strong> {formatDate(drive.startingDate)}</p>
-              <p><strong>Ending Date:</strong> {formatDate(drive.endingDate)}</p>
-              <p><strong>Total Blood Bags:</strong> {drive.BloodBags.length}</p>
-            </div>
-          );
-        })}
+        {/* Add onClick to toggle visibility */}
+        <h2 className="header" onClick={toggleBloodDrivesVisibility} style={{ cursor: 'pointer' }}>
+          Blood Drives
+          <p className="small">click to display / hide</p>
+        </h2>
+        {isBloodDrivesExpanded && bloodDrives.map((drive) => (
+          <div key={drive.id} className="stats">
+            <p><strong>Starting Date:</strong> {formatDate(drive.startingDate)}</p>
+            <p><strong>Ending Date:</strong> {formatDate(drive.endingDate)}</p>
+            <p><strong>Total Blood Bags:</strong> {drive.BloodBags.length}</p>
+          </div>
+        ))}
       </div>
 
+      {/* Blood Donations in the Past Month Expandable Section */}
       <div className="card">
-        <h2 className="header">Blood Donations in the Past Month</h2>
-        {bloodDonationsMonth.map((donation) => (
+        <h2 className="header" onClick={toggleDonationsMonthVisibility} style={{ cursor: 'pointer' }}>
+          Blood Donations in the Past Month
+          <p className="small">click to display / hide</p>
+
+        </h2>
+        {isDonationsMonthExpanded && bloodDonationsMonth.map((donation) => (
           <div key={donation.id} className="stats">
             <p><strong>Taking Date:</strong> {formatDate(donation.takingDate)}</p>
             <p><strong>Status:</strong> {donation.status}</p>
@@ -202,9 +239,14 @@ export default function GuestInfo() {
         ))}
       </div>
 
+      {/* Blood Donations in the Past Week Expandable Section */}
       <div className="card">
-        <h2 className="header">Blood Donations in the Past Week</h2>
-        {bloodDonationsWeek.map((donation) => (
+        <h2 className="header" onClick={toggleDonationsWeekVisibility} style={{ cursor: 'pointer' }}>
+          Blood Donations in the Past Week
+          <p className="small">click to display / hide</p>
+
+        </h2>
+        {isDonationsWeekExpanded && bloodDonationsWeek.map((donation) => (
           <div key={donation.id} className="stats">
             <p><strong>Taking Date:</strong> {formatDate(donation.takingDate)}</p>
             <p><strong>Status:</strong> {donation.status}</p>
