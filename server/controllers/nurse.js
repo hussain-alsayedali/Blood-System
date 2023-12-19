@@ -408,6 +408,14 @@ exports.acceptDonationRequest = async (req, res) => {
     let extraMoney = 0;
     if (bloodDrive) {
       extraMoney = 300;
+      await prisma.bloodBag.update({
+        where: {
+          id: newBloodBag.id,
+        },
+        data: {
+          bloodDriveId: bloodDrive.id,
+        },
+      });
     }
     await prisma.donor.update({
       where: {
@@ -470,7 +478,7 @@ exports.editPatientInfo = async (req, res) => {
     const lastName = req.body.lastName;
     const changedBirth = new Date(req.body.birth);
     const changedEmail = req.body.email;
-    const changedWeight = req.body.weight;
+    const changedWeight = parseInt(req.body.weight);
     const changedPhone = req.body.phone;
     const changedBloodType = req.body.bloodType;
 

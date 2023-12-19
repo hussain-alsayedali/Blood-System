@@ -47,6 +47,7 @@ module.exports = {
               bloodType: true,
             },
           },
+          BloodDrive: true,
         },
       });
       res.json({ bloodBags: bloodBags });
@@ -77,5 +78,47 @@ module.exports = {
       console.log("error" + e);
       res.json(e);
     }
+  },
+  getAllBloodDrives: async (req, res) => {
+    const allBloodDrives = await prisma.bloodDrive.findMany({
+      include: {
+        BloodBags: true,
+      },
+    });
+    res.json({ allBloodDrives: allBloodDrives });
+  },
+  getAllDonationInWeek: async (req, res) => {
+    const startDate = new Date();
+    startDate.setDate(startDate.getDate() - 7); // Subtracts 7 days from the current date
+
+    const bloodBagsWithinWeek = await prisma.bloodBag.findMany({
+      where: {
+        takingDate: {
+          gte: startDate,
+        },
+      },
+    });
+    res.json({ bloodBagsWithinWeek: bloodBagsWithinWeek });
+  },
+  getAllDonationInMonth: async (req, res) => {
+    const startDate = new Date();
+    startDate.setDate(startDate.getDate() - 28); // Subtracts 7 days from the current date
+
+    const bloodBagsWithinMonth = await prisma.bloodBag.findMany({
+      where: {
+        takingDate: {
+          gte: startDate,
+        },
+      },
+    });
+    res.json({ bloodBagsWithinMonth: bloodBagsWithinMonth });
+  },
+  getAllConfiremedPayments: async (req, res) => {
+    const allBloodBags = await prisma.bloodBag.findMany({
+      include: {
+        BloodDrive: true,
+      },
+    });
+    res.json(allBloodBags);
   },
 };

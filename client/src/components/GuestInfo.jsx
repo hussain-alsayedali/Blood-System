@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Axios from "axios";
-import './Styles/GuestInfo.css';
+import "./Styles/GuestInfo.css";
 export default function GuestInfo() {
   const [bloodBags, setBloodBags] = useState([]);
   const [donors, setDonors] = useState([]);
@@ -13,8 +13,13 @@ export default function GuestInfo() {
   const [recivingRequests, setRecivingRequest] = useState([]);
   const [donationRequests, setDonationRequest] = useState([]);
   const [infectionRequests, setInfectionRequest] = useState([]);
+  const [bloodDrives, setBloodDrives] = useState([]);
 
-  console.log(recivingRequests);
+  const [bloodDonationsWeek, setBloodDonationsWeek] = useState([]);
+  const [bloodDonationsMonth, setBloodDonationsMonth] = useState([]);
+  const [AllBloodBagsMonth, swere] = useState([]);
+
+  console.log(bloodBags);
 
   // Filter requests for the last 7 days
   const last7Days = new Date();
@@ -99,29 +104,41 @@ export default function GuestInfo() {
         <div className="stats">Good Blood Bags: {bloodBags.length}</div>
         <div className="stats">Donors: {donors.length}</div>
         <div className="stats">Recipients: {recipients.length}</div>
-        <div className="stats">Receiving Requests: {recivingRequests.length}</div>
-        <div className="stats">Donation Requests: {donationRequests.length}</div>
-        <div className="stats">Infection Requests: {infectionRequests.length}</div>
         <div className="stats">
-          Receiving Requests in the last 7 days: {recivingRequestsLast7Days.length}
+          Receiving Requests: {recivingRequests.length}
         </div>
         <div className="stats">
-          Donation Requests in the last 7 days: {donationRequestsLast7Days.length}
+          Donation Requests: {donationRequests.length}
         </div>
         <div className="stats">
-          Infection Requests in the last 7 days: {infectionRequestsLast7Days.length}
+          Infection Requests: {infectionRequests.length}
         </div>
         <div className="stats">
-          Receiving Requests in the last 28 days: {recivingRequestsLast28Days.length}
+          Receiving Requests in the last 7 days:{" "}
+          {recivingRequestsLast7Days.length}
         </div>
         <div className="stats">
-          Donation Requests in the last 28 days: {donationRequestsLast28Days.length}
+          Donation Requests in the last 7 days:{" "}
+          {donationRequestsLast7Days.length}
         </div>
         <div className="stats">
-          Infection Requests in the last 28 days: {infectionRequestsLast28Days.length}
+          Infection Requests in the last 7 days:{" "}
+          {infectionRequestsLast7Days.length}
+        </div>
+        <div className="stats">
+          Receiving Requests in the last 28 days:{" "}
+          {recivingRequestsLast28Days.length}
+        </div>
+        <div className="stats">
+          Donation Requests in the last 28 days:{" "}
+          {donationRequestsLast28Days.length}
+        </div>
+        <div className="stats">
+          Infection Requests in the last 28 days:{" "}
+          {infectionRequestsLast28Days.length}
         </div>
         <div className="stats">Blood Drive: {bloodDrive.message}</div>
       </div>
     </div>
-  ); 
+  );
 }

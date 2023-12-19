@@ -13,10 +13,5 @@ router.post("/signupnurse", isAuthed, authController.postSignupNurse);
 router.get("/getBloodGrouped", isAuthed, homeController.getBloodGrouped);
 router.get("/getAllPatients", isAuthed, nurseController.getAll);
 router.get("/getAllRequestes", isAuthed, nurseController.getAllRequestes);
-router.get(
-  "/getCurrentBloodDrive",
-  isAuthed,
-  homeController.getCurrentBloodDrive
-);
 
 module.exports = router;

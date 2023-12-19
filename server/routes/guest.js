@@ -10,5 +10,25 @@ router.get("/getBloodBags", isAuthed, homeController.getBloodBags);
 router.get("/getAllPatients", isAuthed, nurseController.getAll);
 router.get("/getAllPatientsDivided", isAuthed, nurseController.getAllDivided);
 router.get("/getAllRequestes", isAuthed, nurseController.getAllRequestes);
-
+router.get(
+  "/getCurrentBloodDrive",
+  isAuthed,
+  homeController.getCurrentBloodDrive
+);
+router.get("/getAllBloodDrives", isAuthed, homeController.getAllBloodDrives);
+router.get(
+  "/getAllDonationInWeek",
+  isAuthed,
+  homeController.getAllDonationInWeek
+);
+router.get(
+  "/getAllDonationInMonth",
+  isAuthed,
+  homeController.getAllDonationInMonth
+);
+router.get(
+  "/getAllConfiremedPayments",
+  isAuthed,
+  homeController.getAllConfiremedPayments
+);
 module.exports = router;

@@ -115,6 +115,8 @@ model BloodBag {
   bloodBankId      Int?
   DonationRequest  DonationRequest[]
   ReceivingRequest ReceivingRequest[]
+  BloodDrive       BloodDrive?        @relation(fields: [bloodDriveId], references: [id])
+  bloodDriveId     Int?
 }
 
 model DonationRequest {
@@ -166,11 +168,12 @@ model BloodBank {
 }
 
 model BloodDrive {
-  id           Int      @id @default(autoincrement())
-  startingDate DateTime @default(now())
+  id           Int        @id @default(autoincrement())
+  startingDate DateTime   @default(now())
   endingDate   DateTime
-  nurseStarted nurse    @relation(fields: [nurseId], references: [id])
+  nurseStarted nurse      @relation(fields: [nurseId], references: [id])
   nurseId      Int
+  BloodBags    BloodBag[]
 }
 
 model Session {
