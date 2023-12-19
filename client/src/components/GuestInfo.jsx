@@ -2,6 +2,12 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Axios from "axios";
 import "./Styles/GuestInfo.css";
+
+function formatDate(dateString) {
+  const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' };
+  return new Date(dateString).toLocaleDateString(undefined, options);
+}
+
 export default function GuestInfo() {
   const [bloodBags, setBloodBags] = useState([]);
   const [donors, setDonors] = useState([]);
@@ -150,105 +156,61 @@ export default function GuestInfo() {
         <div className="stats">Good Blood Bags: {bloodBags.length}</div>
         <div className="stats">Donors: {donors.length}</div>
         <div className="stats">Recipients: {recipients.length}</div>
-        <div className="stats">
-          Receiving Requests: {recivingRequests.length}
-        </div>
-        <div className="stats">
-          Donation Requests: {donationRequests.length}
-        </div>
-        <div className="stats">
-          Infection Requests: {infectionRequests.length}
-        </div>
-        <div className="stats">
-          Receiving Requests in the last 7 days:{" "}
-          {recivingRequestsLast7Days.length}
-        </div>
-        <div className="stats">
-          Donation Requests in the last 7 days:{" "}
-          {donationRequestsLast7Days.length}
-        </div>
-        <div className="stats">
-          Infection Requests in the last 7 days:{" "}
-          {infectionRequestsLast7Days.length}
-        </div>
-        <div className="stats">
-          Receiving Requests in the last 28 days:{" "}
-          {recivingRequestsLast28Days.length}
-        </div>
-        <div className="stats">
-          Donation Requests in the last 28 days:{" "}
-          {donationRequestsLast28Days.length}
-        </div>
-        <div className="stats">
-          Infection Requests in the last 28 days:{" "}
-          {infectionRequestsLast28Days.length}
-        </div>
+        <div className="stats">Receiving Requests: {recivingRequests.length}</div>
+        <div className="stats">Donation Requests: {donationRequests.length}</div>
+        <div className="stats">Infection Requests: {infectionRequests.length}</div>
+        <div className="stats">Receiving Requests in the last 7 days: {recivingRequestsLast7Days.length}</div>
+        <div className="stats">Donation Requests in the last 7 days: {donationRequestsLast7Days.length}</div>
+        <div className="stats">Infection Requests in the last 7 days: {infectionRequestsLast7Days.length}</div>
+        <div className="stats">Receiving Requests in the last 28 days: {recivingRequestsLast28Days.length}</div>
+        <div className="stats">Donation Requests in the last 28 days: {donationRequestsLast28Days.length}</div>
+        <div className="stats">Infection Requests in the last 28 days: {infectionRequestsLast28Days.length}</div>
         <div className="stats">Blood Drive: {bloodDrive.message}</div>
       </div>
-      <h2>Payments</h2>
-      {allBloodBags.map((bag) => {
-        return (
-          <div key={bag.id}>
-            <p>taking date : {bag.takingDate} </p>
-            <p>
-              given to : {bag.Donor.firstName} {bag.Donor.lastName}
-            </p>
-            <p>money given : {bag.bloodDriveId ? "350" : "50"} riyals </p>
-          </div>
-        );
-      })}
-      <h2>Blood Drives</h2>
-      {bloodDrives.map((drive) => {
-        let bloodBagCount = 0;
 
-        return (
-          <div key={drive.id}>
-            <p>Starting Date: {drive.startingDate}</p>
-            <p>Ending Date: {drive.endingDate}</p>
-            <h4>Blood Bags:</h4>
-            {drive.BloodBags.map((bag) => {
-              bloodBagCount++;
-              return (
-                <div key={bag.id}>
-                  <p>Blood Bag ID: {bag.id}</p>
-                  {/* Render additional blood bag details as needed */}
-                </div>
-              );
-            })}
-            <p>Total Blood Bags: {bloodBagCount}</p>
+      <div className="card">
+        <h2 className="header">Payments</h2>
+        {allBloodBags.map((bag) => (
+          <div key={bag.id} className="stats">
+            <p><strong>Taking Date:</strong> {formatDate(bag.takingDate)}</p>
+            <p><strong>Given To:</strong> {`${bag.Donor.firstName} ${bag.Donor.lastName}`}</p>
+            <p><strong>Money Given:</strong> {bag.bloodDriveId ? "350" : "50"} Riyals</p>
           </div>
-        );
-      })}
-      <h2>Blood Donations in the Past Month</h2>
-      {bloodDonationsMonth.map((donation) => (
-        <div key={donation.id}>
-          <p>Taking Date: {donation.takingDate}</p>
-          <p>Status: {donation.status}</p>
-          {donation.givenTo && (
-            <p>Given To: {donation.givenTo.recipientName}</p>
-          )}
-          {donation.Donor && <p>Donor: {donation.Donor.donorName}</p>}
-          {donation.BloodBank && (
-            <p>Blood Bank: {donation.BloodBank.bankName}</p>
-          )}
-          {/* Render other blood donation details as needed */}
-        </div>
-      ))}
-      <h2>Blood Donations in the Past Week</h2>
-      {bloodDonationsWeek.map((donation) => (
-        <div key={donation.id}>
-          <p>Taking Date: {donation.takingDate}</p>
-          <p>Status: {donation.status}</p>
-          {donation.givenTo && (
-            <p>Given To: {donation.givenTo.recipientName}</p>
-          )}
-          {donation.Donor && <p>Donor: {donation.Donor.donorName}</p>}
-          {donation.BloodBank && (
-            <p>Blood Bank: {donation.BloodBank.bankName}</p>
-          )}
-          {/* Render other blood donation details as needed */}
-        </div>
-      ))}
+        ))}
+      </div>
+
+      <div className="card">
+        <h2 className="header">Blood Drives</h2>
+        {bloodDrives.map((drive) => {
+          return (
+            <div key={drive.id} className="stats">
+              <p><strong>Starting Date:</strong> {formatDate(drive.startingDate)}</p>
+              <p><strong>Ending Date:</strong> {formatDate(drive.endingDate)}</p>
+              <p><strong>Total Blood Bags:</strong> {drive.BloodBags.length}</p>
+            </div>
+          );
+        })}
+      </div>
+
+      <div className="card">
+        <h2 className="header">Blood Donations in the Past Month</h2>
+        {bloodDonationsMonth.map((donation) => (
+          <div key={donation.id} className="stats">
+            <p><strong>Taking Date:</strong> {formatDate(donation.takingDate)}</p>
+            <p><strong>Status:</strong> {donation.status}</p>
+          </div>
+        ))}
+      </div>
+
+      <div className="card">
+        <h2 className="header">Blood Donations in the Past Week</h2>
+        {bloodDonationsWeek.map((donation) => (
+          <div key={donation.id} className="stats">
+            <p><strong>Taking Date:</strong> {formatDate(donation.takingDate)}</p>
+            <p><strong>Status:</strong> {donation.status}</p>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
