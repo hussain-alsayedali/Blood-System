@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import './History.css';
 
-// Helper function to format dates
 const formatDate = (isoString) => {
     const date = new Date(isoString);
     return `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`;
 };
 
-// Function to fetch all requests from the API
 const fetchAllRequests = async () => {
     try {
         const response = await fetch('http://localhost:2121/nurse/getAllRequestes');
@@ -33,6 +31,7 @@ const History = () => {
         donation: true,
         infection: true,
     });
+    const [searchTerm, setSearchTerm] = useState('');
 
     useEffect(() => {
         fetchAllRequests()
@@ -55,6 +54,25 @@ const History = () => {
         }));
     };
 
+    const handleSearchChange = (e) => {
+        setSearchTerm(e.target.value);
+    };
+
+    const filterById = (requests, id) => {
+        if (!id) return requests;
+        const searchTerm = isNaN(id) ? id : Number(id);
+
+        return requests.filter(request => {
+            const recipientIdString = String(request.recipientId);
+            const donorIdString = String(request.donorId);
+
+            return (
+                recipientIdString.includes(String(searchTerm)) ||
+                donorIdString.includes(String(searchTerm))
+            );
+        });
+    };
+
     if (error) {
         return <div>Error: {error}</div>;
     }
@@ -63,13 +81,21 @@ const History = () => {
         <div className="container">
             <h1 className="heading">History</h1>
 
+            <input
+                type="text"
+                placeholder="Search by ID..."
+                value={searchTerm}
+                onChange={handleSearchChange}
+                className="search-input"
+            />
+
             <div className="requests-section">
                 <button className="toggle-btn" onClick={() => toggleSection('receiving')}>
                     Receiving Requests
                 </button>
                 {showSections.receiving && (
                     <ul className="list">
-                        {requests.receivingRequests.map((request, index) => (
+                        {filterById(requests.receivingRequests, searchTerm).map((request, index) => (
                             <li key={index} className="list-item">
                                 Recipient ID: {request.recipientId}, Served by: {request.nurseId},
                                 Status: {request.requestStatus}, Request Date: {formatDate(request.requestDate)},
@@ -86,7 +112,7 @@ const History = () => {
                 </button>
                 {showSections.donation && (
                     <ul className="list">
-                        {requests.donationRequests.map((request, index) => (
+                        {filterById(requests.donationRequests, searchTerm).map((request, index) => (
                             <li key={index} className="list-item">
                                 Donor ID: {request.donorId}, Handled by(ID): {request.nurseId},
                                 Status: {request.requestStatus}, Request Date: {formatDate(request.requestDate)},
@@ -103,7 +129,7 @@ const History = () => {
                 </button>
                 {showSections.infection && (
                     <ul className="list">
-                        {requests.infectionRequests.map((request, index) => (
+                        {filterById(requests.infectionRequests, searchTerm).map((request, index) => (
                             <li key={index} className="list-item">
                                 Patient ID: {request.donorId}, Handled by(ID): {request.nurseId},
                                 Infection Type: {request.diseaseCatalogId},
