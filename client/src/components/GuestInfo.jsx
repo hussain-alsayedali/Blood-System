@@ -138,7 +138,7 @@ export default function GuestInfo() {
   useEffect(() => {
     Axios({
       method: "GET",
-      url: "http://localhost:2121/getCurrentBloodDrive",
+      url: "http://localhost:2121/guest/getCurrentBloodDrive",
       withCredentials: true,
     })
       .then((res) => {
