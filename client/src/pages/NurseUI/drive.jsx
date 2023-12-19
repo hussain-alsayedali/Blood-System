@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Axios from "axios";
 
 const Drive = () => {
@@ -6,6 +6,20 @@ const Drive = () => {
   const [endingDate, setEndingDate] = useState("");
   const [message, setMessage] = useState(null);
   const [error, setError] = useState(null);
+
+  const [bloodDrives, setBloodDrives] = useState([]);
+  useEffect(() => {
+    Axios({
+      method: "GET",
+      url: "http://localhost:2121/guest/getAllBloodDrives",
+      withCredentials: true,
+    })
+      .then((res) => {
+        setBloodDrives(res.data.allBloodDrives);
+      })
+      .catch((error) => console.error(error));
+  }, []);
+
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -25,6 +39,10 @@ const Drive = () => {
         setError(res.data.message);
       });
   };
+  function formatDate(dateString) {
+    const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' };
+    return new Date(dateString).toLocaleDateString(undefined, options);
+  }
 
   return (
     <div>
@@ -54,6 +72,21 @@ const Drive = () => {
         </div>
         <button type="submit">Create Blood Drive</button>
       </form>
+
+      {/* Blood Drives Expandable Section */}
+      <div className="card">
+        {/* Add onClick to toggle visibility */}
+        <h2>
+          Blood Drives
+        </h2>
+        {bloodDrives.map((drive) => (
+          <div key={drive.id} className="stats">
+            <p><strong>Starting Date:</strong> {formatDate(drive.startingDate)}</p>
+            <p><strong>Ending Date:</strong> {formatDate(drive.endingDate)}</p>
+            <p><strong>Total Blood Bags:</strong> {drive.BloodBags.length}</p>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
