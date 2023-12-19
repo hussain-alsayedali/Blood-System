@@ -27,6 +27,19 @@ exports.isReadyToDonate = async (req, res) => {
     if (donor.weight > 150) {
       constraints.push("Weight is high, it should be less than 150 KG");
     }
+    // Check for active (uncured) infections
+    const activeInfections = await prisma.infection.findMany({
+      where: {
+        donorId: donor.id,
+        cured: false,
+      },
+    });
+
+    if (activeInfections.length > 0) {
+      constraints.push(
+        "You currently have an active infection and cannot donate at this time"
+      );
+    }
 
     // check if there any existing waiting donation request for the current donor
     const existingDonationRequests = await prisma.donationRequest.findMany({
