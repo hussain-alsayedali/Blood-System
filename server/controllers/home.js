@@ -117,6 +117,7 @@ module.exports = {
     const allBloodBags = await prisma.bloodBag.findMany({
       include: {
         BloodDrive: true,
+        Donor: true,
       },
     });
     res.json(allBloodBags);

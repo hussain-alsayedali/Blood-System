@@ -13,14 +13,60 @@ export default function GuestInfo() {
   const [recivingRequests, setRecivingRequest] = useState([]);
   const [donationRequests, setDonationRequest] = useState([]);
   const [infectionRequests, setInfectionRequest] = useState([]);
-  const [bloodDrives, setBloodDrives] = useState([]);
 
+  const [bloodDrives, setBloodDrives] = useState([]);
   const [bloodDonationsWeek, setBloodDonationsWeek] = useState([]);
   const [bloodDonationsMonth, setBloodDonationsMonth] = useState([]);
-  const [AllBloodBagsMonth, swere] = useState([]);
+  const [allBloodBags, setAllBloodBags] = useState([]);
+  console.log("bags");
+  console.log(allBloodBags);
 
-  console.log(bloodBags);
+  useEffect(() => {
+    Axios({
+      method: "GET",
+      url: "http://localhost:2121/guest/getAllConfiremedPayments",
+      withCredentials: true,
+    })
+      .then((res) => {
+        setAllBloodBags(res.data);
+      })
+      .catch((error) => console.error(error));
+  }, []);
+  useEffect(() => {
+    Axios({
+      method: "GET",
+      url: "http://localhost:2121/guest/getAllBloodDrives",
+      withCredentials: true,
+    })
+      .then((res) => {
+        setBloodDrives(res.data.allBloodDrives);
+      })
+      .catch((error) => console.error(error));
+  }, []);
 
+  useEffect(() => {
+    Axios({
+      method: "GET",
+      url: "http://localhost:2121/guest/getAllDonationInWeek",
+      withCredentials: true,
+    })
+      .then((res) => {
+        setBloodDonationsWeek(res.data.bloodBagsWithinWeek);
+      })
+      .catch((error) => console.error(error));
+  }, []);
+
+  useEffect(() => {
+    Axios({
+      method: "GET",
+      url: "http://localhost:2121/guest/getAllDonationInMonth",
+      withCredentials: true,
+    })
+      .then((res) => {
+        setBloodDonationsMonth(res.data.bloodBagsWithinMonth);
+      })
+      .catch((error) => console.error(error));
+  }, []);
   // Filter requests for the last 7 days
   const last7Days = new Date();
   last7Days.setDate(last7Days.getDate() - 7);
@@ -139,6 +185,70 @@ export default function GuestInfo() {
         </div>
         <div className="stats">Blood Drive: {bloodDrive.message}</div>
       </div>
+      <h2>Payments</h2>
+      {allBloodBags.map((bag) => {
+        return (
+          <div key={bag.id}>
+            <p>taking date : {bag.takingDate} </p>
+            <p>
+              given to : {bag.Donor.firstName} {bag.Donor.lastName}
+            </p>
+            <p>money given : {bag.bloodDriveId ? "350" : "50"} riyals </p>
+          </div>
+        );
+      })}
+      <h2>Blood Drives</h2>
+      {bloodDrives.map((drive) => {
+        let bloodBagCount = 0;
+
+        return (
+          <div key={drive.id}>
+            <p>Starting Date: {drive.startingDate}</p>
+            <p>Ending Date: {drive.endingDate}</p>
+            <h4>Blood Bags:</h4>
+            {drive.BloodBags.map((bag) => {
+              bloodBagCount++;
+              return (
+                <div key={bag.id}>
+                  <p>Blood Bag ID: {bag.id}</p>
+                  {/* Render additional blood bag details as needed */}
+                </div>
+              );
+            })}
+            <p>Total Blood Bags: {bloodBagCount}</p>
+          </div>
+        );
+      })}
+      <h2>Blood Donations in the Past Month</h2>
+      {bloodDonationsMonth.map((donation) => (
+        <div key={donation.id}>
+          <p>Taking Date: {donation.takingDate}</p>
+          <p>Status: {donation.status}</p>
+          {donation.givenTo && (
+            <p>Given To: {donation.givenTo.recipientName}</p>
+          )}
+          {donation.Donor && <p>Donor: {donation.Donor.donorName}</p>}
+          {donation.BloodBank && (
+            <p>Blood Bank: {donation.BloodBank.bankName}</p>
+          )}
+          {/* Render other blood donation details as needed */}
+        </div>
+      ))}
+      <h2>Blood Donations in the Past Week</h2>
+      {bloodDonationsWeek.map((donation) => (
+        <div key={donation.id}>
+          <p>Taking Date: {donation.takingDate}</p>
+          <p>Status: {donation.status}</p>
+          {donation.givenTo && (
+            <p>Given To: {donation.givenTo.recipientName}</p>
+          )}
+          {donation.Donor && <p>Donor: {donation.Donor.donorName}</p>}
+          {donation.BloodBank && (
+            <p>Blood Bank: {donation.BloodBank.bankName}</p>
+          )}
+          {/* Render other blood donation details as needed */}
+        </div>
+      ))}
     </div>
   );
 }
