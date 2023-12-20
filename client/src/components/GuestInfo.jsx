@@ -24,8 +24,6 @@ export default function GuestInfo() {
   const [bloodDonationsWeek, setBloodDonationsWeek] = useState([]);
   const [bloodDonationsMonth, setBloodDonationsMonth] = useState([]);
   const [allBloodBags, setAllBloodBags] = useState([]);
-  console.log("bags");
-  console.log(allBloodBags);
 
   useEffect(() => {
     Axios({
@@ -203,6 +201,7 @@ export default function GuestInfo() {
           <div key={bag.id} className="stats">
             <p><strong>Taking Date:</strong> {formatDate(bag.takingDate)}</p>
             <p><strong>Given To:</strong> {`${bag.Donor.firstName} ${bag.Donor.lastName}`}</p>
+            <p><strong>Blood Type:</strong> {` ${bag.Donor.bloodType}`}</p>
             <p><strong>Money Given:</strong> {bag.bloodDriveId ? "350" : "50"} Riyals</p>
           </div>
         ))}
@@ -235,6 +234,9 @@ export default function GuestInfo() {
           <div key={donation.id} className="stats">
             <p><strong>Taking Date:</strong> {formatDate(donation.takingDate)}</p>
             <p><strong>Status:</strong> {donation.status}</p>
+            <p><strong>Donor ID:</strong> {donation.donorId}</p>
+            <p><strong>Donor Name:</strong> {donation.Donor.firstName} {donation.Donor.lastName}</p>
+            <p><strong>Blood Type:</strong> {donation.Donor.bloodType}</p>
           </div>
         ))}
       </div>
@@ -250,6 +252,10 @@ export default function GuestInfo() {
           <div key={donation.id} className="stats">
             <p><strong>Taking Date:</strong> {formatDate(donation.takingDate)}</p>
             <p><strong>Status:</strong> {donation.status}</p>
+            <p><strong>Donor ID:</strong> {donation.donorId}</p>
+            <p><strong>Donor Name:</strong> {donation.Donor.firstName} {donation.Donor.lastName}</p>
+            <p><strong>Blood Type:</strong> {donation.Donor.bloodType}</p>
+
           </div>
         ))}
       </div>
