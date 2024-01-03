@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import boss from "../assets/satiyah.jpg";
 import { Link } from "react-router-dom";
 import Axios from "axios";
-import { useDispatch } from "react-redux";
+
 import logoIcon from "../assets/blood-donation.png";
 import "./Styles/Login.css"; // Import the CSS file
 function Login() {
@@ -13,7 +13,6 @@ function Login() {
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const [isSignup, setIsSignup] = useState(false);
-  const dispatch = useDispatch(); // Initialize useDispatch
 
   const handleLogin = (e) => {
     e.preventDefault();

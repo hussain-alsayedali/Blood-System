@@ -2,7 +2,7 @@ const nodemailer = require("nodemailer");
 const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
-    user: "bloodwaveproject@gmail.com",
+    user: process.env.EMAIL,
     pass: process.env.EMAIL_PASSWORD,
   },
 });
@@ -10,7 +10,7 @@ const transporter = nodemailer.createTransport({
 async function sendEmail(recipientMail, messageSubject, messageText) {
   try {
     const mailOptions = {
-      from: "bloodwaveproject@gmail.com",
+      from: process.env.EMAIL,
       to: recipientMail,
       subject: messageSubject,
       text: messageText,
