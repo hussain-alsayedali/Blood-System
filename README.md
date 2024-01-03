@@ -5,9 +5,13 @@
 # How to start :
 
 there is an example of env in the server/config , add the needed information and rename the file to .env .
+
 Email is the sender email
+
 EMAIL_PASSWORD is the password for the given email(gmail is the provider for the current project).
+
 DATABASE_URL is the link to the database
+
 and finally the PORT.
 
 ## How It's Made:
