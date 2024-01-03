@@ -97,6 +97,16 @@ module.exports = {
           gte: startDate,
         },
       },
+      include: {
+        Donor: {
+          select: {
+            firstName: true,
+            lastName: true,
+            bloodType: true,
+          },
+        },
+        BloodDrive: true,
+      },
     });
     res.json({ bloodBagsWithinWeek: bloodBagsWithinWeek });
   },
@@ -109,6 +119,16 @@ module.exports = {
         takingDate: {
           gte: startDate,
         },
+      },
+      include: {
+        Donor: {
+          select: {
+            firstName: true,
+            lastName: true,
+            bloodType: true,
+          },
+        },
+        BloodDrive: true,
       },
     });
     res.json({ bloodBagsWithinMonth: bloodBagsWithinMonth });
