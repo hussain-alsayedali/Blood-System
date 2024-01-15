@@ -15,7 +15,7 @@ export default function SignupNurse() {
     password: "",
   });
   console.log(formData);
-
+  const apiUrl = import.meta.env.VITE_API_BASE;
   const register = (event) => {
     console.log("started clicking");
 
@@ -24,7 +24,7 @@ export default function SignupNurse() {
       method: "POST",
       data: formData,
       withCredentials: true,
-      url: "http://localhost:2121/nurse/signup",
+      url: apiUrl + "/nurse/signup",
       // crossDomain: true,
     })
       .then((res) => console.log(res))

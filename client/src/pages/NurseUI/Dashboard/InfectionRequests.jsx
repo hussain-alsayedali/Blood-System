@@ -4,11 +4,11 @@ import Axios from "axios";
 
 const InfectionRequests = () => {
   const [infectionRequests, setInfectionRequests] = useState([]);
-
+  const apiUrl = import.meta.env.VITE_API_BASE;
   useEffect(() => {
     Axios({
       method: "GET",
-      url: "http://localhost:2121/nurse/getWaitingInfectionRequests",
+      url: apiUrl + "/nurse/getWaitingInfectionRequests",
       withCredentials: true,
     })
       .then((res) => {
@@ -23,7 +23,7 @@ const InfectionRequests = () => {
   const handleAccept = (requestId, requesterType, requesterId) => {
     Axios({
       method: "POST",
-      url: "http://localhost:2121/nurse/acceptInfectionRequest",
+      url: apiUrl + "/nurse/acceptInfectionRequest",
       data: {
         requestId,
         requesterType,
@@ -49,7 +49,7 @@ const InfectionRequests = () => {
   const handleDecline = (requestId) => {
     Axios({
       method: "POST",
-      url: "http://localhost:2121/nurse/declineInfectionRequest",
+      url: apiUrl + "/nurse/declineInfectionRequest",
       data: {
         requestId,
       },
@@ -97,10 +97,7 @@ const InfectionRequests = () => {
                 <td>
                   <button
                     onClick={() =>
-                      handleAccept(
-                        request.id,
-                        request.requesterId
-                      )
+                      handleAccept(request.id, request.requesterId)
                     }
                   >
                     Accept

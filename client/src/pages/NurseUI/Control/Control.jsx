@@ -12,10 +12,11 @@ function Control() {
   const [newDisease, setNewDisease] = useState("");
   const [bloodBags, setBloodBags] = useState([]);
 
+  const apiUrl = import.meta.env.VITE_API_BASE;
   useEffect(() => {
     Axios({
       method: "GET",
-      url: "http://localhost:2121/nurse/getDonationsweek",
+      url: apiUrl + "/nurse/getDonationsweek",
       withCredentials: true,
     })
       .then((res) => {
@@ -28,7 +29,7 @@ function Control() {
   useEffect(() => {
     Axios({
       method: "GET",
-      url: "http://localhost:2121/nurse/getAll",
+      url: apiUrl + "/nurse/getAll",
       withCredentials: true,
     })
       .then((res) => {
@@ -65,7 +66,7 @@ function Control() {
         _method: "PUT", // Include the method override as a form field or query parameter
       },
       withCredentials: true,
-      url: "http://localhost:2121/nurse/editPatientInfo",
+      url: apiUrl + "/nurse/editPatientInfo",
     })
       .then((response) => {
         console.log(response);
@@ -82,7 +83,7 @@ function Control() {
   const deleteUser = (userId, userType) => {
     Axios({
       method: "DELETE",
-      url: `http://localhost:2121/nurse/deleteUser?id=${userId}&type=${userType}`,
+      url: apiUrl + `/nurse/deleteUser?id=${userId}&type=${userType}`,
       withCredentials: true,
     });
   };
@@ -101,7 +102,7 @@ function Control() {
   const [diseases, setDiseases] = useState([]);
   useEffect(() => {
     console.log("test0");
-    Axios.get("http://localhost:2121/donor/getDiseases", {
+    Axios.get(apiUrl + "/donor/getDiseases", {
       withCredentials: true,
     })
       .then((response) => {
@@ -133,7 +134,7 @@ function Control() {
       method: "POST",
       data: infectionData,
       withCredentials: true,
-      url: "http://localhost:2121/nurse/addInfection",
+      url: apiUrl + "/nurse/addInfection",
       // crossDomain: true,
     })
       .then((response) => {

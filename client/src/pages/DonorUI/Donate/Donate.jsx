@@ -15,10 +15,11 @@ const Donate = () => {
     bloodDrive: "",
     message: "",
   });
+  const apiUrl = import.meta.env.VITE_API_BASE;
   useEffect(() => {
     Axios({
       method: "GET",
-      url: "http://localhost:2121/donor/currentDonor",
+      url: apiUrl + "/donor/currentDonor",
       withCredentials: true, // This is important for sessions to work
     })
       .then((res) => {
@@ -31,7 +32,7 @@ const Donate = () => {
           birth: res.data.birth,
         });
 
-        return Axios.get("http://localhost:2121/donor/readyToDonate", {
+        return Axios.get(apiUrl + "/donor/readyToDonate", {
           withCredentials: true,
         });
       })
@@ -47,7 +48,7 @@ const Donate = () => {
   useEffect(() => {
     Axios({
       method: "GET",
-      url: "http://localhost:2121/guest/getCurrentBloodDrive",
+      url: apiUrl + "/guest/getCurrentBloodDrive",
       withCredentials: true, // This is important for sessions to work
     }).then((res) => {
       console.log(res.data);
@@ -59,7 +60,7 @@ const Donate = () => {
     if (constraints.length > 0) {
       alert(
         "You cannot donate at this time due to the following constraints: " +
-        constraints.join(", ")
+          constraints.join(", ")
       );
       console.error("Cannot donate due to constraints:", constraints);
       return;
@@ -67,7 +68,7 @@ const Donate = () => {
 
     // Submit the donation to the backend.
     Axios.post(
-      "http://localhost:2121/donor/createDonationRequest",
+      apiUrl + "/donor/createDonationRequest",
       {
         donorId: user.id,
         // Include any additional data your backend requires here.
@@ -95,7 +96,7 @@ const Donate = () => {
     console.log("Attempting to fetch donation requests");
     Axios({
       method: "GET",
-      url: "http://localhost:2121/donor/getAllRequests",
+      url: apiUrl + "/donor/getAllRequests",
       withCredentials: true,
     })
       .then((response) => {

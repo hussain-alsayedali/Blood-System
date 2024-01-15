@@ -6,12 +6,12 @@ const Drive = () => {
   const [endingDate, setEndingDate] = useState("");
   const [message, setMessage] = useState(null);
   const [error, setError] = useState(null);
-
   const [bloodDrives, setBloodDrives] = useState([]);
+  const apiUrl = import.meta.env.VITE_API_BASE;
   useEffect(() => {
     Axios({
       method: "GET",
-      url: "http://localhost:2121/guest/getAllBloodDrives",
+      url: apiUrl + "/guest/getAllBloodDrives",
       withCredentials: true,
     })
       .then((res) => {
@@ -20,12 +20,11 @@ const Drive = () => {
       .catch((error) => console.error(error));
   }, []);
 
-
   const handleSubmit = async (event) => {
     event.preventDefault();
     Axios({
       method: "POST",
-      url: "http://localhost:2121/nurse/createBloodDrive",
+      url: apiUrl + "/nurse/createBloodDrive",
       withCredentials: true,
       data: { startingDate, endingDate },
     })
@@ -40,7 +39,14 @@ const Drive = () => {
       });
   };
   function formatDate(dateString) {
-    const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' };
+    const options = {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+    };
     return new Date(dateString).toLocaleDateString(undefined, options);
   }
 
@@ -76,14 +82,18 @@ const Drive = () => {
       {/* Blood Drives Expandable Section */}
       <div className="card">
         {/* Add onClick to toggle visibility */}
-        <h2>
-          Blood Drives
-        </h2>
+        <h2>Blood Drives</h2>
         {bloodDrives.map((drive) => (
           <div key={drive.id} className="stats">
-            <p><strong>Starting Date:</strong> {formatDate(drive.startingDate)}</p>
-            <p><strong>Ending Date:</strong> {formatDate(drive.endingDate)}</p>
-            <p><strong>Total Blood Bags:</strong> {drive.BloodBags.length}</p>
+            <p>
+              <strong>Starting Date:</strong> {formatDate(drive.startingDate)}
+            </p>
+            <p>
+              <strong>Ending Date:</strong> {formatDate(drive.endingDate)}
+            </p>
+            <p>
+              <strong>Total Blood Bags:</strong> {drive.BloodBags.length}
+            </p>
           </div>
         ))}
       </div>

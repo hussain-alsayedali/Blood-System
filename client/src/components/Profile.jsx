@@ -28,10 +28,11 @@ function Profile() {
   //     })
   //     .catch((error) => console.error(error));
   // }, []);
+  const apiUrl = import.meta.env.VITE_API_BASE;
   useEffect(() => {
     Axios({
       method: "GET",
-      url: "http://localhost:2121/nurse/getCurrentNurse",
+      url: apiUrl + "/nurse/getCurrentNurse",
       withCredentials: true,
     })
       .then((res) => {

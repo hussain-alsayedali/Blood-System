@@ -13,13 +13,16 @@ function Login() {
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const [isSignup, setIsSignup] = useState(false);
+  const apiUrl = import.meta.env.VITE_API_BASE;
+  console.log(apiUrl);
 
+  console.log("base url is " + apiUrl);
   const handleLogin = (e) => {
     e.preventDefault();
     setError("");
 
     Axios.post(
-      `http://localhost:2121/${role}/login`,
+      apiUrl + `/${role}/login`,
       {
         email,
         password,

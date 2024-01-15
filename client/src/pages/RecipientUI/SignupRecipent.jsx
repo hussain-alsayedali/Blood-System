@@ -23,7 +23,7 @@ export default function SignupRecipent() {
   console.log(location.search);
   console.log(location.state);
   // console.log(user);
-
+  const apiUrl = import.meta.env.VITE_API_BASE;
   function handleChange(event) {
     console.log(event);
     const { name, value, type, checked } = event.target;
@@ -41,7 +41,7 @@ export default function SignupRecipent() {
       method: "POST",
       data: formData,
       withCredentials: true,
-      url: "http://localhost:2121/recipient/signup",
+      url: apiUrl + "/recipient/signup",
       crossDomain: true,
     })
       .then((res) => console.log(res))

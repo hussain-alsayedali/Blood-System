@@ -4,7 +4,14 @@ import Axios from "axios";
 import "./Styles/GuestInfo.css";
 
 function formatDate(dateString) {
-  const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' };
+  const options = {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+  };
   return new Date(dateString).toLocaleDateString(undefined, options);
 }
 
@@ -24,11 +31,11 @@ export default function GuestInfo() {
   const [bloodDonationsWeek, setBloodDonationsWeek] = useState([]);
   const [bloodDonationsMonth, setBloodDonationsMonth] = useState([]);
   const [allBloodBags, setAllBloodBags] = useState([]);
-
+  const apiUrl = import.meta.env.VITE_API_BASE;
   useEffect(() => {
     Axios({
       method: "GET",
-      url: "http://localhost:2121/guest/getAllConfiremedPayments",
+      url: apiUrl + "/guest/getAllConfiremedPayments",
       withCredentials: true,
     })
       .then((res) => {
@@ -39,7 +46,7 @@ export default function GuestInfo() {
   useEffect(() => {
     Axios({
       method: "GET",
-      url: "http://localhost:2121/guest/getAllBloodDrives",
+      url: apiUrl + "/guest/getAllBloodDrives",
       withCredentials: true,
     })
       .then((res) => {
@@ -51,7 +58,7 @@ export default function GuestInfo() {
   useEffect(() => {
     Axios({
       method: "GET",
-      url: "http://localhost:2121/guest/getAllDonationInWeek",
+      url: apiUrl + "/guest/getAllDonationInWeek",
       withCredentials: true,
     })
       .then((res) => {
@@ -63,7 +70,7 @@ export default function GuestInfo() {
   useEffect(() => {
     Axios({
       method: "GET",
-      url: "http://localhost:2121/guest/getAllDonationInMonth",
+      url: apiUrl + "/guest/getAllDonationInMonth",
       withCredentials: true,
     })
       .then((res) => {
@@ -100,7 +107,7 @@ export default function GuestInfo() {
   useEffect(() => {
     Axios({
       method: "GET",
-      url: "http://localhost:2121/guest/getBloodBags",
+      url: apiUrl + "/guest/getBloodBags",
       withCredentials: true,
     })
       .then((res) => {
@@ -111,7 +118,7 @@ export default function GuestInfo() {
   useEffect(() => {
     Axios({
       method: "GET",
-      url: "http://localhost:2121/guest/getAllPatientsDivided",
+      url: apiUrl + "/guest/getAllPatientsDivided",
       withCredentials: true,
     })
       .then((res) => {
@@ -123,7 +130,7 @@ export default function GuestInfo() {
   useEffect(() => {
     Axios({
       method: "GET",
-      url: "http://localhost:2121/guest/getAllRequestes",
+      url: apiUrl + "/guest/getAllRequestes",
       withCredentials: true,
     })
       .then((res) => {
@@ -136,7 +143,7 @@ export default function GuestInfo() {
   useEffect(() => {
     Axios({
       method: "GET",
-      url: "http://localhost:2121/guest/getCurrentBloodDrive",
+      url: apiUrl + "/guest/getCurrentBloodDrive",
       withCredentials: true,
     })
       .then((res) => {
@@ -154,7 +161,7 @@ export default function GuestInfo() {
   // Toggle function for payment details
   const togglePaymentsVisibility = () => {
     setIsPaymentsExpanded(!isPaymentsExpanded);
-  }
+  };
 
   const [isBloodDrivesExpanded, setIsBloodDrivesExpanded] = useState(false);
   // Toggle function for blood drives details
@@ -162,7 +169,8 @@ export default function GuestInfo() {
     setIsBloodDrivesExpanded(!isBloodDrivesExpanded);
   };
 
-  const [isDonationsMonthExpanded, setIsDonationsMonthExpanded] = useState(false);
+  const [isDonationsMonthExpanded, setIsDonationsMonthExpanded] =
+    useState(false);
   const [isDonationsWeekExpanded, setIsDonationsWeekExpanded] = useState(false);
   // Toggle function for monthly donations details
   const toggleDonationsMonthVisibility = () => {
@@ -180,15 +188,39 @@ export default function GuestInfo() {
         <div className="stats">Good Blood Bags: {bloodBags.length}</div>
         <div className="stats">Donors: {donors.length}</div>
         <div className="stats">Recipients: {recipients.length}</div>
-        <div className="stats">Receiving Requests: {recivingRequests.length}</div>
-        <div className="stats">Donation Requests: {donationRequests.length}</div>
-        <div className="stats">Infection Requests: {infectionRequests.length}</div>
-        <div className="stats">Receiving Requests in the last 7 days: {recivingRequestsLast7Days.length}</div>
-        <div className="stats">Donation Requests in the last 7 days: {donationRequestsLast7Days.length}</div>
-        <div className="stats">Infection Requests in the last 7 days: {infectionRequestsLast7Days.length}</div>
-        <div className="stats">Receiving Requests in the last 28 days: {recivingRequestsLast28Days.length}</div>
-        <div className="stats">Donation Requests in the last 28 days: {donationRequestsLast28Days.length}</div>
-        <div className="stats">Infection Requests in the last 28 days: {infectionRequestsLast28Days.length}</div>
+        <div className="stats">
+          Receiving Requests: {recivingRequests.length}
+        </div>
+        <div className="stats">
+          Donation Requests: {donationRequests.length}
+        </div>
+        <div className="stats">
+          Infection Requests: {infectionRequests.length}
+        </div>
+        <div className="stats">
+          Receiving Requests in the last 7 days:{" "}
+          {recivingRequestsLast7Days.length}
+        </div>
+        <div className="stats">
+          Donation Requests in the last 7 days:{" "}
+          {donationRequestsLast7Days.length}
+        </div>
+        <div className="stats">
+          Infection Requests in the last 7 days:{" "}
+          {infectionRequestsLast7Days.length}
+        </div>
+        <div className="stats">
+          Receiving Requests in the last 28 days:{" "}
+          {recivingRequestsLast28Days.length}
+        </div>
+        <div className="stats">
+          Donation Requests in the last 28 days:{" "}
+          {donationRequestsLast28Days.length}
+        </div>
+        <div className="stats">
+          Infection Requests in the last 28 days:{" "}
+          {infectionRequestsLast28Days.length}
+        </div>
         <div className="stats">Blood Drive: {bloodDrive.message}</div>
       </div>
 
@@ -197,67 +229,118 @@ export default function GuestInfo() {
           Payments
           <p className="small">click to display / hide</p>
         </h1>
-        {isPaymentsExpanded && allBloodBags.map((bag) => (
-          <div key={bag.id} className="stats">
-            <p><strong>Taking Date:</strong> {formatDate(bag.takingDate)}</p>
-            <p><strong>Given To:</strong> {`${bag.Donor.firstName} ${bag.Donor.lastName}`}</p>
-            <p><strong>Blood Type:</strong> {` ${bag.Donor.bloodType}`}</p>
-            <p><strong>Money Given:</strong> {bag.bloodDriveId ? "350" : "50"} Riyals</p>
-          </div>
-        ))}
+        {isPaymentsExpanded &&
+          allBloodBags.map((bag) => (
+            <div key={bag.id} className="stats">
+              <p>
+                <strong>Taking Date:</strong> {formatDate(bag.takingDate)}
+              </p>
+              <p>
+                <strong>Given To:</strong>{" "}
+                {`${bag.Donor.firstName} ${bag.Donor.lastName}`}
+              </p>
+              <p>
+                <strong>Blood Type:</strong> {` ${bag.Donor.bloodType}`}
+              </p>
+              <p>
+                <strong>Money Given:</strong> {bag.bloodDriveId ? "350" : "50"}{" "}
+                Riyals
+              </p>
+            </div>
+          ))}
       </div>
 
       {/* Blood Drives Expandable Section */}
       <div className="card">
         {/* Add onClick to toggle visibility */}
-        <h2 className="header" onClick={toggleBloodDrivesVisibility} style={{ cursor: 'pointer' }}>
+        <h2
+          className="header"
+          onClick={toggleBloodDrivesVisibility}
+          style={{ cursor: "pointer" }}
+        >
           Blood Drives
           <p className="small">click to display / hide</p>
         </h2>
-        {isBloodDrivesExpanded && bloodDrives.map((drive) => (
-          <div key={drive.id} className="stats">
-            <p><strong>Starting Date:</strong> {formatDate(drive.startingDate)}</p>
-            <p><strong>Ending Date:</strong> {formatDate(drive.endingDate)}</p>
-            <p><strong>Total Blood Bags:</strong> {drive.BloodBags.length}</p>
-          </div>
-        ))}
+        {isBloodDrivesExpanded &&
+          bloodDrives.map((drive) => (
+            <div key={drive.id} className="stats">
+              <p>
+                <strong>Starting Date:</strong> {formatDate(drive.startingDate)}
+              </p>
+              <p>
+                <strong>Ending Date:</strong> {formatDate(drive.endingDate)}
+              </p>
+              <p>
+                <strong>Total Blood Bags:</strong> {drive.BloodBags.length}
+              </p>
+            </div>
+          ))}
       </div>
 
       {/* Blood Donations in the Past Month Expandable Section */}
       <div className="card">
-        <h2 className="header" onClick={toggleDonationsMonthVisibility} style={{ cursor: 'pointer' }}>
+        <h2
+          className="header"
+          onClick={toggleDonationsMonthVisibility}
+          style={{ cursor: "pointer" }}
+        >
           Blood Donations in the Past Month
           <p className="small">click to display / hide</p>
-
         </h2>
-        {isDonationsMonthExpanded && bloodDonationsMonth.map((donation) => (
-          <div key={donation.id} className="stats">
-            <p><strong>Taking Date:</strong> {formatDate(donation.takingDate)}</p>
-            <p><strong>Status:</strong> {donation.status}</p>
-            <p><strong>Donor ID:</strong> {donation.donorId}</p>
-            <p><strong>Donor Name:</strong> {donation.Donor.firstName} {donation.Donor.lastName}</p>
-            <p><strong>Blood Type:</strong> {donation.Donor.bloodType}</p>
-          </div>
-        ))}
+        {isDonationsMonthExpanded &&
+          bloodDonationsMonth.map((donation) => (
+            <div key={donation.id} className="stats">
+              <p>
+                <strong>Taking Date:</strong> {formatDate(donation.takingDate)}
+              </p>
+              <p>
+                <strong>Status:</strong> {donation.status}
+              </p>
+              <p>
+                <strong>Donor ID:</strong> {donation.donorId}
+              </p>
+              <p>
+                <strong>Donor Name:</strong> {donation.Donor.firstName}{" "}
+                {donation.Donor.lastName}
+              </p>
+              <p>
+                <strong>Blood Type:</strong> {donation.Donor.bloodType}
+              </p>
+            </div>
+          ))}
       </div>
 
       {/* Blood Donations in the Past Week Expandable Section */}
       <div className="card">
-        <h2 className="header" onClick={toggleDonationsWeekVisibility} style={{ cursor: 'pointer' }}>
+        <h2
+          className="header"
+          onClick={toggleDonationsWeekVisibility}
+          style={{ cursor: "pointer" }}
+        >
           Blood Donations in the Past Week
           <p className="small">click to display / hide</p>
-
         </h2>
-        {isDonationsWeekExpanded && bloodDonationsWeek.map((donation) => (
-          <div key={donation.id} className="stats">
-            <p><strong>Taking Date:</strong> {formatDate(donation.takingDate)}</p>
-            <p><strong>Status:</strong> {donation.status}</p>
-            <p><strong>Donor ID:</strong> {donation.donorId}</p>
-            <p><strong>Donor Name:</strong> {donation.Donor.firstName} {donation.Donor.lastName}</p>
-            <p><strong>Blood Type:</strong> {donation.Donor.bloodType}</p>
-
-          </div>
-        ))}
+        {isDonationsWeekExpanded &&
+          bloodDonationsWeek.map((donation) => (
+            <div key={donation.id} className="stats">
+              <p>
+                <strong>Taking Date:</strong> {formatDate(donation.takingDate)}
+              </p>
+              <p>
+                <strong>Status:</strong> {donation.status}
+              </p>
+              <p>
+                <strong>Donor ID:</strong> {donation.donorId}
+              </p>
+              <p>
+                <strong>Donor Name:</strong> {donation.Donor.firstName}{" "}
+                {donation.Donor.lastName}
+              </p>
+              <p>
+                <strong>Blood Type:</strong> {donation.Donor.bloodType}
+              </p>
+            </div>
+          ))}
       </div>
     </div>
   );

@@ -21,6 +21,8 @@ export default function SignupDonor() {
   console.log(location.pathname);
   console.log(location.search);
   console.log(location.state);
+
+  const apiUrl = import.meta.env.VITE_API_BASE;
   // console.log(user);
   const register = (event) => {
     event.preventDefault(); // Prevent default form submission behavior
@@ -28,7 +30,7 @@ export default function SignupDonor() {
       method: "POST",
       data: formData,
       withCredentials: true,
-      url: "http://localhost:2121/donor/signup",
+      url: apiUrl + "/donor/signup",
       crossDomain: true,
     })
       .then((res) => console.log(res))
