@@ -2,8 +2,11 @@
 
 **Blood Wave** is a robust blood donation management system designed to bridge the gap between blood donors and recipients, ensuring a streamlined process for blood collection, storage, and distribution. This platform addresses the need for efficient blood donation logistics and inventory management, while also providing an easy-to-use interface for users to manage their donations and requests.
 
-**Link to project:** [bloodwave.netlify.app](https://bloodwave.netlify.app/)
+
 <img src="./Storage image.PNG" />
+
+**Link to project:** [bloodwave.netlify.app](https://bloodwave.netlify.app/)
+
 # How to start :
 
 there is an example of env in the server/config , add the needed information and rename the file to .env .
